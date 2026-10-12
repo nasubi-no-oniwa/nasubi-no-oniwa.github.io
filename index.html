@@ -61,68 +61,76 @@ header.top {
 nav a { text-decoration: none; font-weight: 800; font-size: 14px; color: var(--muted); margin-left: 18px; }
 nav a:hover { color: var(--purple); }
 
-/* ---------- はじめ ---------- */
-.hero { position: relative; overflow: hidden; padding: 56px 0 72px; }
-.hero .wrap { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 24px; align-items: center; }
-.hero h1 { margin: 0; font-size: clamp(38px, 7vw, 64px); line-height: 1.15; font-weight: 900; letter-spacing: 0.02em; }
-.hero h1 .n { color: var(--purple); }
-.hero h1 .g { color: var(--leaf); }
-.hero p { margin: 18px 0 28px; font-size: clamp(15px, 2.2vw, 17px); color: var(--muted); max-width: 30em; }
+/* ---------- はじめ（小さめ） ---------- */
+.hero { padding: 28px 0 8px; }
+.hero .wrap { display: flex; align-items: center; gap: 18px; }
+.hero .mascot { width: 92px; flex-shrink: 0; animation: sway 4s ease-in-out infinite; transform-origin: 50% 100%; }
+@keyframes sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+.hero h1 { margin: 0; font-size: clamp(26px, 5vw, 38px); line-height: 1.2; font-weight: 900; }
+.hero h1 .n { color: var(--purple); } .hero h1 .g { color: var(--leaf); }
+.hero p { margin: 4px 0 0; font-size: 14px; color: var(--muted); }
 .btn {
-  display: inline-flex; align-items: center; gap: 8px; text-decoration: none; font-weight: 900; font-size: 16px;
-  padding: 14px 24px; border-radius: 999px; color: #fff;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-weight: 900; font-size: 16px;
+  padding: 13px 26px; border-radius: 999px; color: #fff; border: 0; cursor: pointer; font-family: inherit;
   background: linear-gradient(180deg, var(--purple2), var(--purple));
   box-shadow: 0 5px 0 color-mix(in srgb, var(--purple) 70%, black), 0 12px 24px rgba(107, 63, 160, 0.3);
   transition: transform .1s, box-shadow .1s;
 }
 .btn:active { transform: translateY(4px); box-shadow: 0 1px 0 color-mix(in srgb, var(--purple) 70%, black); }
-.mascot { width: min(320px, 100%); justify-self: center; animation: sway 4s ease-in-out infinite; transform-origin: 50% 100%; }
-@keyframes sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
-.ground {
-  position: absolute; left: 0; right: 0; bottom: 0; height: 34px;
-  background: radial-gradient(20px 12px at 20px 0, var(--leaf2) 98%, transparent) repeat-x;
-  background-size: 40px 34px; opacity: .5;
-}
+.btn.ghost { background: var(--bg2); color: var(--ink); box-shadow: none; }
 
 /* ---------- 見出し ---------- */
-section { padding: 56px 0; }
-.sec-title { display: flex; align-items: baseline; gap: 12px; margin: 0 0 24px; }
-.sec-title h2 { margin: 0; font-size: 26px; font-weight: 900; }
-.sec-title span { font-size: 13px; color: var(--muted); font-weight: 800; letter-spacing: .12em; }
+section { padding: 28px 0; }
+.sec-title { display: flex; align-items: baseline; gap: 12px; margin: 0 0 16px; }
+.sec-title h2 { margin: 0; font-size: 22px; font-weight: 900; }
+.sec-title span { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .12em; }
 
-/* ---------- ゲーム一覧 ---------- */
-#games { background: var(--bg2); }
-.games { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-.game {
-  background: var(--card); border-radius: 24px; box-shadow: var(--shadow); overflow: hidden;
-  display: flex; flex-direction: column; border: 1px solid var(--line);
-  transition: transform .15s;
+/* ---------- 新作（大きく1つ） ---------- */
+.feature {
+  display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: center; padding: 22px 26px; border-radius: 26px;
+  background: radial-gradient(circle at 15% 30%, #4b33a8, #1d1546 70%); color: #fff; box-shadow: var(--shadow); cursor: pointer; position: relative; overflow: hidden;
 }
-.game:hover { transform: translateY(-4px); }
-.game .thumb {
-  aspect-ratio: 16 / 10; display: grid; place-items: center; position: relative;
-  background: linear-gradient(135deg, #2b1f66, #150f36);
-}
-.game .thumb img { width: 42%; aspect-ratio: 1; border-radius: 22%; box-shadow: 0 14px 30px rgba(0,0,0,.4); }
-.game .badge {
-  position: absolute; top: 12px; left: 12px; font-size: 12px; font-weight: 900; padding: 4px 10px;
-  border-radius: 999px; background: #ffe45e; color: #4a3700;
-}
-.game .body { padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
-.game h3 { margin: 0; font-size: 20px; font-weight: 900; }
-.game p { margin: 0; font-size: 14px; color: var(--muted); flex: 1; }
-.tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.tags span { font-size: 11px; font-weight: 800; padding: 3px 9px; border-radius: 999px; background: var(--bg2); color: var(--muted); }
-.game .btn { align-self: flex-start; margin-top: 6px; padding: 11px 22px; font-size: 15px; }
-.game.soon .thumb { background: repeating-linear-gradient(45deg, var(--bg2), var(--bg2) 12px, var(--bg) 12px, var(--bg) 24px); }
-.game.soon .thumb .seed { font-size: 56px; }
-.game.soon .btn { background: var(--bg2); color: var(--muted); box-shadow: none; pointer-events: none; }
+.feature img { width: 132px; aspect-ratio: 1; border-radius: 24%; box-shadow: 0 14px 30px rgba(0,0,0,.45); }
+.feature .new { display: inline-block; font-size: 12px; font-weight: 900; padding: 3px 12px; border-radius: 999px; background: #ffe45e; color: #4a3700; letter-spacing: .08em; }
+.feature h3 { margin: 6px 0 2px; font-size: clamp(24px, 4vw, 32px); font-weight: 900; line-height: 1.2; }
+.feature p { margin: 0 0 14px; font-size: 14px; opacity: .88; }
+.feature .row { display: flex; gap: 10px; flex-wrap: wrap; }
+.feature .btn.ghost { background: rgba(255,255,255,.14); color: #fff; }
+
+/* ---------- ゲーム（アイコン一覧） ---------- */
+#games { padding-top: 8px; }
+.apps { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 24px 16px; }
+.app { display: flex; flex-direction: column; align-items: center; gap: 8px; background: none; border: 0; padding: 0; cursor: pointer; color: inherit; font-family: inherit; }
+.app .ic { width: 100%; max-width: 120px; aspect-ratio: 1; border-radius: 24%; overflow: hidden; position: relative; box-shadow: 0 8px 18px rgba(58, 45, 74, .18); transition: transform .15s; background: var(--card); }
+.app:hover .ic { transform: translateY(-3px) scale(1.03); } .app:active .ic { transform: scale(.95); }
+.app .ic img { width: 100%; height: 100%; display: block; }
+.app .ic .dot { position: absolute; top: 6px; right: 6px; width: 12px; height: 12px; border-radius: 50%; background: #ff5a5a; border: 2px solid #fff; }
+.app b { font-size: 13px; font-weight: 800; line-height: 1.3; text-align: center; }
+.app.soon .ic { display: grid; place-items: center; font-size: 40px; box-shadow: none; border: 2px dashed var(--line); background: repeating-linear-gradient(45deg, var(--bg2), var(--bg2) 10px, var(--bg) 10px, var(--bg) 20px); }
+.app.soon b { color: var(--muted); }
+
+/* ---------- くわしく（下から出る） ---------- */
+.sheet-bg { position: fixed; inset: 0; background: rgba(20, 12, 30, .45); opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 30; }
+.sheet { visibility: hidden; position: fixed; left: 50%; bottom: 0; width: min(520px, 100%); transform: translate(-50%, 105%); background: var(--card); border-radius: 26px 26px 0 0; padding: 14px 22px calc(26px + env(safe-area-inset-bottom, 0px)); z-index: 31; transition: transform .25s cubic-bezier(.2,.9,.3,1.1), visibility 0s .25s; box-shadow: 0 -10px 40px rgba(0,0,0,.25); max-height: 88vh; overflow: auto; }
+.sheet-on .sheet-bg { opacity: 1; pointer-events: auto; } .sheet-on .sheet { transform: translate(-50%, 0); visibility: visible; transition: transform .25s cubic-bezier(.2,.9,.3,1.1); }
+.sheet .grip { width: 44px; height: 5px; border-radius: 9px; background: var(--line); margin: 0 auto 14px; }
+.sheet .head { display: flex; gap: 16px; align-items: center; }
+.sheet .head img { width: 96px; aspect-ratio: 1; border-radius: 24%; box-shadow: 0 8px 18px rgba(0,0,0,.2); }
+.sheet h3 { margin: 0; font-size: 22px; font-weight: 900; line-height: 1.25; }
+.sheet .yomi { font-size: 12px; color: var(--muted); font-weight: 800; }
+.sheet p { margin: 14px 0; font-size: 15px; }
+.sheet .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+.sheet .tags span { font-size: 12px; font-weight: 800; padding: 3px 10px; border-radius: 999px; background: var(--bg2); color: var(--muted); }
+.sheet .btn { width: 100%; font-size: 18px; padding: 15px; }
+.sheet .close { position: absolute; top: 12px; right: 14px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: var(--bg2); color: var(--ink); font-size: 18px; cursor: pointer; }
 
 /* ---------- お知らせ ---------- */
 .news { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
 .news li { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding: 16px 4px; border-bottom: 1px solid var(--line); }
 .news time { font-size: 14px; font-weight: 800; color: var(--purple); font-variant-numeric: tabular-nums; }
 .news p { margin: 0; font-size: 15px; }
+.news li.more { display: none; } .news.open li.more { display: grid; }
+.news-more { margin: 14px auto 0; display: block; }
 
 /* ---------- このお庭について ---------- */
 .about { display: grid; grid-template-columns: 120px 1fr; gap: 24px; align-items: center; background: var(--card); border-radius: 24px; padding: 28px; box-shadow: var(--shadow); border: 1px solid var(--line); }
@@ -133,18 +141,17 @@ section { padding: 56px 0; }
 footer { padding: 36px 0 48px; text-align: center; font-size: 13px; color: var(--muted); }
 
 @media (max-width: 720px) {
-  .hero { padding: 32px 0 64px; }
-  .hero .wrap { grid-template-columns: 1fr; text-align: center; }
-  .hero p { margin-left: auto; margin-right: auto; }
-  .mascot { width: 200px; grid-row: 1; }
+  .hero { padding: 18px 0 4px; } .hero .mascot { width: 64px; } .hero p { font-size: 13px; }
+  .feature { grid-template-columns: 1fr; text-align: center; padding: 22px 18px; gap: 12px; justify-items: center; }
+  .feature img { width: 120px; } .feature .row { justify-content: center; }
+  .apps { grid-template-columns: repeat(3, 1fr); gap: 18px 12px; }
   nav a { margin-left: 12px; font-size: 13px; }
-  .news li { grid-template-columns: 1fr; gap: 2px; }
+  .news li { grid-template-columns: 1fr; gap: 2px; padding: 12px 4px; }
   .about { grid-template-columns: 1fr; text-align: center; }
   .about svg { margin: 0 auto; width: 96px; }
-  section { padding: 44px 0; }
 }
 @media (max-width: 380px) { nav a:first-child { display: none; } }
-@media (prefers-reduced-motion: reduce) { .mascot { animation: none; } html { scroll-behavior: auto; } }
+@media (prefers-reduced-motion: reduce) { .mascot { animation: none; } html { scroll-behavior: auto; } .sheet, .sheet-bg { transition: none; } }
 </style>
 </head>
 <body>
@@ -182,20 +189,22 @@ footer { padding: 36px 0 48px; text-align: center; font-size: 13px; color: var(-
 <main>
   <div class="hero">
     <div class="wrap">
-      <div>
-        <h1><span class="n">なすび</span>の<br><span class="g">お庭</span>へようこそ</h1>
-        <p>ブラウザですぐ遊べる、小さなゲームを育てています。インストールなし、スマホでもPCでも、友だちと合言葉で対戦も。</p>
-        <a class="btn" href="#games">ゲームであそぶ</a>
-      </div>
       <svg class="mascot" viewBox="0 0 200 240" role="img" aria-label="なすびのキャラクター"><use href="#nasubi"/></svg>
+      <div>
+        <h1><span class="n">なすび</span>の<span class="g">お庭</span></h1>
+        <p>ブラウザですぐ遊べる小さなゲーム。インストールなし、スマホでもPCでも。</p>
+      </div>
     </div>
-    <div class="ground" aria-hidden="true"></div>
   </div>
+
+  <section id="new">
+    <div class="wrap"><div id="feature"></div></div>
+  </section>
 
   <section id="games">
     <div class="wrap">
       <div class="sec-title"><h2>ゲーム</h2><span>GAMES</span></div>
-      <div class="games" id="game-list"></div>
+      <div class="apps" id="game-list"></div>
     </div>
   </section>
 
@@ -203,6 +212,7 @@ footer { padding: 36px 0 48px; text-align: center; font-size: 13px; color: var(-
     <div class="wrap">
       <div class="sec-title"><h2>お知らせ</h2><span>NEWS</span></div>
       <ul class="news" id="news-list"></ul>
+      <button class="btn ghost news-more" id="news-more" hidden></button>
     </div>
   </section>
 
@@ -220,6 +230,16 @@ footer { padding: 36px 0 48px; text-align: center; font-size: 13px; color: var(-
 </main>
 
 <footer>© <span id="year"></span> なすびのお庭</footer>
+
+<div class="sheet-bg" id="sheet-bg"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-name">
+  <div class="grip"></div>
+  <button class="close" id="sh-close" aria-label="とじる">✕</button>
+  <div class="head"><img id="sh-img" alt=""><div><h3 id="sh-name"></h3><div class="yomi" id="sh-yomi"></div></div></div>
+  <p id="sh-text"></p>
+  <div class="tags" id="sh-tags"></div>
+  <a class="btn" id="sh-play" href="#">あそぶ</a>
+</div>
 
 <script>
 // =============================================
@@ -256,21 +276,21 @@ const GAMES = [
     tags: ['タワーディフェンス', 'CPU対戦', '合言葉で対戦', '観戦'],
   },
   {
-    name: '盤滑（パンファ）',
+    name: '盤滑', yomi: 'パンファ',
     url: 'https://nasubi-no-oniwa.github.io/panfa/',
     image: 'img/panfa.png',
     text: '3手ごとに、1列がすべるリバーシ。取ったはずの角が、すべって消える。次にすべる列はいつも見えているので、すべったあとの形まで読んで置くのが勝負どころ。',
     tags: ['リバーシ', 'CPU対戦', 'この端末で2人', '合言葉で対戦', '観戦'],
   },
   {
-    name: '回廊快走（かいろうかいそう）',
+    name: '回廊快走', yomi: 'かいろうかいそう',
     url: 'https://nasubi-no-oniwa.github.io/kairou/',
     image: 'img/kairou.png',
     text: '通路をまわして、どこまでも走れ。壁も天井も床になる、終わりのない回廊。穴やかべをよけて、コインを集めて、どこまで行けるか。あいことばで2人同時に走る対戦も。',
     tags: ['ランナー', '1人で記録', 'ゴースト', '合言葉で対戦'],
   },
   {
-    name: '絵私（えし）',
+    name: '絵私', yomi: 'えし',
     url: 'https://nasubi-no-oniwa.github.io/eshi/',
     image: 'img/eshi.png',
     text: '頭と体・うで・あしを描いて、骨を入れて戦う。長い腕は遠くまで届くけれど遅い。殴られたうで・あしはもげて吹っ飛ぶ！ 描いたキャラはIDでだれでも使える。60秒で描いて戦う「らくがきバトル」も。',
@@ -282,7 +302,7 @@ const GAMES = [
     image: 'img/batbey.png',
     text: '自分で描いた形がそのまま当たり判定になる、3Dバトルごま。攻撃・防御・持久・重さにポイントを振り分けて、3・2・1・まわせ！ バースト・場外・回転停止で3点先取。',
     tags: ['お絵かき', '3D', 'バトル', 'CPU対戦', '合言葉で対戦', '観戦', 'コマID'],
-    badge: 'NEW'
+    badge: 'NEW', catch: '描いたコマで、ぶつかり合え。会心の一撃でバーストをねらえ！'
   },
   {
     name: 'つぎのゲーム',
@@ -306,20 +326,41 @@ const NEWS = [
 ];
 
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-document.getElementById('game-list').innerHTML = GAMES.map(g => `
-  <article class="game${g.soon ? ' soon' : ''}">
-    <div class="thumb">
-      ${g.badge ? `<span class="badge">${esc(g.badge)}</span>` : ''}
-      ${g.soon ? '<span class="seed" aria-hidden="true">🌱</span>' : `<img src="${esc(g.image)}" alt="${esc(g.name)}のアイコン" loading="lazy">`}
-    </div>
-    <div class="body">
-      <h3>${esc(g.name)}</h3>
-      <p>${esc(g.text)}</p>
-      <div class="tags">${(g.tags || []).map(t => `<span>${esc(t)}</span>`).join('')}</div>
-      ${g.soon ? '<span class="btn">もうすぐ</span>' : `<a class="btn" href="${esc(g.url)}">あそぶ</a>`}
-    </div>
-  </article>`).join('');
-document.getElementById('news-list').innerHTML = NEWS.map(n => `<li><time>${esc(n.date)}</time><p>${esc(n.text)}</p></li>`).join('');
+const $ = id => document.getElementById(id);
+// 新作（いちばん新しい NEW のゲーム）を大きく
+const NEW = GAMES.find(g => g.badge && !g.soon);
+if (NEW) {
+  $('feature').innerHTML = `<div class="feature" data-i="${GAMES.indexOf(NEW)}">
+    <img src="${esc(NEW.image)}" alt="${esc(NEW.name)}のアイコン">
+    <div><span class="new">${esc(NEW.badge)}</span><h3>${esc(NEW.name)}</h3><p>${esc(NEW.catch || NEW.text)}</p>
+      <div class="row"><a class="btn" href="${esc(NEW.url)}">あそぶ</a><button class="btn ghost" type="button">くわしく</button></div></div></div>`;
+} else $('new').hidden = true;
+// アイコン一覧
+$('game-list').innerHTML = GAMES.map((g, i) => g.soon
+  ? `<div class="app soon"><span class="ic" aria-hidden="true">🌱</span><b>つくってます</b></div>`
+  : `<button class="app" type="button" data-i="${i}"><span class="ic"><img src="${esc(g.image)}" alt="" loading="lazy">${g.badge ? '<i class="dot"></i>' : ''}</span><b>${esc(g.name)}</b></button>`).join('');
+// くわしく（下から出る）
+let lastFocus = null;
+function openSheet(i) {
+  const g = GAMES[i]; if (!g || g.soon) return;
+  $('sh-img').src = g.image; $('sh-img').alt = g.name + 'のアイコン'; $('sh-name').textContent = g.name; $('sh-yomi').textContent = g.yomi || '';
+  $('sh-text').textContent = g.text; $('sh-tags').innerHTML = (g.tags || []).map(t => `<span>${esc(t)}</span>`).join(''); $('sh-play').href = g.url;
+  lastFocus = document.activeElement; document.body.classList.add('sheet-on'); setTimeout(() => $('sh-play').focus({ preventScroll: true }), 50);
+}
+function closeSheet() { document.body.classList.remove('sheet-on'); if (lastFocus) lastFocus.focus({ preventScroll: true }); }
+document.addEventListener('click', e => {
+  if (e.target.closest('.feature a')) return;
+  const el = e.target.closest('[data-i]'); if (el) openSheet(+el.dataset.i);
+});
+$('sheet-bg').onclick = closeSheet; $('sh-close').onclick = closeSheet;
+addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
+// お知らせ：新しい3件、のこりは「もっと見る」
+const SHOW = 3;
+$('news-list').innerHTML = NEWS.map((n, i) => `<li${i >= SHOW ? ' class="more"' : ''}><time>${esc(n.date)}</time><p>${esc(n.text)}</p></li>`).join('');
+if (NEWS.length > SHOW) {
+  const b = $('news-more'); b.hidden = false; b.textContent = 'もっと見る（あと' + (NEWS.length - SHOW) + '件）';
+  b.onclick = () => { const o = $('news-list').classList.toggle('open'); b.textContent = o ? 'とじる' : 'もっと見る（あと' + (NEWS.length - SHOW) + '件）'; };
+}
 document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
