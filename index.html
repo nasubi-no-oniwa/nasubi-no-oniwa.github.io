@@ -100,6 +100,24 @@ section { padding: 28px 0; }
 /* ---------- ゲーム（アイコン一覧） ---------- */
 #games { padding-top: 8px; }
 .apps { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 24px 16px; }
+.live { background: var(--card); border-radius: 22px; padding: 16px 18px; box-shadow: var(--shadow); }
+.live-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.live-head b { font-size: 18px; font-weight: 900; }
+.prime { font-size: 12.5px; font-weight: 800; padding: 3px 12px; border-radius: 999px; background: var(--bg2); color: var(--muted); }
+.prime.hot { background: #ffcf3a; color: #3a2a00; animation: primeglow 1.6s infinite; }
+@keyframes primeglow { 50% { box-shadow: 0 0 0 5px rgba(255, 207, 58, .35); } }
+.live-sum { margin: 8px 0 10px; font-size: 14px; font-weight: 800; }
+.live-sum b { font-size: 18px; }
+.live-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.live-list a { display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px 6px 6px; border-radius: 999px; background: var(--bg2); color: inherit; text-decoration: none; font-size: 13px; font-weight: 800; }
+.live-list a img { width: 26px; height: 26px; border-radius: 8px; }
+.live-list a em { font-style: normal; font-size: 12px; color: var(--muted); }
+.live-list a.on { background: #e9f8ee; color: #1f6b3a; }
+.live-list a.on em { color: #1f6b3a; }
+.live-note { margin: 10px 0 0; font-size: 12px; color: var(--muted); }
+.app .ic .wait { position: absolute; left: 6px; bottom: 6px; padding: 2px 8px; border-radius: 999px; background: #2fbf6b; color: #fff; font-size: 11px; font-weight: 900; box-shadow: 0 2px 6px rgba(0,0,0,.25); }
+.sh-live { margin: 6px 0 0; font-size: 13px; font-weight: 800; color: #1f6b3a; min-height: 0; }
+.sh-live:empty { display: none; }
 .app { display: flex; flex-direction: column; align-items: center; gap: 8px; background: none; border: 0; padding: 0; cursor: pointer; color: inherit; font-family: inherit; }
 .app .ic { width: 100%; max-width: 120px; aspect-ratio: 1; border-radius: 24%; overflow: hidden; position: relative; box-shadow: 0 8px 18px rgba(58, 45, 74, .18); transition: transform .15s; background: var(--card); }
 .app:hover .ic { transform: translateY(-3px) scale(1.03); } .app:active .ic { transform: scale(.95); }
@@ -201,6 +219,17 @@ footer { padding: 36px 0 48px; text-align: center; font-size: 13px; color: var(-
     <div class="wrap"><div id="feature"></div></div>
   </section>
 
+  <section id="live">
+    <div class="wrap">
+      <div class="live">
+        <div class="live-head"><b>だれかと対戦</b><span class="prime" id="prime"></span></div>
+        <p class="live-sum" id="live-sum">いまの人数を読みこみ中…</p>
+        <div class="live-list" id="live-list"></div>
+        <p class="live-note">ゲームの「だれかと対戦」を押すと、待っている人と自動でつながります。相手がいないときはCPUと遊びながら待てます。</p>
+      </div>
+    </div>
+  </section>
+
   <section id="games">
     <div class="wrap">
       <div class="sec-title"><h2>ゲーム</h2><span>GAMES</span></div>
@@ -238,6 +267,7 @@ footer { padding: 36px 0 48px; text-align: center; font-size: 13px; color: var(-
   <div class="head"><img id="sh-img" alt=""><div><h3 id="sh-name"></h3><div class="yomi" id="sh-yomi"></div></div></div>
   <p id="sh-text"></p>
   <div class="tags" id="sh-tags"></div>
+  <p class="sh-live" id="sh-live"></p>
   <a class="btn" id="sh-play" href="#">あそぶ</a>
 </div>
 
@@ -248,25 +278,25 @@ footer { padding: 36px 0 48px; text-align: center; font-size: 13px; color: var(-
 // =============================================
 const GAMES = [
   {
-    name: 'さかさまドロップ',
+    name: 'さかさまドロップ', qm: 'sakasama',
     url: 'https://sakasama-drop.github.io/',
     image: 'img/sakasama-drop.png',
     text: '4つつなげて消す落ちものパズル。ゲージが溜まったら、相手の盤面をさかさまに！ 積み上げた連鎖がひっくり返る、荒れる対戦パズル。',
-    tags: ['パズル', 'CPU対戦', '合言葉で対戦', '観戦'],
+    tags: ['パズル', 'CPU対戦', 'だれかと対戦', '合言葉で対戦', '観戦'],
   },
   {
-    name: '4つ目のダルマ',
+    name: '4つ目のダルマ', qm: 'daruma',
     url: 'https://nasubi-no-oniwa.github.io/daruma/',
     image: 'img/daruma.png',
     text: '交互にダルマを落として、4つ並べたら勝ち。でも3ターンごとに、小槌が指した段がだるま落としで抜ける！ 並びが崩れるか、逆にそろうか。',
-    tags: ['2人対戦', 'CPU対戦', 'この端末で2人', '合言葉で対戦', '観戦'],
+    tags: ['2人対戦', 'CPU対戦', 'この端末で2人', 'だれかと対戦', '合言葉で対戦', '観戦'],
   },
   {
-    name: 'ハネタンク',
+    name: 'ハネタンク', qm: 'hanetank',
     url: 'https://nasubi-no-oniwa.github.io/hanetank/',
     image: 'img/hanetank.png',
     text: 'はね返る弾で撃ち合う、おもちゃの戦車バトル。毎戦スキルを振り直して、ブロックを仕込んで、2本先取！ 自分の弾にも当たるので要注意。',
-    tags: ['3D', 'アクション', 'CPU対戦', '同じPCで2人', '合言葉で対戦', '観戦'],
+    tags: ['3D', 'アクション', 'CPU対戦', '同じPCで2人', 'だれかと対戦', '合言葉で対戦', '観戦'],
   },
   {
     name: 'さくがえ',
@@ -276,18 +306,18 @@ const GAMES = [
     tags: ['タワーディフェンス', 'CPU対戦', '合言葉で対戦', '観戦'],
   },
   {
-    name: '盤滑', yomi: 'パンファ',
+    name: '盤滑', qm: 'panfa', yomi: 'パンファ',
     url: 'https://nasubi-no-oniwa.github.io/panfa/',
     image: 'img/panfa.png',
     text: '3手ごとに、1列がすべるリバーシ。取ったはずの角が、すべって消える。次にすべる列はいつも見えているので、すべったあとの形まで読んで置くのが勝負どころ。',
-    tags: ['リバーシ', 'CPU対戦', 'この端末で2人', '合言葉で対戦', '観戦'],
+    tags: ['リバーシ', 'CPU対戦', 'この端末で2人', 'だれかと対戦', '合言葉で対戦', '観戦'],
   },
   {
-    name: '回廊快走', yomi: 'かいろうかいそう',
+    name: '回廊快走', qm: 'kairou', yomi: 'かいろうかいそう',
     url: 'https://nasubi-no-oniwa.github.io/kairou/',
     image: 'img/kairou.png',
     text: '通路をまわして、どこまでも走れ。壁も天井も床になる、終わりのない回廊。穴やかべをよけて、コインを集めて、どこまで行けるか。あいことばで2人同時に走る対戦も。',
-    tags: ['ランナー', '1人で記録', 'ゴースト', '合言葉で対戦'],
+    tags: ['ランナー', '1人で記録', 'ゴースト', 'だれかと対戦', '合言葉で対戦'],
   },
   {
     name: '絵私', yomi: 'えし',
@@ -304,11 +334,11 @@ const GAMES = [
     tags: ['お絵かき', '3D', 'バトル', 'CPU対戦', '合言葉で対戦', '観戦', 'コマID'],
   },
   {
-    name: 'ユキダマッチ',
+    name: 'ユキダマッチ', qm: 'yukidama',
     url: 'https://nasubi-no-oniwa.github.io/yukidama/',
     image: 'img/yukidama.png',
     text: '雪合戦の1対1。走って、すべって、よじ登って、雪玉をぶつけ合う3Dアクション。かくれる雪のかべは時間とともに溶けていき、最後は正面からのぶつかり合い。ココアやカイロで回復、特技は4つから1つ。',
-    tags: ['3D', 'アクション', 'CPU対戦', '合言葉で対戦', '観戦'],
+    tags: ['3D', 'アクション', 'CPU対戦', 'だれかと対戦', '合言葉で対戦', '観戦'],
   },
   {
     name: 'ピンチボウル',
@@ -318,11 +348,11 @@ const GAMES = [
     tags: ['3D', 'アクション', 'CPU対戦', '合言葉で対戦', '観戦'],
   },
   {
-    name: '地元の最強', yomi: 'じもとのさいきょう',
+    name: '地元の最強', qm: 'jimoto', yomi: 'じもとのさいきょう',
     url: 'https://nasubi-no-oniwa.github.io/jimoto/',
     image: 'img/jimoto.png',
     text: '市町村の本物の形でぶつかり合う、全自動の1対1。明治から今までの16,737の市町村・区（なくなった町村も）が出場できる。体力は面積、勢いは人口。向きと政策カードで、あなたの地元を最強にしよう。',
-    tags: ['市町村', '全自動バトル', '研究', '合言葉で対戦', '観戦'],
+    tags: ['市町村', '全自動バトル', '研究', 'だれかと対戦', '挑戦状', '合言葉で対戦', '観戦'],
     badge: 'NEW', catch: 'あなたの地元の形は、最強か？'
   },
   {
@@ -334,6 +364,7 @@ const GAMES = [
 ];
 
 const NEWS = [
+  { date: '2026.10.15', text: '「だれかと対戦」を7つのゲームに追加しました。待っている人と自動でつながります。毎晩21時〜22時は対戦タイム！ 地元の最強には、いつでも戦える「挑戦状」も。' },
   { date: '2026.10.15', text: '新作「地元の最強」を公開しました。全国の市町村の本物の形でぶつかり合う、全自動の対戦ゲームです。明治から今までの、なくなった町村も出場できます。' },
   { date: '2026.10.14', text: '新作「ピンチボウル」を公開しました。ボウリングのピンになって球をよける、1対1の3Dアクションです。ガードレールではね返る球に、ドミノのように倒れるピン。' },
   { date: '2026.10.14', text: '新作「ユキダマッチ」を公開しました。雪合戦の1対1で戦う3Dアクションです。かべが溶けていく3つのステージ、4つの特技、決着リプレイつき。' },
@@ -369,6 +400,7 @@ function openSheet(i) {
   const g = GAMES[i]; if (!g || g.soon) return;
   $('sh-img').src = g.image; $('sh-img').alt = g.name + 'のアイコン'; $('sh-name').textContent = g.name; $('sh-yomi').textContent = g.yomi || '';
   $('sh-text').textContent = g.text; $('sh-tags').innerHTML = (g.tags || []).map(t => `<span>${esc(t)}</span>`).join(''); $('sh-play').href = g.url;
+  const lv = g.qm && LIVE[g.qm]; $('sh-live').textContent = g.qm ? (lv && (lv.wait || lv.pairs) ? `いま 対戦待ち ${lv.wait}人・対戦中 ${lv.pairs}組` : 'だれかと対戦できます') : '';
   lastFocus = document.activeElement; document.body.classList.add('sheet-on'); setTimeout(() => $('sh-play').focus({ preventScroll: true }), 50);
 }
 function closeSheet() { document.body.classList.remove('sheet-on'); if (lastFocus) lastFocus.focus({ preventScroll: true }); }
@@ -386,6 +418,35 @@ if (NEWS.length > SHOW) {
   b.onclick = () => { const o = $('news-list').classList.toggle('open'); b.textContent = o ? 'とじる' : 'もっと見る（あと' + (NEWS.length - SHOW) + '件）'; };
 }
 document.getElementById('year').textContent = new Date().getFullYear();
+// ---------- いまの人数（30秒ごとに見に行く。つながりっぱなしにしないので、同時接続の上限を使わない） ----------
+const DBURL = 'https://sakasama-drop-default-rtdb.asia-southeast1.firebasedatabase.app';
+let LIVE = {};
+const jstHour = () => new Date(Date.now() + 9 * 3600 * 1000).getUTCHours();
+function drawLive() {
+  const prime = jstHour() === 21, pe = $('prime');
+  pe.textContent = prime ? '🔥 いま対戦タイム！（22時まで）' : '🌙 毎晩21時〜22時は対戦タイム'; pe.classList.toggle('hot', prime);
+  const qg = GAMES.filter(g => g.qm);
+  let w = 0, p = 0; for (const g of qg) { const v = LIVE[g.qm]; if (v) { w += v.wait; p += v.pairs; } }
+  $('live-sum').innerHTML = `いま 対戦待ち <b>${w}</b>人・対戦中 <b>${p}</b>組`;
+  // 人がいるゲームを先に
+  const order = qg.slice().sort((a, b) => ((LIVE[b.qm] || {}).wait || 0) - ((LIVE[a.qm] || {}).wait || 0));
+  $('live-list').innerHTML = order.map(g => { const v = LIVE[g.qm] || { wait: 0, pairs: 0 }; return `<a href="${esc(g.url)}" class="${v.wait ? 'on' : ''}"><img src="${esc(g.image)}" alt="">${esc(g.name)}<em>${v.wait ? '待ち' + v.wait + '人' : v.pairs ? '対戦中' + v.pairs + '組' : '—'}</em></a>`; }).join('');
+  document.querySelectorAll('#game-list .app[data-i]').forEach(el => {
+    const g = GAMES[+el.dataset.i], v = g && g.qm && LIVE[g.qm], ic = el.querySelector('.ic'); let b = ic.querySelector('.wait');
+    if (v && v.wait) { if (!b) { b = document.createElement('span'); b.className = 'wait'; ic.appendChild(b); } b.textContent = '待ち' + v.wait; } else if (b) b.remove();
+  });
+}
+async function loadLive() {
+  if (document.hidden) return;
+  try {
+    const r = await fetch(DBURL + '/pres.json', { cache: 'no-store' }); const v = (await r.json()) || {};
+    const out = {}; for (const k in v) { const e = v[k]; if (!e || !e.g) continue; const o = out[e.g] = out[e.g] || { wait: 0, play: 0 }; if (e.s === 'p') o.play++; else o.wait++; }
+    for (const g in out) out[g].pairs = Math.ceil(out[g].play / 2);
+    LIVE = out; drawLive();
+  } catch (e) { drawLive(); $('live-sum').textContent = 'いまの人数を読みこめませんでした'; }
+}
+drawLive(); loadLive(); setInterval(loadLive, 30000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) loadLive(); });
 </script>
 </body>
 </html>
