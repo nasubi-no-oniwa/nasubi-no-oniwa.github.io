@@ -446,8 +446,9 @@ if (NEWS.length > SHOW) {
   b.onclick = () => { const o = $('news-list').classList.toggle('open'); b.textContent = o ? 'とじる' : 'もっと見る（あと' + (NEWS.length - SHOW) + '件）'; };
 }
 document.getElementById('year').textContent = new Date().getFullYear();
-// ---------- いまの人数（30秒ごとに見に行く。つながりっぱなしにしないので、同時接続の上限を使わない） ----------
-const DBURL = 'https://sakasama-drop-default-rtdb.asia-southeast1.firebasedatabase.app';
+// ---------- いまの人数（90秒ごとに見に行く。つながりっぱなしにしないので、同時接続の上限を使わない） ----------
+// 地元の最強は別のデータベース（通信量を分けるため）
+const DBURLS = ['https://sakasama-drop-default-rtdb.asia-southeast1.firebasedatabase.app', 'https://jimoto-saikyo-default-rtdb.asia-southeast1.firebasedatabase.app'];
 let LIVE = {};
 const jstHour = () => new Date(Date.now() + 9 * 3600 * 1000).getUTCHours();
 function drawLive() {
@@ -467,13 +468,15 @@ function drawLive() {
 async function loadLive() {
   if (document.hidden) return;
   try {
-    const r = await fetch(DBURL + '/pres.json', { cache: 'no-store' }); const v = (await r.json()) || {};
+    const all = await Promise.all(DBURLS.map(u => fetch(u + '/pres.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : undefined).catch(() => undefined)));
+    if (all.every(x => x === undefined)) throw new Error('x');
+    const v = Object.assign({}, ...all.map(x => x || {}));
     const out = {}; for (const k in v) { const e = v[k]; if (!e || !e.g) continue; const o = out[e.g] = out[e.g] || { wait: 0, play: 0 }; if (e.s === 'p') o.play++; else o.wait++; }
     for (const g in out) out[g].pairs = Math.ceil(out[g].play / 2);
     LIVE = out; drawLive();
   } catch (e) { drawLive(); $('live-sum').textContent = 'いまの人数を読みこめませんでした'; }
 }
-drawLive(); loadLive(); setInterval(loadLive, 30000);
+drawLive(); loadLive(); setInterval(loadLive, 90000);
 document.addEventListener('visibilitychange', () => { if (!document.hidden) loadLive(); });
 </script>
 </body>
