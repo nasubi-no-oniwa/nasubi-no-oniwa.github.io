@@ -495,7 +495,8 @@ async function loadLive() {
   try {
     const all = await Promise.all(DBURLS.map(u => fetch(u + '/pres.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : undefined).catch(() => undefined)));
     if (all.every(x => x === undefined)) throw new Error('x');
-    const v = Object.assign({}, ...all.map(x => x || {}));
+    // 地元の最強は自分のデータベースの分だけ数える（古いデータベースに残った、もういない人の分を数えない）
+    const v = Object.assign({}, ...all.map((x, i) => { const o = {}; for (const k in (x || {})) { const e = x[k]; if (i === 0 && e && e.g === 'jimoto') continue; o[k] = e; } return o; }));
     const out = {}; for (const k in v) { const e = v[k]; if (!e || !e.g) continue; const o = out[e.g] = out[e.g] || { wait: 0, play: 0 }; if (e.s === 'p') o.play++; else o.wait++; }
     for (const g in out) out[g].pairs = Math.ceil(out[g].play / 2);
     LIVE = out; drawLive();
