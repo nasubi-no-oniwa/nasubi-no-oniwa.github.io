@@ -157,6 +157,9 @@ section { padding: 28px 0; }
 .about p:last-child { margin: 0; color: var(--muted); font-size: 14px; }
 
 footer { padding: 36px 0 48px; text-align: center; font-size: 13px; color: var(--muted); }
+.support { display: inline-flex; align-items: center; gap: 6px; margin-bottom: 12px; padding: 7px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--purple); font-weight: 700; text-decoration: none; }
+.support:hover { border-color: var(--purple2); }
+.support-note { display: block; margin-bottom: 14px; font-size: 12px; }
 
 @media (max-width: 720px) {
   .hero { padding: 18px 0 4px; } .hero .mascot { width: 64px; } .hero p { font-size: 13px; }
@@ -258,7 +261,11 @@ footer { padding: 36px 0 48px; text-align: center; font-size: 13px; color: var(-
   </section>
 </main>
 
-<footer>© <span id="year"></span> なすびのお庭</footer>
+<footer>
+  <a class="support" href="https://ofuse.me/001a3b99" target="_blank" rel="noopener">🍆 応援する</a>
+  <span class="support-note">ゲームはずっと無料です。応援はAI代・サーバー代など運営に使います。</span>
+  © <span id="year"></span> なすびのお庭
+</footer>
 
 <div class="sheet-bg" id="sheet-bg"></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-name">
