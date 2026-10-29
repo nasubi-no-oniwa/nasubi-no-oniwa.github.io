@@ -166,6 +166,28 @@ section { padding: 28px 0; }
 
 footer { padding: 36px 0 48px; text-align: center; font-size: 13px; color: var(--muted); }
 
+/* ---------- ことばの切りかえ ---------- */
+.hero .wrap { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "m t" "m l"; column-gap: 18px; }
+.hero .mascot { grid-area: m; } .hero .wrap > div:not(.langs) { grid-area: t; align-self: end; }
+.langs { grid-area: l; align-self: start; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.langs button { font: 800 12.5px var(--font); line-height: 1.4; background: transparent; color: var(--muted); border: 1.5px solid var(--line); border-radius: 999px; padding: 3px 11px; cursor: pointer; }
+.langs button:hover { color: var(--purple); border-color: var(--purple); }
+.langs button[aria-pressed="true"] { background: var(--purple); border-color: var(--purple); color: #fff; }
+/* 中国語は台湾の丸ゴシック、韓国語は見出しだけ丸い字（Jua）。日本語のフォントに無い字のため */
+html[data-lang="zh"] { --font: "Chiron GoRound TC", "M PLUS Rounded 1c", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif; }
+html[data-lang="ko"] { --font: "M PLUS Rounded 1c", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif; }
+html[data-lang="ko"] :is(.brand, .hero h1, .sec-title h2, .feature h3, .sheet h3, .live-head b, .btn, .app b) { font-family: "M PLUS Rounded 1c", "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; font-synthesis: none; }
+html[data-lang="en"] .sec-title span { display: none; }
+.brand { white-space: nowrap; }
+@media (max-width: 720px) {
+  .hero .wrap { grid-template-areas: "m t" "l l"; column-gap: 14px; }
+  .langs { margin-top: 12px; }
+}
+@media (max-width: 380px) {
+  .brand { font-size: 16px; gap: 8px; } .brand svg { width: 30px; height: 30px; }
+  html[data-lang="en"] .hero h1 { font-size: 23px; }
+}
+
 @media (max-width: 720px) {
   .hero { padding: 18px 0 4px; } .hero .mascot { width: 64px; } .hero p { font-size: 13px; }
   .feature { grid-template-columns: 1fr; text-align: center; padding: 22px 18px; gap: 12px; justify-items: center; }
@@ -207,19 +229,20 @@ footer { padding: 36px 0 48px; text-align: center; font-size: 13px; color: var(-
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#"><svg aria-hidden="true"><use href="#nasubi"/></svg>なすびのお庭</a>
-    <nav><a href="#games">ゲーム</a><a href="#news">お知らせ</a><a href="#about">このお庭</a></nav>
+    <a class="brand" href="#"><svg aria-hidden="true"><use href="#nasubi"/></svg><span data-i="doc_title">なすびのお庭</span></a>
+    <nav><a href="#games" data-i="nav_games">ゲーム</a><a href="#news" data-i="nav_news">お知らせ</a><a href="#about" data-i="nav_about">このお庭</a></nav>
   </div>
 </header>
 
 <main>
   <div class="hero">
     <div class="wrap">
-      <svg class="mascot" viewBox="0 0 200 240" role="img" aria-label="なすびのキャラクター"><use href="#nasubi"/></svg>
+      <svg class="mascot" viewBox="0 0 200 240" role="img" aria-label="なすびのキャラクター" data-ia="mascot"><use href="#nasubi"/></svg>
       <div>
-        <h1><span class="n">なすび</span>の<span class="g">お庭</span></h1>
-        <p>ブラウザですぐ遊べる小さなゲーム。インストールなし、スマホでもPCでも。</p>
+        <h1 data-ih="hero_h1"><span class="n">なすび</span>の<span class="g">お庭</span></h1>
+        <p data-i="hero_p">ブラウザですぐ遊べる小さなゲーム。インストールなし、スマホでもPCでも。</p>
       </div>
+      <div class="langs" role="group" aria-label="Language"><button type="button" data-lang="ja">日本語</button><button type="button" data-lang="en">English</button><button type="button" data-lang="zh">繁中</button><button type="button" data-lang="ko">한국어</button></div>
     </div>
   </div>
 
@@ -230,24 +253,24 @@ footer { padding: 36px 0 48px; text-align: center; font-size: 13px; color: var(-
   <section id="live">
     <div class="wrap">
       <div class="live">
-        <div class="live-head"><b>だれかと対戦</b><span class="prime" id="prime"></span></div>
-        <p class="live-sum" id="live-sum">いまの人数を読みこみ中…</p>
+        <div class="live-head"><b data-i="qm_btn">だれかと対戦</b><span class="prime" id="prime"></span></div>
+        <p class="live-sum" id="live-sum" data-i="live_loading">いまの人数を読みこみ中…</p>
         <div class="live-list" id="live-list"></div>
-        <p class="live-note">ゲームの「だれかと対戦」を押すと、待っている人と自動でつながります。相手がいないときはCPUと遊びながら待てます。</p>
+        <p class="live-note" data-i="live_note">ゲームの「だれかと対戦」を押すと、待っている人と自動でつながります。相手がいないときはCPUと遊びながら待てます。</p>
       </div>
     </div>
   </section>
 
   <section id="games">
     <div class="wrap">
-      <div class="sec-title"><h2>ゲーム</h2><span>GAMES</span></div>
+      <div class="sec-title"><h2 data-i="nav_games">ゲーム</h2><span>GAMES</span></div>
       <div class="apps" id="game-list"></div>
     </div>
   </section>
 
   <section id="news">
     <div class="wrap">
-      <div class="sec-title"><h2>お知らせ</h2><span>NEWS</span></div>
+      <div class="sec-title"><h2 data-i="nav_news">お知らせ</h2><span>NEWS</span></div>
       <ul class="news" id="news-list"></ul>
       <button class="btn ghost news-more" id="news-more" hidden></button>
     </div>
@@ -258,8 +281,8 @@ footer { padding: 36px 0 48px; text-align: center; font-size: 13px; color: var(-
       <div class="about">
         <svg viewBox="0 0 200 240" aria-hidden="true"><use href="#nasubi"/></svg>
         <div>
-          <p><b>なすびのお庭</b>は、思いついたゲームを1つずつ植えて育てている場所です。</p>
-          <p>どのゲームも無料で、ブラウザを開くだけで遊べます。新しいゲームが実ったら、ここでお知らせします。</p>
+          <p data-ih="about_1"><b>なすびのお庭</b>は、思いついたゲームを1つずつ植えて育てている場所です。</p>
+          <p data-i="about_2">どのゲームも無料で、ブラウザを開くだけで遊べます。新しいゲームが実ったら、ここでお知らせします。</p>
         </div>
       </div>
     </div>
@@ -267,24 +290,27 @@ footer { padding: 36px 0 48px; text-align: center; font-size: 13px; color: var(-
 </main>
 
 <footer>
-  © <span id="year"></span> なすびのお庭
+  © <span id="year"></span> <span data-i="doc_title">なすびのお庭</span>
 </footer>
 
 <div class="sheet-bg" id="sheet-bg"></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-name">
   <div class="grip"></div>
-  <button class="close" id="sh-close" aria-label="とじる">✕</button>
+  <button class="close" id="sh-close" aria-label="とじる" data-ia="close">✕</button>
   <div class="head"><img id="sh-img" alt=""><div><h3 id="sh-name"></h3><div class="yomi" id="sh-yomi"></div></div></div>
   <p id="sh-text"></p>
   <div class="tags" id="sh-tags"></div>
   <p class="sh-live" id="sh-live"></p>
-  <a class="btn" id="sh-play" href="#">あそぶ</a>
+  <a class="btn" id="sh-play" href="#" data-i="play">あそぶ</a>
 </div>
 
+<script src="js/i18n.js"></script>
 <script>
 // =============================================
 //  ゲームとお知らせの一覧
 //  新しいゲームやお知らせは、ここに1つ足すだけで表示されます
+//  en / zh / ko は英語・中国語（繁体字）・韓国語の文。なければ日本語のまま出ます
+//  ことばのボタンや見出しの訳は js/i18n.js
 // =============================================
 const GAMES = [
   {
@@ -293,6 +319,9 @@ const GAMES = [
     image: 'img/sakasama-drop.png',
     text: '4つつなげて消す落ちものパズル。ゲージが溜まったら、相手の盤面をさかさまに！ 積み上げた連鎖がひっくり返る、荒れる対戦パズル。',
     tags: ['パズル', 'CPU対戦', 'だれかと対戦', '合言葉で対戦', '観戦'],
+    en: {"name": "Upside-Down Drop", "text": "A falling-block puzzle: connect 4 to clear. When your gauge fills, flip your opponent's board upside down! Their stacked-up chains get turned over in this wild battle puzzle."},
+    zh: {"name": "顛倒掉落", "text": "連成4個就消除的掉落式益智遊戲。量表集滿後，把對手的盤面上下顛倒！辛苦堆好的連鎖瞬間翻轉，混亂的對戰益智遊戲。"},
+    ko: {"name": "거꾸로 드롭", "text": "4개를 이으면 사라지는 낙하 퍼즐. 게이지가 차면 상대의 판을 거꾸로 뒤집어라! 쌓아 둔 연쇄가 뒤집히는 난장판 대전 퍼즐."},
   },
   {
     name: '4つ目のダルマ', qm: 'daruma',
@@ -300,6 +329,9 @@ const GAMES = [
     image: 'img/daruma.png',
     text: '交互にダルマを落として、4つ並べたら勝ち。でも3ターンごとに、小槌が指した段がだるま落としで抜ける！ 並びが崩れるか、逆にそろうか。',
     tags: ['2人対戦', 'CPU対戦', 'この端末で2人', 'だれかと対戦', '合言葉で対戦', '観戦'],
+    en: {"name": "The 4th Daruma", "text": "Take turns dropping daruma and line up 4 to win. But every 3 turns, the row the mallet points at gets knocked out! Will your line crumble, or fall into place?"},
+    zh: {"name": "第四個達摩", "text": "輪流投下達摩，連成4個就贏。但每3回合，小槌指著的那一層會像打達摩一樣被敲掉！排好的會崩掉，還是反而連起來？"},
+    ko: {"name": "네 번째 달마", "text": "번갈아 달마를 떨어뜨려 4개를 나란히 놓으면 승리. 하지만 3턴마다 망치가 가리킨 단이 달마 떨어뜨리기로 빠진다! 줄이 무너질까, 오히려 맞춰질까?"},
   },
   {
     name: 'ハネタンク', qm: 'hanetank',
@@ -307,6 +339,9 @@ const GAMES = [
     image: 'img/hanetank.png',
     text: 'はね返る弾で撃ち合う、おもちゃの戦車バトル。毎戦スキルを振り直して、ブロックを仕込んで、2本先取！ 自分の弾にも当たるので要注意。',
     tags: ['3D', 'アクション', 'CPU対戦', '同じPCで2人', 'だれかと対戦', '合言葉で対戦', '観戦'],
+    en: {"name": "Bounce Tank", "text": "A toy tank battle with bouncing bullets. Re-pick your skills every round, set up blocks, and win 2 rounds first! Careful: your own bullets can hit you too."},
+    zh: {"name": "彈跳坦克", "text": "用會反彈的子彈互射的玩具坦克對戰。每局重新分配技能、布置方塊，先拿下2局！自己的子彈也會打到自己，要小心。"},
+    ko: {"name": "튕김 탱크", "text": "튕기는 탄으로 쏘아 대는 장난감 탱크 배틀. 매 판 스킬을 다시 고르고 블록을 깔아 2판 선승! 내 탄에도 맞으니 조심."},
   },
   {
     name: 'さくがえ',
@@ -314,6 +349,9 @@ const GAMES = [
     image: 'img/sakugae.png',
     text: '柵で道をつくって兵士を送りこむ、6レーンのタワーディフェンス。15秒ごとに、自分の柵の列と相手の柵の列をまるごと入れかえ！ 守りの迷路が、一瞬で相手のものに。',
     tags: ['タワーディフェンス', 'CPU対戦', '合言葉で対戦', '観戦'],
+    en: {"name": "Fence Swap", "text": "A 6-lane tower defense: build paths with fences and send in your soldiers. Every 15 seconds, your fence rows and your opponent's swap places! Your defensive maze becomes theirs in an instant."},
+    zh: {"name": "柵欄互換", "text": "用柵欄造路、派士兵進攻的6路塔防。每15秒，自己和對手的柵欄列整排互換！防守的迷宮瞬間變成對手的。"},
+    ko: {"name": "울타리 체인지", "text": "울타리로 길을 만들어 병사를 보내는 6레인 타워 디펜스. 15초마다 내 울타리 줄과 상대의 울타리 줄이 통째로 바뀐다! 수비 미로가 순식간에 상대 것으로."},
   },
   {
     name: '盤滑', qm: 'panfa', yomi: 'パンファ',
@@ -321,6 +359,9 @@ const GAMES = [
     image: 'img/panfa.png',
     text: '3手ごとに、1列がすべるリバーシ。取ったはずの角が、すべって消える。次にすべる列はいつも見えているので、すべったあとの形まで読んで置くのが勝負どころ。',
     tags: ['リバーシ', 'CPU対戦', 'この端末で2人', 'だれかと対戦', '合言葉で対戦', '観戦'],
+    en: {"name": "Panfa — Sliding Reversi", "short": "Panfa", "text": "Reversi where one row slides every 3 moves. The corner you took can slide away. The next row to slide is always shown, so the key is to read the board after the slide."},
+    zh: {"name": "盤滑（Panfa）滑動黑白棋", "short": "盤滑", "text": "每3手就有1列滑動的黑白棋。拿下的角落也會滑走消失。下一次要滑動的列一直看得到，關鍵是連滑動後的形狀都算進去再下。"},
+    ko: {"name": "판파 — 미끄러지는 리버시", "short": "판파", "text": "3수마다 한 줄이 미끄러지는 리버시. 잡았던 모서리가 미끄러져 사라진다. 다음에 미끄러질 줄은 늘 보이니, 미끄러진 뒤의 모양까지 읽고 두는 게 승부처."},
   },
   {
     name: '回廊快走', qm: 'kairou', yomi: 'かいろうかいそう',
@@ -328,6 +369,9 @@ const GAMES = [
     image: 'img/kairou.png',
     text: '通路をまわして、どこまでも走れ。壁も天井も床になる、終わりのない回廊。穴やかべをよけて、コインを集めて、どこまで行けるか。あいことばで2人同時に走る対戦も。',
     tags: ['ランナー', '1人で記録', 'ゴースト', 'だれかと対戦', '合言葉で対戦'],
+    en: {"name": "Corridor Dash", "text": "Rotate the corridor and run forever. Walls and ceiling become the floor in an endless corridor. Dodge holes and walls, grab coins, and see how far you can go. 2 players can race at once with a passcode, too."},
+    zh: {"name": "迴廊快跑", "text": "旋轉通道，一路跑下去。牆壁和天花板都會變成地板，沒有盡頭的迴廊。閃過洞和牆、收集金幣，看你能跑多遠。也能用暗號2人同時賽跑對戰。"},
+    ko: {"name": "회랑 질주", "text": "통로를 돌려 끝없이 달려라. 벽도 천장도 바닥이 되는 끝없는 회랑. 구멍과 벽을 피하고 코인을 모아 어디까지 갈 수 있을까. 암호로 2명이 동시에 달리는 대전도."},
   },
   {
     name: '絵私', yomi: 'えし',
@@ -335,6 +379,9 @@ const GAMES = [
     image: 'img/eshi.png',
     text: '頭と体・うで・あしを描いて、骨を入れて戦う。長い腕は遠くまで届くけれど遅い。殴られたうで・あしはもげて吹っ飛ぶ！ 描いたキャラはIDでだれでも使える。60秒で描いて戦う「らくがきバトル」も。',
     tags: ['お絵かき', '3D', 'アクション', 'CPU対戦', '合言葉で対戦', '観戦', 'キャラID'],
+    en: {"name": "Eshi — Draw & Fight", "short": "Eshi", "text": "Draw a head, body, arms and legs, add bones, and fight. Long arms reach far but are slow. Arms and legs that get hit snap off and go flying! Anyone can use your character by its ID. There's also Doodle Battle: draw in 60 seconds, then fight."},
+    zh: {"name": "繪我（Eshi）", "short": "繪我", "text": "畫出頭和身體、手、腳，裝上骨頭來戰鬥。長手臂打得遠但比較慢。被打到的手腳會斷掉飛出去！畫好的角色，任何人都能用ID使用。也有60秒畫完就開打的「塗鴉對戰」。"},
+    ko: {"name": "에시 — 그려서 싸우기", "short": "에시", "text": "머리와 몸, 팔, 다리를 그리고 뼈를 넣어 싸운다. 긴 팔은 멀리 닿지만 느리다. 맞은 팔다리는 뽑혀 날아간다! 그린 캐릭터는 ID로 누구나 쓸 수 있다. 60초 안에 그리고 싸우는 '낙서 배틀'도."},
   },
   {
     name: 'バトベイ',
@@ -342,6 +389,9 @@ const GAMES = [
     image: 'img/batbey.png',
     text: '自分で描いた形がそのまま当たり判定になる、3Dバトルごま。攻撃・防御・持久・重さにポイントを振り分けて、3・2・1・まわせ！ バースト・場外・回転停止で3点先取。',
     tags: ['お絵かき', '3D', 'バトル', 'CPU対戦', '合言葉で対戦', '観戦', 'コマID'],
+    en: {"name": "Batbey", "text": "3D battle tops where the shape you draw becomes the hitbox. Split points between attack, defense, stamina and weight, then 3, 2, 1, spin! First to 3 points by burst, ring-out or spin-out wins."},
+    zh: {"name": "對戰陀螺", "text": "自己畫的形狀就是碰撞判定的3D戰鬥陀螺。把點數分配到攻擊、防禦、持久、重量，3、2、1，轉起來！靠爆裂、出場、停轉先拿3分。"},
+    ko: {"name": "배트베이", "text": "직접 그린 모양이 그대로 판정이 되는 3D 배틀 팽이. 공격·방어·지구력·무게에 포인트를 나누고 3, 2, 1, 돌려라! 버스트·장외·회전 정지로 3점 선취."},
   },
   {
     name: 'ユキダマッチ', qm: 'yukidama',
@@ -349,6 +399,9 @@ const GAMES = [
     image: 'img/yukidama.png',
     text: '雪合戦の1対1。走って、すべって、よじ登って、雪玉をぶつけ合う3Dアクション。かくれる雪のかべは時間とともに溶けていき、最後は正面からのぶつかり合い。ココアやカイロで回復、特技は4つから1つ。',
     tags: ['3D', 'アクション', 'CPU対戦', 'だれかと対戦', '合言葉で対戦', '観戦'],
+    en: {"name": "Snowball Match", "text": "A 1-on-1 snowball fight. Run, slide, climb, and pelt each other in 3D action. The snow walls you hide behind melt over time, until it's a head-on clash. Heal with cocoa or hand warmers, and pick 1 of 4 special skills."},
+    zh: {"name": "雪球對決", "text": "一對一打雪仗。跑、滑、攀爬，互丟雪球的3D動作遊戲。可以躲的雪牆會隨時間融化，最後只能正面對決。用可可或暖暖包回復，特技4選1。"},
+    ko: {"name": "눈싸움 매치", "text": "1대1 눈싸움. 달리고, 미끄러지고, 기어올라 눈덩이를 던지는 3D 액션. 숨을 수 있는 눈벽은 시간이 지나면 녹아, 마지막엔 정면 승부. 코코아와 핫팩으로 회복, 특기는 4개 중 1개."},
   },
   {
     name: 'ピンチボウル',
@@ -356,6 +409,9 @@ const GAMES = [
     image: 'img/pinchbowl.png',
     text: 'ボウリングのピンになって、球をよけろ！ 100本のピンのうち1本が自分。投げる番とよける番を3回ずつ交代して、ピンがたくさん残った方が勝ち。前のピンほどボーナス、投げる側はバンパーを置いてはね返りでねらえる。遅くなった球は止められるけれど、速い球に当たったらふっとんで負け。',
     tags: ['3D', 'アクション', 'CPU対戦', '合言葉で対戦', '観戦'],
+    en: {"name": "Pinch Bowl", "text": "Become a bowling pin and dodge the ball! One of the 100 pins is you. Take 3 turns each at throwing and dodging; whoever has more pins left wins. Pins further forward earn bonuses, and the thrower can place bumpers for bank shots. You can stop a slow ball, but get hit by a fast one and you go flying and lose."},
+    zh: {"name": "閃避保齡球", "text": "變成保齡球瓶，閃開球！100支球瓶中有1支是你。投球和閃避各輪流3次，留下的球瓶多的一方獲勝。越前面的球瓶獎勵越多，投球方可以放置緩衝板，利用反彈瞄準。變慢的球可以擋住，但被快球打中就會被撞飛輸掉。"},
+    ko: {"name": "핀치 볼", "text": "볼링 핀이 되어 공을 피해라! 100개의 핀 중 하나가 나. 던지는 차례와 피하는 차례를 3번씩 바꿔, 핀이 많이 남은 쪽이 승리. 앞쪽 핀일수록 보너스, 던지는 쪽은 범퍼를 놓아 튕겨서 노릴 수 있다. 느려진 공은 막을 수 있지만, 빠른 공에 맞으면 날아가서 패배."},
   },
   {
     name: '地元の最強', qm: 'jimoto', yomi: 'じもとのさいきょう',
@@ -363,7 +419,10 @@ const GAMES = [
     image: 'img/jimoto.png',
     text: '市町村の本物の形でぶつかり合う、全自動の1対1。明治から今までの市町村・区（なくなった町村も）に、世界の国・州・都市・町も加えた24,838が出場できる。体力は面積、勢いは人口。向きと政策カードで、あなたの地元を最強にしよう。',
     tags: ['市町村', '全自動バトル', '研究', 'だれかと対戦', '挑戦状', '合言葉で対戦', '観戦'],
-    catch: 'あなたの地元の形は、最強か？'
+    catch: 'あなたの地元の形は、最強か？',
+    en: {"name": "Hometown Champion", "text": "Fully automatic 1-on-1 battles using the real shapes of municipalities. 24,838 entrants: Japanese cities, towns, villages and wards from the Meiji era to today (even ones that no longer exist), plus countries, states, cities and towns around the world. HP is area, momentum is population. Use direction and policy cards to make your hometown the strongest.", "catch": "Is your hometown's shape the strongest?"},
+    zh: {"name": "家鄉最強", "text": "用市町村真實形狀互撞的全自動一對一。從明治到現在的日本市町村・區（包括已消失的町村），再加上世界各國・州・城市・城鎮，共24,838個可以出場。體力是面積，氣勢是人口。用方向和政策卡，讓你的家鄉成為最強。", "catch": "你家鄉的形狀，是最強的嗎？"},
+    ko: {"name": "우리 동네 최강", "text": "시정촌의 실제 모양으로 부딪치는 전자동 1대1. 메이지 시대부터 지금까지의 일본 시정촌·구(사라진 곳도)에 세계의 나라·주·도시·마을까지 24,838곳이 출전. 체력은 면적, 기세는 인구. 방향과 정책 카드로 당신의 동네를 최강으로 만들자.", "catch": "당신 동네의 모양은 최강인가?"},
   },
   {
     name: '自分', yomi: 'じぶん',
@@ -371,7 +430,10 @@ const GAMES = [
     image: 'img/jibun.png',
     text: '名前と誕生日と生まれた市町村区を入れると、あなたの前世の一生が年表で出てくる。縄文から昭和まで、日本の歴史のどこかに生きた、だれかの一生。百姓、奉公人、工場の工員、ときには名前がつく前に亡くなった子も。ごくまれに、あの有名人。',
     tags: ['前世', '歴史', '年表', '市町村', 'ひとりで'],
-    catch: 'あなたの前世は、どんな一生だった？'
+    catch: 'あなたの前世は、どんな一生だった？',
+    en: {"name": "Myself — Past Life Timeline", "short": "Myself", "text": "Enter your name, birthday and the Japanese municipality you were born in, and your past life appears as a timeline. Someone who lived somewhere in Japanese history, from the Jomon period to Showa. A farmer, a servant, a factory worker, sometimes a child who died before being named. Very rarely, someone famous.", "catch": "What kind of life was your past life?"},
+    zh: {"name": "自己 — 前世年表", "short": "自己", "text": "輸入名字、生日和出生的市町村區，就會以年表顯示你前世的一生。從繩文到昭和，在日本歷史某處活過的某個人的一生。農民、傭工、工廠作業員，有時是還沒取名就夭折的孩子。極少數情況下，會是那位名人。", "catch": "你的前世，是怎樣的一生？"},
+    ko: {"name": "나 — 전생 연표", "short": "나", "text": "이름과 생일, 태어난 시정촌구를 넣으면 당신 전생의 일생이 연표로 나온다. 조몬부터 쇼와까지, 일본 역사 어딘가를 살았던 누군가의 일생. 농민, 하인, 공장 직공, 때로는 이름이 붙기 전에 세상을 떠난 아이도. 아주 드물게, 그 유명인.", "catch": "당신의 전생은 어떤 일생이었을까?"},
   },
   {
     name: '弾丸合併', qm: 'dangan', yomi: 'だんがんがっぺい',
@@ -379,7 +441,10 @@ const GAMES = [
     image: 'img/dangan.png',
     text: '市町村や国を3つ、1本の軸で串ざしにしてコマを作る全自動バトル。どこに刺すか・どの向きにするかで性能が変わる。外にはみ出した本物の形がぶつかって削れ合い、軸のまわりまで削れた段は合併解消！ 24,838の市町村・国から選べる。',
     tags: ['市町村', '3D', '全自動バトル', 'だれかと対戦', '挑戦状', '合言葉で対戦', '観戦'],
-    catch: '3つくっつけて、回して勝負！'
+    catch: '3つくっつけて、回して勝負！',
+    en: {"name": "Bullet Merger", "text": "A fully automatic battle where you skewer 3 municipalities or countries on one axle to build a top. Where you pierce them and which way they face changes its stats. The real shapes sticking out collide and grind each other down, and a layer worn down to the axle gets un-merged! Choose from 24,838 municipalities and countries.", "catch": "Skewer 3 together, spin, and battle!"},
+    zh: {"name": "子彈合併", "text": "把3個市町村或國家用1根軸串起來做成陀螺的全自動對戰。刺在哪裡、朝哪個方向，性能都會改變。突出在外的真實形狀互相碰撞削減，削到軸附近的那一層就解除合併！可從24,838個市町村・國家中選擇。", "catch": "串起3個，轉起來決勝負！"},
+    ko: {"name": "탄환 합병", "text": "시정촌이나 나라 3개를 축 하나로 꿰어 팽이를 만드는 전자동 배틀. 어디를 꿰는지, 어느 방향인지에 따라 성능이 바뀐다. 밖으로 튀어나온 실제 모양이 부딪쳐 깎이고, 축 주변까지 깎인 단은 합병 해소! 24,838곳의 시정촌·나라 중에서 고를 수 있다.", "catch": "3개를 붙이고 돌려서 승부!"},
   },
   {
     name: 'シインクラッド', yomi: 'しいんくらっど',
@@ -387,7 +452,10 @@ const GAMES = [
     image: 'img/shiincrad.png',
     text: '死ぬと、その場所に屍が残って足場になる横スクロール。屍はみんなで共有。穴を埋め、トゲをふさぎ、魔物を止める壁になる。だれかが越えると次の層が開く。全100層、5層ごとに番人。挑むたびにちがう名前で。',
     tags: ['2D', 'アクション', 'みんなで協力', '全100層', 'ドット絵'],
-    catch: 'みんなの屍を越えて、頂へ。'
+    catch: 'みんなの屍を越えて、頂へ。',
+    en: {"name": "Shiincrad", "text": "A side-scroller where your corpse stays where you die and becomes a foothold. Corpses are shared by everyone: they fill pits, cover spikes, and become walls that stop monsters. When someone gets past, the next layer opens. 100 layers, with a guardian every 5. A different name every time you try.", "catch": "Climb over everyone's corpses to the top."},
+    zh: {"name": "Shiincrad", "text": "死掉後屍體會留在原地變成踏腳處的橫向卷軸遊戲。屍體由所有人共享，能填坑、蓋住尖刺、成為擋住魔物的牆。有人越過後，下一層就會開放。全100層，每5層有守門人。每次挑戰都換一個名字。", "catch": "越過大家的屍體，前往頂點。"},
+    ko: {"name": "시인크래드", "text": "죽으면 그 자리에 시체가 남아 발판이 되는 횡스크롤. 시체는 모두가 공유. 구멍을 메우고, 가시를 막고, 마물을 막는 벽이 된다. 누군가 넘으면 다음 층이 열린다. 전 100층, 5층마다 문지기. 도전할 때마다 다른 이름으로.", "catch": "모두의 시체를 넘어 정상으로."},
   },
   {
     name: '芋娘', yomi: 'いもむすめ',
@@ -395,7 +463,10 @@ const GAMES = [
     image: 'img/imomusume.png',
     text: '教官が背を向けたすきに、芋をほおばれ。振り向いたら敬礼！ チラ見にフェイント、となりの同僚の密告も。続けて食べるとコンボで速くなり、コンボ10で芋祭り。焼き芋・金の芋も出る。60秒で何個食べられるか、めざせ芋将軍。ランキングつき。',
     tags: ['3D', '2ボタン', 'ひとりで', '60秒', 'コンボ', 'ランキング'],
-    catch: '教官の目を盗んで、芋を食べろ！'
+    catch: '教官の目を盗んで、芋を食べろ！',
+    en: {"name": "Sweet Potato Girl", "text": "Stuff your face with sweet potatoes while the drill instructor's back is turned. When he turns around, salute! Watch out for glances, feints, and the coworker next to you snitching. Eat in a row to build a faster combo; a 10 combo starts the Potato Festival. Roasted and golden potatoes show up too. How many can you eat in 60 seconds? Aim for Potato General. With rankings.", "catch": "Eat sweet potatoes behind the instructor's back!"},
+    zh: {"name": "地瓜娘", "text": "趁教官轉過身，大口吃地瓜。他一回頭就敬禮！還有偷瞄、假動作、旁邊同袍的告密。連續吃會形成連擊變快，連擊10次就是地瓜祭。還會出現烤地瓜、金地瓜。60秒能吃幾個？目標是地瓜將軍。附排行榜。", "catch": "躲過教官的眼睛，吃地瓜！"},
+    ko: {"name": "고구마 소녀", "text": "교관이 등을 돌린 틈에 고구마를 먹어라. 돌아보면 경례! 힐끗 보기와 페인트, 옆 동료의 밀고도. 연속으로 먹으면 콤보로 빨라지고, 콤보 10이면 고구마 축제. 군고구마, 황금 고구마도 나온다. 60초에 몇 개 먹을 수 있을까, 목표는 고구마 장군. 랭킹 있음.", "catch": "교관 몰래 고구마를 먹어라!"},
   },
   {
     name: "Fairies' Tower", yomi: 'フェアリーズタワー',
@@ -403,7 +474,10 @@ const GAMES = [
     image: 'img/fairies-tower.png',
     text: '妖精になって、100層の世界樹を昇る。翅が尽きて倒れた妖精は浮かぶ屍になり、あとから来る仲間の足場になる。3つの陣営に分かれて、どの陣営が先に頂上へたどり着くかの競争。陣営ごとの掲示板と、世界中とつながる広場つき。日本語・英語・中国語・韓国語で遊べる。',
     tags: ['2D', 'アクション', 'みんなで協力', '3つの陣営', '全100層', '掲示板', 'ドット絵'],
-    catch: '死は、だれかの足場になる。'
+    catch: '死は、だれかの足場になる。',
+    en: {"name": "Fairies' Tower", "text": "Become a fairy and climb the 100-floor World Tree. Fairies who run out of wing power and fall become floating remains, footholds for allies who come later. Split into 3 factions and race to see which reaches the summit first. With a board for each faction and a plaza connected to the whole world. Playable in Japanese, English, Chinese and Korean.", "catch": "Death becomes someone's foothold."},
+    zh: {"name": "Fairies' Tower", "text": "化身妖精，攀登100層的世界樹。翅膀力量耗盡而倒下的妖精會化為漂浮的屍骸，成為後來同伴的踏腳石。分成3個陣營，比賽哪個陣營先抵達頂端。附各陣營的留言板，和與全世界相連的廣場。可用日文、英文、中文、韓文遊玩。", "catch": "死亡，會成為某人的踏腳石。"},
+    ko: {"name": "Fairies' Tower", "yomi": "페어리즈 타워", "text": "요정이 되어 100층의 세계수를 오른다. 날개 힘이 다해 쓰러진 요정은 떠다니는 시체가 되어 뒤따르는 동료의 발판이 된다. 3개 진영으로 나뉘어 어느 진영이 먼저 정상에 닿는지 경쟁. 진영별 게시판과 전 세계와 이어지는 광장 있음. 일본어·영어·중국어·한국어로 즐길 수 있다.", "catch": "죽음은 누군가의 발판이 된다."},
   },
   {
     name: 'インテグラ・レイヤー', yomi: 'いんてぐられいやー',
@@ -411,7 +485,10 @@ const GAMES = [
     image: 'img/integra-layer.png',
     text: '倒れた誰かの欠片が、きみの力になる。塔で拾った欠片を5×5の盤面にはめて、同じ色の凸と凹をつなげるほど強くなる。倒れると欠片はその場に残り、あとから来た人が拾える。ボスは次の手を予告してくる。全員で100階の塔のてっぺんへ。日本語・英語・中国語・韓国語で遊べる。',
     tags: ['ローグライク', 'パズル', 'みんなで協力', '全100階', 'ドット絵', '掲示板'],
-    catch: '倒れた誰かの欠片が、きみの力になる。'
+    catch: '倒れた誰かの欠片が、きみの力になる。',
+    en: {"name": "Integra Layer", "text": "The shards of the fallen become your power. Fit shards you find in the tower onto a 5×5 board; the more same-color bumps and sockets you connect, the stronger you get. When you fall, your shards stay behind for others to pick up. Bosses announce their next move. Everyone together, to the top of the 100-floor tower. Playable in Japanese, English, Chinese and Korean.", "catch": "The shards of the fallen become your power."},
+    zh: {"name": "整合層", "text": "倒下之人的碎片，會成為你的力量。把在塔中撿到的碎片嵌進5×5的盤面，同色的凸與凹接得越多就越強。倒下後碎片會留在原地，後來的人可以撿走。頭目會預告下一招。全員一起前往100層之塔的頂端。可用日文、英文、中文、韓文遊玩。", "catch": "倒下之人的碎片，會成為你的力量。"},
+    ko: {"name": "인테그라 레이어", "text": "쓰러진 누군가의 조각이 너의 힘이 된다. 탑에서 주운 조각을 5×5 판에 끼우고, 같은 색의 볼록과 오목을 많이 이을수록 강해진다. 쓰러지면 조각은 그 자리에 남아 나중에 온 사람이 주울 수 있다. 보스는 다음 수를 예고한다. 모두 함께 100층 탑의 꼭대기로. 일본어·영어·중국어·한국어로 즐길 수 있다.", "catch": "쓰러진 누군가의 조각이 너의 힘이 된다."},
   },
   {
     name: '穴の神隠し', yomi: 'あなのかみかくし',
@@ -419,7 +496,10 @@ const GAMES = [
     image: 'img/furoya-no-onna.png',
     text: '巨大なヘドロのお尻から、○△■がムリムリ出てくる。長押しで綱を引いて、離すとゆるむ。■は強く、△はやさしく、○はそのあいだ。穴のまわりの輪が赤なら強すぎ、青なら弱すぎ。たまに金の○も。抜いた量と形で決まる称号は1万通り、引くのは顔のないデッサン人形。',
     tags: ['3D', '長押し', 'ひとりで', '力加減', 'ランキング'],
-    catch: 'ムリムリ出てくる○△■を、引っぱり出せ！'
+    catch: 'ムリムリ出てくる○△■を、引っぱり出せ！',
+    en: {"name": "Ana no Kamikakushi", "text": "○△■ come squeezing out of a giant sludge butt. Hold to pull the rope, let go to loosen it. ■ needs strength, △ a gentle touch, ○ something in between. If the ring around the hole is red you are pulling too hard; blue, too soft. Sometimes a golden ○ appears. 10,000 possible titles depending on how much and what shapes you pull out, and the one pulling is a faceless drawing mannequin.", "catch": "Pull out the ○△■ squeezing out!"},
+    zh: {"name": "穴の神隠し", "yomi": "穴之神隱", "text": "巨大的汙泥屁股裡，○△■ 硬是擠了出來。長按拉繩，放開就鬆。■ 要用力，△ 要輕柔，○ 介於兩者之間。洞口周圍的圈是紅色就太用力，藍色就太輕。偶爾還有金色的 ○。依拉出的量和形狀決定的稱號多達1萬種，拉繩的是沒有臉的素描人偶。", "catch": "把擠出來的○△■拉出來！"},
+    ko: {"name": "穴の神隠し", "yomi": "아나노 카미카쿠시", "text": "거대한 진흙 엉덩이에서 ○△■가 끙끙 밀려 나온다. 길게 누르면 밧줄을 당기고, 떼면 느슨해진다. ■는 세게, △는 살살, ○는 그 중간. 구멍 주위 고리가 빨강이면 너무 세고, 파랑이면 너무 약하다. 가끔 황금 ○도. 뽑은 양과 모양으로 정해지는 칭호는 1만 가지, 당기는 건 얼굴 없는 데생 인형.", "catch": "밀려 나오는 ○△■를 끌어내라!"},
   },
   {
     name: 'もやしの次郎', yomi: 'もやしのじろう',
@@ -427,7 +507,10 @@ const GAMES = [
     image: 'img/moyashi-no-jiro.png',
     text: 'ヤサイ、どこまで盛れる？ 長い・ふつう・短いもやしの小皿から、トングか素手でつかんで丼に盛る。長いほど重いけどくずれやすい。盛ったらカウンター越しにお客さんの前まで運ぶ。こぼしたらちゃぶ台返しで店が爆発。点数は高さ×重さでランキング。',
     tags: ['3D', '物理', 'ひとりで', 'バランス', 'ランキング'],
-    badge: 'NEW', catch: 'ヤサイ、どこまで盛れる？'
+    badge: 'NEW', catch: 'ヤサイ、どこまで盛れる？',
+    en: {"name": "Moyashi no Jiro", "text": "How high can you pile the veggies? Grab bean sprouts from small plates of long, normal or short ones, with tongs or bare hands, and pile them on your bowl. Longer ones are heavier but topple easily. Then carry it across the counter to the customer. Spill it and the table flips and the shop explodes. Score is height × weight, with rankings.", "catch": "How high can you pile the bean sprouts?"},
+    zh: {"name": "豆芽次郎", "text": "蔬菜，到底能堆多高？從長、普通、短的豆芽小碟裡，用夾子或徒手抓起來堆到碗上。越長越重，但越容易垮。堆好後越過吧台端到客人面前。灑出來就會翻桌，店會爆炸。分數是高度×重量，附排行榜。", "catch": "豆芽，到底能堆多高？"},
+    ko: {"name": "숙주의 지로", "text": "야채, 얼마나 쌓을 수 있을까? 긴·보통·짧은 숙주 접시에서 집게나 맨손으로 집어 그릇에 쌓는다. 길수록 무겁지만 무너지기 쉽다. 다 쌓으면 카운터 너머 손님 앞까지 나른다. 쏟으면 밥상 뒤집기로 가게가 폭발. 점수는 높이×무게로 랭킹.", "catch": "숙주, 얼마나 높이 쌓을 수 있을까?"},
   },
   {
     name: '手りゅう弾は帰宅する', yomi: 'てりゅうだんはきたくする',
@@ -435,7 +518,10 @@ const GAMES = [
     image: 'img/teryudan-kitaku.png',
     text: '手りゅう弾を渡された。絶対に自爆してはいけない。でも、どう投げても帰ってくる。投げた瞬間に野球部がライナーで打ち返し、鳥がくわえて落としてくる。帰ってくる理由は約200種類。帰ってくるまで生きのびた時間でランキング。',
     tags: ['3D', '長押し', 'ひとりで', 'なんでやねん', 'ランキング'],
-    badge: 'NEW', catch: 'どう投げても、帰ってくる。'
+    badge: 'NEW', catch: 'どう投げても、帰ってくる。',
+    en: {"name": "The Grenade Comes Home", "text": "You've been handed a grenade. You must never blow yourself up. But however you throw it, it comes back. The baseball team lines it straight back the moment you throw it; a bird picks it up and drops it on you. About 200 reasons it comes back. Ranked by how long you survive until it returns.", "catch": "However you throw it, it comes back."},
+    zh: {"name": "手榴彈回家了", "text": "你拿到了一顆手榴彈。絕對不可以自爆。但不管怎麼丟，它都會回來。一丟出去就被棒球隊打成平飛球擊回，被鳥叼回來丟下。回來的理由約有200種。以撐到它回來前活了多久來排名。", "catch": "不管怎麼丟，它都會回來。"},
+    ko: {"name": "수류탄은 귀가한다", "text": "수류탄을 건네받았다. 절대로 자폭해서는 안 된다. 그런데 어떻게 던져도 돌아온다. 던지자마자 야구부가 라이너로 받아치고, 새가 물고 와서 떨어뜨린다. 돌아오는 이유는 약 200가지. 돌아올 때까지 살아남은 시간으로 랭킹.", "catch": "어떻게 던져도, 돌아온다."},
   },
   {
     name: 'つぎのゲーム',
@@ -446,89 +532,111 @@ const GAMES = [
 ];
 
 const NEWS = [
-  { date: '2026.10.29', text: '新作を2本公開しました。もやしを丼に盛って運ぶ「もやしの次郎」と、どう投げても帰ってくる手りゅう弾から生きのびる「手りゅう弾は帰宅する」。どちらもランキングつきです。' },
-  { date: '2026.10.27', text: '「風呂屋の女」は3Dになって「穴の神隠し」に生まれ変わりました。巨大なお尻から出てくる○△■を引っぱり出して、1万通りの称号を集めましょう。ランキングも新しくなりました。' },
-  { date: '2026.10.27', text: '新作「風呂屋の女」（いまの「穴の神隠し」）を公開しました。くさい客にからまったガラクタを、綱で引っぱり出す力加減のゲームです。女将の声をたよりに、大きいガラクタを出しつづけましょう。ランキングつき。' },
-  { date: '2026.10.27', text: '新作「インテグラ・レイヤー」を公開しました。倒れた誰かの欠片を盤面につないで強くなる、全員参加型のローグライクです。ボスの予告、地域の大ボス、合成所つき。みんなで100階の塔を上りましょう。' },
-  { date: '2026.10.23', text: "新作「Fairies' Tower（フェアリーズタワー）」を公開しました。妖精になって、倒れた仲間の屍を足場に100層の世界樹を昇ります。3つの陣営に分かれて頂上を目指す競争。掲示板つき、4つの言葉で遊べます。" },
-  { date: '2026.10.23', text: '新作「芋娘」を公開しました。教官の目を盗んで芋を食べる、2ボタンの3Dゲームです。コンボ・芋祭り・階級・ランキングつき。60秒で何個食べられるか、めざせ芋将軍！' },
-  { date: '2026.10.20', text: '新作「シインクラッド」を公開しました。死ぬとそこが足場になる、みんなで挑む全100層の横スクロールです。屍はすべての人で共有、だれかが越えると次の層が開きます。' },
-  { date: '2026.10.18', text: '新作「弾丸合併」を公開しました。市町村や国を3つ串ざしにしてコマを作る、全自動の3Dバトルです。だれかと対戦・挑戦状・番付つき。' },
-  { date: '2026.10.16', text: '新作「自分」を公開しました。名前と誕生日と生まれた市町村区から、あなたの前世の一生を年表で出します。縄文から昭和まで、その土地で本当にあったできごとも。' },
-  { date: '2026.10.16', text: '「地元の最強」に世界の国・州・都市・町が参戦しました。ソ連やユーゴスラビアなどの昔の国も。全24,838が出場できます。' },
-  { date: '2026.10.15', text: '「だれかと対戦」を7つのゲームに追加しました。待っている人と自動でつながります。毎晩21時〜22時は対戦タイム！ 地元の最強には、いつでも戦える「挑戦状」も。' },
-  { date: '2026.10.15', text: '新作「地元の最強」を公開しました。全国の市町村の本物の形でぶつかり合う、全自動の対戦ゲームです。明治から今までの、なくなった町村も出場できます。' },
-  { date: '2026.10.14', text: '新作「ピンチボウル」を公開しました。ボウリングのピンになって球をよける、1対1の3Dアクションです。ガードレールではね返る球に、ドミノのように倒れるピン。' },
-  { date: '2026.10.14', text: '新作「ユキダマッチ」を公開しました。雪合戦の1対1で戦う3Dアクションです。かべが溶けていく3つのステージ、4つの特技、決着リプレイつき。' },
-  { date: '2026.10.11', text: '新作「バトベイ」を公開しました。描いたコマで戦う3Dバトルごまです。60秒で描いて戦う、らくがきバトルも。' },
-  { date: '2026.10.09', text: '新作「絵私（えし）」を公開しました。自分で描いたキャラに骨を入れて戦う、お絵かき格闘ゲームです。キャラID・みんなのキャラ・らくがきバトル・観戦つき。' },
-  { date: '2026.10.09', text: '「さくがえ」に、あいことば対戦と観戦を追加しました。' },
-  { date: '2026.10.08', text: '新作「回廊快走（かいろうかいそう）」を公開しました。通路を90度まわしながら走り続ける、終わりのないランゲームです。' },
-  { date: '2026.10.05', text: '新作「盤滑（パンファ）」を公開しました。3手ごとに1列がすべる、リバーシの対戦ゲームです。' },
-  { date: '2026.10.02', text: '新作「さくがえ」を公開しました。柵の列を相手と入れかえる、6レーンのタワーディフェンスです。' },
-  { date: '2026.10.01', text: '新作「ハネタンク」を公開しました。はね返る弾で撃ち合う3Dの戦車バトルです。スマホとPCで対戦できます。' },
-  { date: '2026.09.30', text: '新作「4つ目のダルマ」を公開しました。3ターンごとにだるま落としが起きる、4つ並べ対戦ゲームです。' },
-  { date: '2026.09.30', text: 'ホームページ「なすびのお庭」をひらきました。' },
-  { date: '2026.09.30', text: '「さかさまドロップ」を公開しました。合言葉でのオンライン対戦・観戦にも対応しています。' }
+  { date: '2026.10.29', text: '新作を2本公開しました。もやしを丼に盛って運ぶ「もやしの次郎」と、どう投げても帰ってくる手りゅう弾から生きのびる「手りゅう弾は帰宅する」。どちらもランキングつきです。', en: "Two new games are out: \"Moyashi no Jiro\", where you pile bean sprouts on a bowl and carry it, and \"The Grenade Comes Home\", where you survive a grenade that comes back however you throw it. Both have rankings.", zh: "推出2款新作：把豆芽堆到碗上端出去的「豆芽次郎」，以及不管怎麼丟都會回來、要從手榴彈下活下來的「手榴彈回家了」。兩款都有排行榜。", ko: "신작 2개를 공개했어요. 숙주를 그릇에 쌓아 나르는 「숙주의 지로」와, 어떻게 던져도 돌아오는 수류탄에서 살아남는 「수류탄은 귀가한다」. 둘 다 랭킹이 있어요." },
+  { date: '2026.10.27', text: '「風呂屋の女」は3Dになって「穴の神隠し」に生まれ変わりました。巨大なお尻から出てくる○△■を引っぱり出して、1万通りの称号を集めましょう。ランキングも新しくなりました。', en: "\"Furoya no Onna\" has been reborn in 3D as \"Ana no Kamikakushi\". Pull the ○△■ out of a giant butt and collect 10,000 titles. The rankings are new, too.", zh: "「風呂屋の女」變成3D，重生為「穴の神隠し」。把巨大屁股裡出來的○△■拉出來，收集1萬種稱號吧。排行榜也更新了。", ko: "「風呂屋の女」가 3D가 되어 「穴の神隠し」로 다시 태어났어요. 거대한 엉덩이에서 나오는 ○△■를 끌어내 1만 가지 칭호를 모아 보세요. 랭킹도 새로워졌어요." },
+  { date: '2026.10.27', text: '新作「風呂屋の女」（いまの「穴の神隠し」）を公開しました。くさい客にからまったガラクタを、綱で引っぱり出す力加減のゲームです。女将の声をたよりに、大きいガラクタを出しつづけましょう。ランキングつき。', en: "New game \"Furoya no Onna\" (now \"Ana no Kamikakushi\") is out. A game of finesse where you pull junk tangled on a smelly customer out with a rope. Follow the landlady's voice and keep pulling out big junk. With rankings.", zh: "推出新作「風呂屋の女」（現在的「穴の神隠し」）。用繩子把纏在臭客人身上的破爛拉出來、考驗力道的遊戲。跟著老闆娘的聲音，不斷拉出大件破爛吧。附排行榜。", ko: "신작 「風呂屋の女」(지금의 「穴の神隠し」)를 공개했어요. 냄새나는 손님에게 엉킨 잡동사니를 밧줄로 끌어내는 힘 조절 게임이에요. 여주인의 목소리를 따라 큰 잡동사니를 계속 끌어내세요. 랭킹 있음." },
+  { date: '2026.10.27', text: '新作「インテグラ・レイヤー」を公開しました。倒れた誰かの欠片を盤面につないで強くなる、全員参加型のローグライクです。ボスの予告、地域の大ボス、合成所つき。みんなで100階の塔を上りましょう。', en: "New game \"Integra Layer\" is out. A roguelike everyone plays together, where you get stronger by linking the shards of the fallen on your board. With boss previews, regional big bosses, and a fusion shop. Let's climb the 100-floor tower together.", zh: "推出新作「整合層」。把倒下之人的碎片接在盤面上變強、全員參與的Roguelike。有頭目預告、地區大頭目、合成所。大家一起登上100層的塔吧。", ko: "신작 「인테그라 레이어」를 공개했어요. 쓰러진 누군가의 조각을 판에 이어 강해지는, 모두가 참여하는 로그라이크예요. 보스 예고, 지역 대보스, 합성소도 있어요. 다 함께 100층 탑을 올라요." },
+  { date: '2026.10.23', text: "新作「Fairies' Tower（フェアリーズタワー）」を公開しました。妖精になって、倒れた仲間の屍を足場に100層の世界樹を昇ります。3つの陣営に分かれて頂上を目指す競争。掲示板つき、4つの言葉で遊べます。", en: "New game \"Fairies' Tower\" is out. Become a fairy and climb the 100-floor World Tree, using fallen allies' remains as footholds. Split into 3 factions and race to the top. With message boards, playable in 4 languages.", zh: "推出新作「Fairies' Tower」。化身妖精，以倒下同伴的屍骸為踏腳石，攀登100層的世界樹。分成3個陣營比賽誰先登頂。附留言板，可用4種語言遊玩。", ko: "신작 「Fairies' Tower」를 공개했어요. 요정이 되어 쓰러진 동료의 시체를 발판 삼아 100층의 세계수를 올라요. 3개 진영으로 나뉘어 정상을 향해 경쟁. 게시판이 있고, 4개 언어로 즐길 수 있어요." },
+  { date: '2026.10.23', text: '新作「芋娘」を公開しました。教官の目を盗んで芋を食べる、2ボタンの3Dゲームです。コンボ・芋祭り・階級・ランキングつき。60秒で何個食べられるか、めざせ芋将軍！', en: "New game \"Sweet Potato Girl\" is out. A 2-button 3D game where you eat sweet potatoes behind the instructor's back. With combos, Potato Festivals, ranks and rankings. How many can you eat in 60 seconds? Aim for Potato General!", zh: "推出新作「地瓜娘」。躲過教官的眼睛吃地瓜、只用2個按鈕的3D遊戲。有連擊、地瓜祭、階級、排行榜。60秒能吃幾個？目標是地瓜將軍！", ko: "신작 「고구마 소녀」를 공개했어요. 교관 몰래 고구마를 먹는 2버튼 3D 게임이에요. 콤보, 고구마 축제, 계급, 랭킹 있음. 60초에 몇 개 먹을 수 있을까, 목표는 고구마 장군!" },
+  { date: '2026.10.20', text: '新作「シインクラッド」を公開しました。死ぬとそこが足場になる、みんなで挑む全100層の横スクロールです。屍はすべての人で共有、だれかが越えると次の層が開きます。', en: "New game \"Shiincrad\" is out. A 100-layer side-scroller everyone takes on together, where the spot you die becomes a foothold. Corpses are shared by all players, and when someone gets past, the next layer opens.", zh: "推出新作「Shiincrad」。死掉的地方會變成踏腳處、大家一起挑戰的全100層橫向卷軸遊戲。屍體由所有人共享，有人越過後下一層就會開放。", ko: "신작 「시인크래드」를 공개했어요. 죽은 곳이 발판이 되는, 모두가 함께 도전하는 전 100층 횡스크롤이에요. 시체는 모든 사람이 공유하고, 누군가 넘으면 다음 층이 열려요." },
+  { date: '2026.10.18', text: '新作「弾丸合併」を公開しました。市町村や国を3つ串ざしにしてコマを作る、全自動の3Dバトルです。だれかと対戦・挑戦状・番付つき。', en: "New game \"Bullet Merger\" is out. A fully automatic 3D battle where you skewer 3 municipalities or countries to make a top. With online matchmaking, challenges and rankings.", zh: "推出新作「子彈合併」。把3個市町村或國家串起來做成陀螺的全自動3D對戰。有隨機對戰、挑戰書、排行。", ko: "신작 「탄환 합병」을 공개했어요. 시정촌이나 나라 3개를 꿰어 팽이를 만드는 전자동 3D 배틀이에요. 아무나와 대전, 도전장, 순위표 있음." },
+  { date: '2026.10.16', text: '新作「自分」を公開しました。名前と誕生日と生まれた市町村区から、あなたの前世の一生を年表で出します。縄文から昭和まで、その土地で本当にあったできごとも。', en: "New game \"Myself\" is out. From your name, birthday and birthplace, it shows your past life as a timeline. From Jomon to Showa, including events that really happened in that place.", zh: "推出新作「自己」。從名字、生日和出生的市町村區，以年表呈現你前世的一生。從繩文到昭和，還有那片土地上真實發生過的事。", ko: "신작 「나」를 공개했어요. 이름과 생일, 태어난 시정촌구로 당신 전생의 일생을 연표로 보여 줘요. 조몬부터 쇼와까지, 그 땅에서 실제로 있었던 일도." },
+  { date: '2026.10.16', text: '「地元の最強」に世界の国・州・都市・町が参戦しました。ソ連やユーゴスラビアなどの昔の国も。全24,838が出場できます。', en: "Countries, states, cities and towns from around the world have joined \"Hometown Champion\". Even former countries like the USSR and Yugoslavia. 24,838 entrants in all.", zh: "世界各國・州・城市・城鎮加入了「家鄉最強」。連蘇聯、南斯拉夫等過去的國家也在。共24,838個可以出場。", ko: "「우리 동네 최강」에 세계의 나라·주·도시·마을이 참전했어요. 소련이나 유고슬라비아 같은 옛 나라도. 총 24,838곳이 출전할 수 있어요." },
+  { date: '2026.10.15', text: '「だれかと対戦」を7つのゲームに追加しました。待っている人と自動でつながります。毎晩21時〜22時は対戦タイム！ 地元の最強には、いつでも戦える「挑戦状」も。', en: "Added \"Play someone online\" to 7 games. You'll be matched automatically with someone who's waiting. Every night 21:00–22:00 JST is Battle Time! Hometown Champion also has \"Challenges\" you can fight anytime.", zh: "在7款遊戲中加入了「隨機對戰」。會自動和正在等待的人配對。每晚日本時間21〜22點是對戰時間！家鄉最強還有隨時都能戰鬥的「挑戰書」。", ko: "7개 게임에 「아무나와 대전」을 추가했어요. 기다리는 사람과 자동으로 연결돼요. 매일 밤 일본 시간 21~22시는 대전 타임! 우리 동네 최강에는 언제든 싸울 수 있는 「도전장」도." },
+  { date: '2026.10.15', text: '新作「地元の最強」を公開しました。全国の市町村の本物の形でぶつかり合う、全自動の対戦ゲームです。明治から今までの、なくなった町村も出場できます。', en: "New game \"Hometown Champion\" is out. A fully automatic battle game where the real shapes of Japan's municipalities clash. Towns and villages from the Meiji era on, even ones that no longer exist, can enter.", zh: "推出新作「家鄉最強」。用全日本市町村真實形狀互相碰撞的全自動對戰遊戲。從明治到現在、已經消失的町村也能出場。", ko: "신작 「우리 동네 최강」을 공개했어요. 일본 전국 시정촌의 실제 모양으로 부딪치는 전자동 대전 게임이에요. 메이지 시대부터 지금까지, 사라진 마을도 출전할 수 있어요." },
+  { date: '2026.10.14', text: '新作「ピンチボウル」を公開しました。ボウリングのピンになって球をよける、1対1の3Dアクションです。ガードレールではね返る球に、ドミノのように倒れるピン。', en: "New game \"Pinch Bowl\" is out. A 1-on-1 3D action game where you become a bowling pin and dodge the ball. Balls that bounce off the guardrails, and pins that fall like dominoes.", zh: "推出新作「閃避保齡球」。變成保齡球瓶閃避球的一對一3D動作遊戲。會被護欄反彈的球，和像骨牌一樣倒下的球瓶。", ko: "신작 「핀치 볼」을 공개했어요. 볼링 핀이 되어 공을 피하는 1대1 3D 액션이에요. 가드레일에 튕기는 공과 도미노처럼 쓰러지는 핀." },
+  { date: '2026.10.14', text: '新作「ユキダマッチ」を公開しました。雪合戦の1対1で戦う3Dアクションです。かべが溶けていく3つのステージ、4つの特技、決着リプレイつき。', en: "New game \"Snowball Match\" is out. A 1-on-1 snowball fight in 3D action. 3 stages where the walls melt away, 4 special skills, and finishing-blow replays.", zh: "推出新作「雪球對決」。一對一打雪仗的3D動作遊戲。牆會融化的3個關卡、4種特技、決勝重播。", ko: "신작 「눈싸움 매치」를 공개했어요. 1대1 눈싸움 3D 액션이에요. 벽이 녹아 가는 3개 스테이지, 4가지 특기, 결착 리플레이 있음." },
+  { date: '2026.10.11', text: '新作「バトベイ」を公開しました。描いたコマで戦う3Dバトルごまです。60秒で描いて戦う、らくがきバトルも。', en: "New game \"Batbey\" is out. 3D battle tops where you fight with a top you drew. There's also Doodle Battle: draw in 60 seconds, then fight.", zh: "推出新作「對戰陀螺」。用自己畫的陀螺戰鬥的3D戰鬥陀螺。也有60秒畫完就開打的塗鴉對戰。", ko: "신작 「배트베이」를 공개했어요. 직접 그린 팽이로 싸우는 3D 배틀 팽이예요. 60초 안에 그리고 싸우는 낙서 배틀도." },
+  { date: '2026.10.09', text: '新作「絵私（えし）」を公開しました。自分で描いたキャラに骨を入れて戦う、お絵かき格闘ゲームです。キャラID・みんなのキャラ・らくがきバトル・観戦つき。', en: "New game \"Eshi\" is out. A drawing fighting game where you put bones into a character you drew and fight. With character IDs, everyone's characters, Doodle Battle and spectating.", zh: "推出新作「繪我（Eshi）」。替自己畫的角色裝上骨頭來戰鬥的塗鴉格鬥遊戲。有角色ID、大家的角色、塗鴉對戰、觀戰。", ko: "신작 「에시」를 공개했어요. 직접 그린 캐릭터에 뼈를 넣어 싸우는 그림 격투 게임이에요. 캐릭터 ID, 모두의 캐릭터, 낙서 배틀, 관전 있음." },
+  { date: '2026.10.09', text: '「さくがえ」に、あいことば対戦と観戦を追加しました。', en: "Added passcode matches and spectating to \"Fence Swap\".", zh: "「柵欄互換」加入了暗號對戰和觀戰。", ko: "「울타리 체인지」에 암호 대전과 관전을 추가했어요." },
+  { date: '2026.10.08', text: '新作「回廊快走（かいろうかいそう）」を公開しました。通路を90度まわしながら走り続ける、終わりのないランゲームです。', en: "New game \"Corridor Dash\" is out. An endless running game where you keep running while rotating the corridor 90 degrees.", zh: "推出新作「迴廊快跑」。一邊把通道旋轉90度一邊不斷奔跑、沒有終點的跑酷遊戲。", ko: "신작 「회랑 질주」를 공개했어요. 통로를 90도씩 돌리며 계속 달리는 끝없는 러닝 게임이에요." },
+  { date: '2026.10.05', text: '新作「盤滑（パンファ）」を公開しました。3手ごとに1列がすべる、リバーシの対戦ゲームです。', en: "New game \"Panfa — Sliding Reversi\" is out. A reversi battle game where one row slides every 3 moves.", zh: "推出新作「盤滑（Panfa）滑動黑白棋」。每3手就有1列滑動的黑白棋對戰遊戲。", ko: "신작 「판파 — 미끄러지는 리버시」를 공개했어요. 3수마다 한 줄이 미끄러지는 리버시 대전 게임이에요." },
+  { date: '2026.10.02', text: '新作「さくがえ」を公開しました。柵の列を相手と入れかえる、6レーンのタワーディフェンスです。', en: "New game \"Fence Swap\" is out. A 6-lane tower defense where you swap fence rows with your opponent.", zh: "推出新作「柵欄互換」。和對手互換柵欄列的6路塔防。", ko: "신작 「울타리 체인지」를 공개했어요. 상대와 울타리 줄을 바꾸는 6레인 타워 디펜스예요." },
+  { date: '2026.10.01', text: '新作「ハネタンク」を公開しました。はね返る弾で撃ち合う3Dの戦車バトルです。スマホとPCで対戦できます。', en: "New game \"Bounce Tank\" is out. A 3D tank battle where you shoot bouncing bullets. Play against each other on phone and PC.", zh: "推出新作「彈跳坦克」。用會反彈的子彈互射的3D坦克對戰。手機和電腦都能對戰。", ko: "신작 「튕김 탱크」를 공개했어요. 튕기는 탄으로 쏘아 대는 3D 탱크 배틀이에요. 스마트폰과 PC로 대전할 수 있어요." },
+  { date: '2026.09.30', text: '新作「4つ目のダルマ」を公開しました。3ターンごとにだるま落としが起きる、4つ並べ対戦ゲームです。', en: "New game \"The 4th Daruma\" is out. A connect-four battle game where a daruma-otoshi knock-out happens every 3 turns.", zh: "推出新作「第四個達摩」。每3回合就會發生「打達摩」的四子棋對戰遊戲。", ko: "신작 「네 번째 달마」를 공개했어요. 3턴마다 달마 떨어뜨리기가 일어나는 사목 대전 게임이에요." },
+  { date: '2026.09.30', text: 'ホームページ「なすびのお庭」をひらきました。', en: "Opened the homepage \"Nasubi's Garden\".", zh: "首頁「茄子的庭院」開張了。", ko: "홈페이지 「가지의 정원」을 열었어요." },
+  { date: '2026.09.30', text: '「さかさまドロップ」を公開しました。合言葉でのオンライン対戦・観戦にも対応しています。', en: "\"Upside-Down Drop\" is out. It also supports online passcode matches and spectating.", zh: "推出「顛倒掉落」。也支援用暗號的線上對戰與觀戰。", ko: "「거꾸로 드롭」을 공개했어요. 암호로 하는 온라인 대전과 관전도 지원해요." }
 ];
 
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const $ = id => document.getElementById(id);
-// 新作（いちばん新しい NEW のゲーム）を大きく
+// ---------- ことば（日本語・English・繁體中文・한국어） ----------
+const T = (k, v) => I18N.t(k, v);
+const LG = () => I18N.lang;
+// ゲームの文（名前・紹介・ひとこと）をいまの言葉で。訳がなければ日本語のまま
+const loc = (g, f) => { const o = LG() !== 'ja' && g[LG()]; return o && o[f] != null ? o[f] : g[f]; };
+const shortName = g => loc(g, 'short') || loc(g, 'name');
+const tagText = t => { const k = 'tag:' + t, r = T(k); return r === k ? t : r; };
+// ゲームへのリンクに ?lang=xx をつけて、ゲームも同じ言葉で始まるように（日本語のときはつけない）
+const gameURL = g => LG() === 'ja' ? g.url : g.url + (g.url.includes('?') ? '&' : '?') + 'lang=' + LG();
 const NEW = GAMES.find(g => g.badge && !g.soon);
-if (NEW) {
-  $('feature').innerHTML = `<div class="feature" data-i="${GAMES.indexOf(NEW)}">
-    <img src="${esc(NEW.image)}" alt="${esc(NEW.name)}のアイコン">
-    <div><span class="new">${esc(NEW.badge)}</span><h3>${esc(NEW.name)}</h3><p>${esc(NEW.catch || NEW.text)}</p>
-      <div class="row"><a class="btn" href="${esc(NEW.url)}">あそぶ</a><button class="btn ghost" type="button">くわしく</button></div></div></div>`;
-} else $('new').hidden = true;
-// アイコン一覧
-$('game-list').innerHTML = GAMES.map((g, i) => g.soon
-  ? `<div class="app soon"><span class="ic" aria-hidden="true">🌱</span><b>つくってます</b></div>`
-  : `<button class="app" type="button" data-i="${i}"><span class="ic"><img src="${esc(g.image)}" alt="" loading="lazy">${g.badge ? '<i class="dot"></i>' : ''}</span><b>${esc(g.name)}</b></button>`).join('');
+let LIVE = {}, liveErr = false, sheetI = -1, newsOpen = false;
+function render() {
+  // 新作（いちばん新しい NEW のゲーム）を大きく
+  if (NEW) {
+    $('feature').innerHTML = `<div class="feature" data-gi="${GAMES.indexOf(NEW)}">
+    <img src="${esc(NEW.image)}" alt="${esc(T('icon_alt', { n: loc(NEW, 'name') }))}">
+    <div><span class="new">${esc(NEW.badge)}</span><h3>${esc(loc(NEW, 'name'))}</h3><p>${esc(loc(NEW, 'catch') || loc(NEW, 'text'))}</p>
+      <div class="row"><a class="btn" href="${esc(gameURL(NEW))}">${esc(T('play'))}</a><button class="btn ghost" type="button">${esc(T('more'))}</button></div></div></div>`;
+  } else $('new').hidden = true;
+  // アイコン一覧
+  $('game-list').innerHTML = GAMES.map((g, i) => g.soon
+    ? `<div class="app soon"><span class="ic" aria-hidden="true">🌱</span><b>${esc(T('soon'))}</b></div>`
+    : `<button class="app" type="button" data-gi="${i}"><span class="ic"><img src="${esc(g.image)}" alt="" loading="lazy">${g.badge ? '<i class="dot"></i>' : ''}</span><b>${esc(shortName(g))}</b></button>`).join('');
+  // お知らせ：新しい3件、のこりは「もっと見る」
+  $('news-list').innerHTML = NEWS.map((n, i) => `<li${i >= SHOW ? ' class="more"' : ''}><time>${esc(n.date)}</time><p>${esc((LG() !== 'ja' && n[LG()]) || n.text)}</p></li>`).join('');
+  drawNewsBtn();
+  drawLive();
+  if (sheetI >= 0) fillSheet(sheetI);
+}
 // くわしく（下から出る）
 let lastFocus = null;
+function fillSheet(i) {
+  const g = GAMES[i];
+  $('sh-img').src = g.image; $('sh-img').alt = T('icon_alt', { n: loc(g, 'name') }); $('sh-name').textContent = loc(g, 'name'); $('sh-yomi').textContent = (LG() === 'ja' ? g.yomi : (g[LG()] || {}).yomi) || ''; // 日本語の読みがなは外国語では出さない
+  $('sh-text').textContent = loc(g, 'text'); $('sh-tags').innerHTML = (g.tags || []).map(t => `<span>${esc(tagText(t))}</span>`).join(''); $('sh-play').href = gameURL(g);
+  const lv = g.qm && LIVE[g.qm]; $('sh-live').textContent = g.qm ? (lv && (lv.wait || lv.pairs) ? T('sh_live', { w: lv.wait, p: lv.pairs }) : T('sh_can')) : '';
+}
 function openSheet(i) {
   const g = GAMES[i]; if (!g || g.soon) return;
-  $('sh-img').src = g.image; $('sh-img').alt = g.name + 'のアイコン'; $('sh-name').textContent = g.name; $('sh-yomi').textContent = g.yomi || '';
-  $('sh-text').textContent = g.text; $('sh-tags').innerHTML = (g.tags || []).map(t => `<span>${esc(t)}</span>`).join(''); $('sh-play').href = g.url;
-  const lv = g.qm && LIVE[g.qm]; $('sh-live').textContent = g.qm ? (lv && (lv.wait || lv.pairs) ? `いま 対戦待ち ${lv.wait}人・対戦中 ${lv.pairs}組` : 'だれかと対戦できます') : '';
+  sheetI = i; fillSheet(i);
   lastFocus = document.activeElement; document.body.classList.add('sheet-on'); setTimeout(() => $('sh-play').focus({ preventScroll: true }), 50);
 }
-function closeSheet() { document.body.classList.remove('sheet-on'); if (lastFocus) lastFocus.focus({ preventScroll: true }); }
+function closeSheet() { sheetI = -1; document.body.classList.remove('sheet-on'); if (lastFocus) lastFocus.focus({ preventScroll: true }); }
 document.addEventListener('click', e => {
   if (e.target.closest('.feature a')) return;
-  const el = e.target.closest('[data-i]'); if (el) openSheet(+el.dataset.i);
+  const el = e.target.closest('[data-gi]'); if (el) openSheet(+el.dataset.gi);
 });
 $('sheet-bg').onclick = closeSheet; $('sh-close').onclick = closeSheet;
 addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
-// お知らせ：新しい3件、のこりは「もっと見る」
 const SHOW = 3;
-$('news-list').innerHTML = NEWS.map((n, i) => `<li${i >= SHOW ? ' class="more"' : ''}><time>${esc(n.date)}</time><p>${esc(n.text)}</p></li>`).join('');
-if (NEWS.length > SHOW) {
-  const b = $('news-more'); b.hidden = false; b.textContent = 'もっと見る（あと' + (NEWS.length - SHOW) + '件）';
-  b.onclick = () => { const o = $('news-list').classList.toggle('open'); b.textContent = o ? 'とじる' : 'もっと見る（あと' + (NEWS.length - SHOW) + '件）'; };
+function drawNewsBtn() {
+  if (NEWS.length <= SHOW) return;
+  const b = $('news-more'); b.hidden = false; $('news-list').classList.toggle('open', newsOpen);
+  b.textContent = newsOpen ? T('close') : T('news_more', { n: NEWS.length - SHOW });
 }
+$('news-more').onclick = () => { newsOpen = !newsOpen; drawNewsBtn(); };
 document.getElementById('year').textContent = new Date().getFullYear();
 // ---------- いまの人数（90秒ごとに見に行く。つながりっぱなしにしないので、同時接続の上限を使わない） ----------
 // 地元の最強は別のデータベース（通信量を分けるため）
 const DBURLS = ['https://sakasama-drop-default-rtdb.asia-southeast1.firebasedatabase.app', 'https://jimoto-saikyo-default-rtdb.asia-southeast1.firebasedatabase.app'];
-let LIVE = {};
 const jstHour = () => new Date(Date.now() + 9 * 3600 * 1000).getUTCHours();
 function drawLive() {
   const prime = jstHour() === 21, pe = $('prime');
-  pe.textContent = prime ? '🔥 いま対戦タイム！（22時まで）' : '🌙 毎晩21時〜22時は対戦タイム'; pe.classList.toggle('hot', prime);
+  pe.textContent = T(prime ? 'qm_prime_hot' : 'qm_prime'); pe.classList.toggle('hot', prime);
   const qg = GAMES.filter(g => g.qm);
   let w = 0, p = 0; for (const g of qg) { const v = LIVE[g.qm]; if (v) { w += v.wait; p += v.pairs; } }
-  $('live-sum').innerHTML = `いま 対戦待ち <b>${w}</b>人・対戦中 <b>${p}</b>組`;
+  if (liveErr) $('live-sum').textContent = T('live_err'); else $('live-sum').innerHTML = T('live_sum', { w, p });
   // 人がいるゲームを先に
   const order = qg.slice().sort((a, b) => ((LIVE[b.qm] || {}).wait || 0) - ((LIVE[a.qm] || {}).wait || 0));
-  $('live-list').innerHTML = order.map(g => { const v = LIVE[g.qm] || { wait: 0, pairs: 0 }; return `<a href="${esc(g.url)}" class="${v.wait ? 'on' : ''}"><img src="${esc(g.image)}" alt="">${esc(g.name)}<em>${v.wait ? '待ち' + v.wait + '人' : v.pairs ? '対戦中' + v.pairs + '組' : '—'}</em></a>`; }).join('');
-  document.querySelectorAll('#game-list .app[data-i]').forEach(el => {
-    const g = GAMES[+el.dataset.i], v = g && g.qm && LIVE[g.qm], ic = el.querySelector('.ic'); let b = ic.querySelector('.wait');
-    if (v && v.wait) { if (!b) { b = document.createElement('span'); b.className = 'wait'; ic.appendChild(b); } b.textContent = '待ち' + v.wait; } else if (b) b.remove();
+  $('live-list').innerHTML = order.map(g => { const v = LIVE[g.qm] || { wait: 0, pairs: 0 }; return `<a href="${esc(gameURL(g))}" class="${v.wait ? 'on' : ''}"><img src="${esc(g.image)}" alt="">${esc(shortName(g))}<em>${esc(v.wait ? T('li_wait', { n: v.wait }) : v.pairs ? T('li_play', { n: v.pairs }) : '—')}</em></a>`; }).join('');
+  document.querySelectorAll('#game-list .app[data-gi]').forEach(el => {
+    const g = GAMES[+el.dataset.gi], v = g && g.qm && LIVE[g.qm], ic = el.querySelector('.ic'); let b = ic.querySelector('.wait');
+    if (v && v.wait) { if (!b) { b = document.createElement('span'); b.className = 'wait'; ic.appendChild(b); } b.textContent = T('badge_wait', { n: v.wait }); } else if (b) b.remove();
   });
 }
+render();
+document.addEventListener('langchange', render);
 async function loadLive() {
   if (document.hidden) return;
   try {
@@ -538,8 +646,8 @@ async function loadLive() {
     const v = Object.assign({}, ...all.map((x, i) => { const o = {}; for (const k in (x || {})) { const e = x[k]; if (i === 0 && e && e.g === 'jimoto') continue; o[k] = e; } return o; }));
     const out = {}; for (const k in v) { const e = v[k]; if (!e || !e.g) continue; const o = out[e.g] = out[e.g] || { wait: 0, play: 0 }; if (e.s === 'p') o.play++; else o.wait++; }
     for (const g in out) out[g].pairs = Math.ceil(out[g].play / 2);
-    LIVE = out; drawLive();
-  } catch (e) { drawLive(); $('live-sum').textContent = 'いまの人数を読みこめませんでした'; }
+    LIVE = out; liveErr = false; drawLive();
+  } catch (e) { liveErr = true; drawLive(); }
 }
 drawLive(); loadLive(); setInterval(loadLive, 90000);
 document.addEventListener('visibilitychange', () => { if (!document.hidden) loadLive(); });
