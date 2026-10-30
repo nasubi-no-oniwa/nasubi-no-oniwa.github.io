@@ -502,6 +502,17 @@ const GAMES = [
     ko: {"name": "穴の神隠し", "yomi": "아나노 카미카쿠시", "text": "거대한 진흙 엉덩이에서 ○△■가 끙끙 밀려 나온다. 길게 누르면 밧줄을 당기고, 떼면 느슨해진다. ■는 세게, △는 살살, ○는 그 중간. 구멍 주위 고리가 빨강이면 너무 세고, 파랑이면 너무 약하다. 가끔 황금 ○도. 뽑은 양과 모양으로 정해지는 칭호는 1만 가지, 당기는 건 얼굴 없는 데생 인형.", "catch": "밀려 나오는 ○△■를 끌어내라!"},
   },
   {
+    name: '魔法の球 卓球', yomi: 'まほうのたま たっきゅう',
+    url: 'https://nasubi-no-oniwa.github.io/mahou-takkyu/',
+    image: 'img/mahou-takkyu.png',
+    text: '「魔法の球」の卓球版。ラケットの球から線を描いて、自分のコートで1回、相手のコートで1回はずませれば、それが魔球サーブになる。回転は6種類で、2回目のバウンドのあとに効いてくる。レシーブはスワイプで打ち返すが、回転は打つまで分からない。回転に合った振り方でないとネットやアウトに。3本のうち1本返せば勝ち。',
+    tags: ['3D', '線を描く', '合言葉', '卓球', 'ランキング'],
+    badge: 'NEW', catch: '返せるものなら、返してみろ。',
+    en: {"name": "Magic Pitch Ping-Pong", "text": "The ping-pong version of Magic Pitch. Draw a line from the ball on your paddle, bounce it once on your side and once on theirs, and it becomes your magic serve. Six kinds of spin kick in after the second bounce. Receivers swipe to hit it back, but the spin stays hidden until they swing. Swing the wrong way for the spin and it goes into the net or out. Return 1 of 3 to win.", "catch": "Return it if you can."},
+    zh: {"name": "魔法之球 桌球", "text": "「魔法之球」的桌球版。從球拍上的球畫線，在自己這邊彈1次、對方那邊彈1次，它就是你的魔球發球。旋轉有6種，在第2次彈跳後發揮作用。接發球用滑動回擊，但旋轉要到揮拍時才知道。揮法不合旋轉就會掛網或出界。3球中接回1球就贏。", "catch": "有本事就接接看。"},
+    ko: {"name": "마법의 공 탁구", "text": "「마법의 공」의 탁구판. 라켓의 공에서 선을 그어 내 코트에서 1번, 상대 코트에서 1번 튀기면 그것이 마구 서브가 된다. 회전은 6종류로, 2번째 바운드 뒤에 효과가 나타난다. 리시브는 스와이프로 받아치지만 회전은 칠 때까지 모른다. 회전에 맞게 휘두르지 않으면 네트나 아웃. 3개 중 1개만 받아치면 승리.", "catch": "받을 수 있으면 받아 봐."},
+  },
+  {
     name: '魔法の球 PK', yomi: 'まほうのたま ぴーけー',
     url: 'https://nasubi-no-oniwa.github.io/mahou-pk/',
     image: 'img/mahou-pk.png',
@@ -565,6 +576,7 @@ const GAMES = [
 ];
 
 const NEWS = [
+  { date: '2026.10.30', text: '新作「魔法の球 卓球」を公開しました。魔法の球の卓球版で、線を描いた魔球サーブを、スワイプで打ち返します。回転は打つまで分からない。野球・PK・卓球はタイトルのタブで行き来できます。', en: "New game \"Magic Pitch Ping-Pong\" is out. The ping-pong version of Magic Pitch: draw a magic serve and swipe to return it. You won't know the spin until you swing. Switch between Baseball, PK and Ping-Pong with the tabs on the title screen.", zh: "推出新作「魔法之球 桌球」。魔法之球的桌球版，畫出魔球發球，用滑動回擊。旋轉要到揮拍時才知道。棒球・PK・桌球可以用標題畫面的分頁切換。", ko: "신작 「마법의 공 탁구」를 공개했어요. 마법의 공의 탁구판으로, 선을 그린 마구 서브를 스와이프로 받아쳐요. 회전은 칠 때까지 몰라요. 야구・PK・탁구는 타이틀의 탭으로 오갈 수 있어요." },
   { date: '2026.10.30', text: '新作「魔法の球 PK」を公開しました。魔法の球のサッカー版で、線を描いた魔球をキーパーが止めます。合言葉でけり合って、止められていない魔球のランキングを目指しましょう。', en: "New game \"Magic Pitch PK\" is out. The soccer version of Magic Pitch: draw a magic shot and let keepers try to stop it. Trade shots with a code and aim for the most unstoppable shot.", zh: "推出新作「魔法之球 PK」。魔法之球的足球版，畫出的魔球由守門員來擋。用暗號互相踢，挑戰「沒被擋下的魔球」排行榜吧。", ko: "신작 「마법의 공 PK」를 공개했어요. 마법의 공의 축구판으로, 선을 그린 마구를 골키퍼가 막아요. 암호로 서로 차며 막히지 않은 마구 랭킹을 노려 보세요." },
   { date: '2026.10.29', text: '新作「とんで、こんにゃく」を公開しました。おでんの鍋から逃げたこんにゃくを、フライ返しで弾いて変なところに乗せるゲームです。全30面、面ごとのクリア時間ランキングつき。', en: "New game \"Flying Konnyaku\" is out. Flip a konnyaku that escaped the oden pot and land it on weird things. 30 stages, with a clear-time ranking for every stage.", zh: "推出新作「飛吧，蒟蒻」。用鍋鏟把從關東煮鍋裡逃出來的蒟蒻彈到奇怪的地方。共30關，每關都有通關時間排行榜。", ko: "신작 「날아라, 곤약」을 공개했어요. 오뎅 냄비에서 도망친 곤약을 뒤집개로 튕겨 이상한 곳에 올리는 게임이에요. 모두 30스테이지, 스테이지마다 클리어 시간 랭킹이 있어요." },
   { date: '2026.10.29', text: '新作「魔法の球」を公開しました。ストライクゾーンまで線を描くと、それが魔球になります。合言葉で魔球を投げ合って、打たれていない魔球のランキングを目指しましょう。', en: "New game \"Magic Pitch\" is out. Draw a line to the strike zone and it becomes your magic pitch. Trade pitches with a code and aim for the ranking of the most unhittable pitches.", zh: "推出新作「魔法之球」。畫一條線到好球帶，它就變成魔球。用暗號互相投魔球，挑戰「沒被打到的魔球」排行榜吧。", ko: "신작 「마법의 공」을 공개했어요. 스트라이크 존까지 선을 그리면 그것이 마구가 돼요. 암호로 마구를 주고받으며, 맞지 않은 마구 랭킹을 노려 보세요." },
