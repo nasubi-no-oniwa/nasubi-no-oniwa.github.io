@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="ja">
+<head><meta name="robots" content="noindex">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5RB6XMN0QR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5RB6XMN0QR');
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>なすびのお庭</title>
+<meta name="description" content="なすびのお庭は、ブラウザですぐ遊べる小さなゲームをつくっている場所です。スマホでもPCでも、インストールなしで遊べます。">
+<meta name="theme-color" content="#fbf6ec">
+<meta property="og:title" content="なすびのお庭">
+<meta property="og:description" content="ブラウザですぐ遊べる小さなゲームの庭。">
+<meta property="og:type" content="website">
+<link rel="icon" href="img/nasubi.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@500;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fbf6ec;
+  --bg2: #f3ead8;
+  --card: #ffffff;
+  --ink: #3a2d4a;
+  --muted: #7c6f86;
+  --purple: #6b3fa0;
+  --purple2: #8e5cc9;
+  --leaf: #4f9a5a;
+  --leaf2: #7cc47f;
+  --soil: #b98b62;
+  --line: rgba(58, 45, 74, 0.1);
+  --shadow: 0 10px 30px rgba(74, 48, 104, 0.12);
+  --font: "M PLUS Rounded 1c", "Hiragino Maru Gothic ProN", "Hiragino Sans", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1c1626; --bg2: #241c31; --card: #2c2339; --ink: #f4eefb; --muted: #b8a9c9;
+    --purple: #b58cf0; --purple2: #cfaefb; --leaf: #7cc47f; --leaf2: #a5e0a6; --soil: #d7ae86;
+    --line: rgba(255, 255, 255, 0.1); --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1c1626; --bg2: #241c31; --card: #2c2339; --ink: #f4eefb; --muted: #b8a9c9;
+  --purple: #b58cf0; --purple2: #cfaefb; --leaf: #7cc47f; --leaf2: #a5e0a6; --soil: #d7ae86;
+  --line: rgba(255, 255, 255, 0.1); --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font);
+  line-height: 1.7; -webkit-text-size-adjust: 100%;
+}
+a { color: inherit; }
+.wrap { width: min(1040px, 100% - 32px); margin: 0 auto; }
+
+/* ---------- ヘッダー ---------- */
+header.top {
+  position: sticky; top: 0; z-index: 10; backdrop-filter: blur(10px);
+  background: color-mix(in srgb, var(--bg) 82%, transparent); border-bottom: 1px solid var(--line);
+}
+.top .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 900; font-size: 18px; }
+.brand svg { width: 34px; height: 34px; }
+nav a { text-decoration: none; font-weight: 800; font-size: 14px; color: var(--muted); margin-left: 18px; }
+nav a:hover { color: var(--purple); }
+
+/* ---------- はじめ（小さめ） ---------- */
+.hero { padding: 28px 0 8px; }
+.hero .wrap { display: flex; align-items: center; gap: 18px; }
+.hero .mascot { width: 92px; flex-shrink: 0; animation: sway 4s ease-in-out infinite; transform-origin: 50% 100%; }
+@keyframes sway { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+.hero h1 { margin: 0; font-size: clamp(26px, 5vw, 38px); line-height: 1.2; font-weight: 900; }
+.hero h1 .n { color: var(--purple); } .hero h1 .g { color: var(--leaf); }
+.hero p { margin: 4px 0 0; font-size: 14px; color: var(--muted); }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font-weight: 900; font-size: 16px;
+  padding: 13px 26px; border-radius: 999px; color: #fff; border: 0; cursor: pointer; font-family: inherit;
+  background: linear-gradient(180deg, var(--purple2), var(--purple));
+  box-shadow: 0 5px 0 color-mix(in srgb, var(--purple) 70%, black), 0 12px 24px rgba(107, 63, 160, 0.3);
+  transition: transform .1s, box-shadow .1s;
+}
+.btn:active { transform: translateY(4px); box-shadow: 0 1px 0 color-mix(in srgb, var(--purple) 70%, black); }
+.btn.ghost { background: var(--bg2); color: var(--ink); box-shadow: none; }
+
+/* ---------- 見出し ---------- */
+section { padding: 28px 0; }
+.sec-title { display: flex; align-items: baseline; gap: 12px; margin: 0 0 16px; }
+.sec-title h2 { margin: 0; font-size: 22px; font-weight: 900; }
+.sec-title span { font-size: 12px; color: var(--muted); font-weight: 800; letter-spacing: .12em; }
+
+/* ---------- 新作（大きく1つ） ---------- */
+.feature {
+  display: grid; grid-template-columns: auto 1fr; gap: 22px; align-items: center; padding: 22px 26px; border-radius: 26px;
+  background: radial-gradient(circle at 15% 30%, #4b33a8, #1d1546 70%); color: #fff; box-shadow: var(--shadow); cursor: pointer; position: relative; overflow: hidden;
+}
+.feature img { width: 132px; aspect-ratio: 1; border-radius: 24%; box-shadow: 0 14px 30px rgba(0,0,0,.45); }
+.feature .new { display: inline-block; font-size: 12px; font-weight: 900; padding: 3px 12px; border-radius: 999px; background: #ffe45e; color: #4a3700; letter-spacing: .08em; }
+.feature h3 { margin: 6px 0 2px; font-size: clamp(24px, 4vw, 32px); font-weight: 900; line-height: 1.2; }
+.feature p { margin: 0 0 14px; font-size: 14px; opacity: .88; }
+.feature .row { display: flex; gap: 10px; flex-wrap: wrap; }
+.feature .btn.ghost { background: rgba(255,255,255,.14); color: #fff; }
+
+/* ---------- ゲーム（アイコン一覧） ---------- */
+#games { padding-top: 8px; }
+.apps { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 24px 16px; }
+.live { background: var(--card); border-radius: 22px; padding: 16px 18px; box-shadow: var(--shadow); }
+.live-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.live-head b { font-size: 18px; font-weight: 900; }
+.prime { font-size: 12.5px; font-weight: 800; padding: 3px 12px; border-radius: 999px; background: var(--bg2); color: var(--muted); }
+.prime.hot { background: #ffcf3a; color: #3a2a00; animation: primeglow 1.6s infinite; }
+@keyframes primeglow { 50% { box-shadow: 0 0 0 5px rgba(255, 207, 58, .35); } }
+.live-sum { margin: 8px 0 10px; font-size: 14px; font-weight: 800; }
+.live-sum b { font-size: 18px; }
+.live-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.live-list a { display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px 6px 6px; border-radius: 999px; background: var(--bg2); color: inherit; text-decoration: none; font-size: 13px; font-weight: 800; }
+.live-list a img { width: 26px; height: 26px; border-radius: 8px; }
+.live-list a em { font-style: normal; font-size: 12px; color: var(--muted); }
+.live-list a.on { background: #e9f8ee; color: #1f6b3a; }
+.live-list a.on em { color: #1f6b3a; }
+.live-note { margin: 10px 0 0; font-size: 12px; color: var(--muted); }
+.app .ic .wait { position: absolute; left: 6px; bottom: 6px; padding: 2px 8px; border-radius: 999px; background: #2fbf6b; color: #fff; font-size: 11px; font-weight: 900; box-shadow: 0 2px 6px rgba(0,0,0,.25); }
+.sh-live { margin: 6px 0 0; font-size: 13px; font-weight: 800; color: #1f6b3a; min-height: 0; }
+.sh-live:empty { display: none; }
+.app { display: flex; flex-direction: column; align-items: center; gap: 8px; background: none; border: 0; padding: 0; cursor: pointer; color: inherit; font-family: inherit; }
+.app .ic { width: 100%; max-width: 120px; aspect-ratio: 1; border-radius: 24%; overflow: hidden; position: relative; box-shadow: 0 8px 18px rgba(58, 45, 74, .18); transition: transform .15s; background: var(--card); }
+.app:hover .ic { transform: translateY(-3px) scale(1.03); } .app:active .ic { transform: scale(.95); }
+.app .ic img { width: 100%; height: 100%; display: block; }
+.app .ic .dot { position: absolute; top: 6px; right: 6px; width: 12px; height: 12px; border-radius: 50%; background: #ff5a5a; border: 2px solid #fff; }
+.app b { font-size: 13px; font-weight: 800; line-height: 1.3; text-align: center; }
+.app.soon .ic { display: grid; place-items: center; font-size: 40px; box-shadow: none; border: 2px dashed var(--line); background: repeating-linear-gradient(45deg, var(--bg2), var(--bg2) 10px, var(--bg) 10px, var(--bg) 20px); }
+.app.soon b { color: var(--muted); }
+
+/* ---------- くわしく（下から出る） ---------- */
+.sheet-bg { position: fixed; inset: 0; background: rgba(20, 12, 30, .45); opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 30; }
+.sheet { visibility: hidden; position: fixed; left: 50%; bottom: 0; width: min(520px, 100%); transform: translate(-50%, 105%); background: var(--card); border-radius: 26px 26px 0 0; padding: 14px 22px calc(26px + env(safe-area-inset-bottom, 0px)); z-index: 31; transition: transform .25s cubic-bezier(.2,.9,.3,1.1), visibility 0s .25s; box-shadow: 0 -10px 40px rgba(0,0,0,.25); max-height: 88vh; overflow: auto; }
+.sheet-on .sheet-bg { opacity: 1; pointer-events: auto; } .sheet-on .sheet { transform: translate(-50%, 0); visibility: visible; transition: transform .25s cubic-bezier(.2,.9,.3,1.1); }
+.sheet .grip { width: 44px; height: 5px; border-radius: 9px; background: var(--line); margin: 0 auto 14px; }
+.sheet .head { display: flex; gap: 16px; align-items: center; }
+.sheet .head img { width: 96px; aspect-ratio: 1; border-radius: 24%; box-shadow: 0 8px 18px rgba(0,0,0,.2); }
+.sheet h3 { margin: 0; font-size: 22px; font-weight: 900; line-height: 1.25; }
+.sheet .yomi { font-size: 12px; color: var(--muted); font-weight: 800; }
+.sheet p { margin: 14px 0; font-size: 15px; }
+.sheet .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+.sheet .tags span { font-size: 12px; font-weight: 800; padding: 3px 10px; border-radius: 999px; background: var(--bg2); color: var(--muted); }
+.sheet .btn { width: 100%; font-size: 18px; padding: 15px; }
+.sheet .close { position: absolute; top: 12px; right: 14px; width: 36px; height: 36px; border-radius: 50%; border: 0; background: var(--bg2); color: var(--ink); font-size: 18px; cursor: pointer; }
+
+/* ---------- お知らせ ---------- */
+.news { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.news li { display: grid; grid-template-columns: 110px 1fr; gap: 12px; padding: 16px 4px; border-bottom: 1px solid var(--line); }
+.news time { font-size: 14px; font-weight: 800; color: var(--purple); font-variant-numeric: tabular-nums; }
+.news p { margin: 0; font-size: 15px; }
+.news li.more { display: none; } .news.open li.more { display: grid; }
+.news-more { margin: 14px auto 0; display: block; }
+
+/* ---------- このお庭について ---------- */
+.about { display: grid; grid-template-columns: 120px 1fr; gap: 24px; align-items: center; background: var(--card); border-radius: 24px; padding: 28px; box-shadow: var(--shadow); border: 1px solid var(--line); }
+.about svg { width: 120px; }
+.about p { margin: 0 0 8px; }
+.about p:last-child { margin: 0; color: var(--muted); font-size: 14px; }
+
+footer { padding: 36px 0 48px; text-align: center; font-size: 13px; color: var(--muted); }
+
+/* ---------- ことばの切りかえ ---------- */
+.hero .wrap { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "m t" "m l"; column-gap: 18px; }
+.hero .mascot { grid-area: m; } .hero .wrap > div:not(.langs) { grid-area: t; align-self: end; }
+.langs { grid-area: l; align-self: start; display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.langs button { font: 800 12.5px var(--font); line-height: 1.4; background: transparent; color: var(--muted); border: 1.5px solid var(--line); border-radius: 999px; padding: 3px 11px; cursor: pointer; }
+.langs button:hover { color: var(--purple); border-color: var(--purple); }
+.langs button[aria-pressed="true"] { background: var(--purple); border-color: var(--purple); color: #fff; }
+/* 中国語は台湾の丸ゴシック、韓国語は見出しだけ丸い字（Jua）。日本語のフォントに無い字のため */
+html[data-lang="zh"] { --font: "Chiron GoRound TC", "M PLUS Rounded 1c", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif; }
+html[data-lang="ko"] { --font: "M PLUS Rounded 1c", "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", system-ui, sans-serif; }
+html[data-lang="ko"] :is(.brand, .hero h1, .sec-title h2, .feature h3, .sheet h3, .live-head b, .btn, .app b) { font-family: "M PLUS Rounded 1c", "Jua", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif; font-synthesis: none; }
+html[data-lang="en"] .sec-title span { display: none; }
+.brand { white-space: nowrap; }
+@media (max-width: 720px) {
+  .hero .wrap { grid-template-areas: "m t" "l l"; column-gap: 14px; }
+  .langs { margin-top: 12px; }
+}
+@media (max-width: 380px) {
+  .brand { font-size: 16px; gap: 8px; } .brand svg { width: 30px; height: 30px; }
+  html[data-lang="en"] .hero h1 { font-size: 23px; }
+}
+
+@media (max-width: 720px) {
+  .hero { padding: 18px 0 4px; } .hero .mascot { width: 64px; } .hero p { font-size: 13px; }
+  .feature { grid-template-columns: 1fr; text-align: center; padding: 22px 18px; gap: 12px; justify-items: center; }
+  .feature img { width: 120px; } .feature .row { justify-content: center; }
+  .apps { grid-template-columns: repeat(3, 1fr); gap: 18px 12px; }
+  nav a { margin-left: 12px; font-size: 13px; }
+  .news li { grid-template-columns: 1fr; gap: 2px; padding: 12px 4px; }
+  .about { grid-template-columns: 1fr; text-align: center; }
+  .about svg { margin: 0 auto; width: 96px; }
+}
+@media (max-width: 380px) { nav a:first-child { display: none; } }
+@media (prefers-reduced-motion: reduce) { .mascot { animation: none; } html { scroll-behavior: auto; } .sheet, .sheet-bg { transition: none; } }
+</style>
+</head>
+<body>
+
+<!-- なすびのキャラ（使い回し用） -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="nb" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9b6ad6"/><stop offset=".55" stop-color="#6b3fa0"/><stop offset="1" stop-color="#43246a"/>
+    </linearGradient>
+    <symbol id="nasubi" viewBox="0 0 200 240">
+      <ellipse cx="100" cy="228" rx="58" ry="8" fill="#000" opacity=".12"/>
+      <path d="M100 58c46 0 70 44 70 96 0 44-30 74-70 74s-70-30-70-74c0-52 24-96 70-96z" fill="url(#nb)"/>
+      <ellipse cx="70" cy="120" rx="12" ry="26" fill="#fff" opacity=".28" transform="rotate(18 70 120)"/>
+      <path d="M100 30c-6 0-9 12-9 24" stroke="#3f7d46" stroke-width="9" stroke-linecap="round" fill="none"/>
+      <path d="M52 76c14-26 34-30 48-22 14-8 34-4 48 22-14-4-26-2-34 6-4-8-10-10-14-10s-10 2-14 10c-8-8-20-10-34-6z" fill="#4f9a5a"/>
+      <circle cx="80" cy="150" r="7" fill="#231432"/>
+      <circle cx="120" cy="150" r="7" fill="#231432"/>
+      <circle cx="82.5" cy="147.5" r="2.4" fill="#fff"/>
+      <circle cx="122.5" cy="147.5" r="2.4" fill="#fff"/>
+      <path d="M90 168q10 9 20 0" stroke="#231432" stroke-width="4" stroke-linecap="round" fill="none"/>
+      <ellipse cx="66" cy="168" rx="9" ry="5" fill="#ff8fb1" opacity=".55"/>
+      <ellipse cx="134" cy="168" rx="9" ry="5" fill="#ff8fb1" opacity=".55"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#"><svg aria-hidden="true"><use href="#nasubi"/></svg><span data-i="doc_title">なすびのお庭</span></a>
+    <nav><a href="#games" data-i="nav_games">ゲーム</a><a href="#news" data-i="nav_news">お知らせ</a><a href="#about" data-i="nav_about">このお庭</a></nav>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <svg class="mascot" viewBox="0 0 200 240" role="img" aria-label="なすびのキャラクター" data-ia="mascot"><use href="#nasubi"/></svg>
+      <div>
+        <h1 data-ih="hero_h1"><span class="n">なすび</span>の<span class="g">お庭</span></h1>
+        <p data-i="hero_p">ブラウザですぐ遊べる小さなゲーム。インストールなし、スマホでもPCでも。</p>
+      </div>
+      <div class="langs" role="group" aria-label="Language"><button type="button" data-lang="ja">日本語</button><button type="button" data-lang="en">English</button><button type="button" data-lang="zh">繁中</button><button type="button" data-lang="ko">한국어</button></div>
+    </div>
+  </div>
+
+  <section id="new">
+    <div class="wrap"><div id="feature"></div></div>
+  </section>
+
+  <section id="live">
+    <div class="wrap">
+      <div class="live">
+        <div class="live-head"><b data-i="qm_btn">だれかと対戦</b><span class="prime" id="prime"></span></div>
+        <p class="live-sum" id="live-sum" data-i="live_loading">いまの人数を読みこみ中…</p>
+        <div class="live-list" id="live-list"></div>
+        <p class="live-note" data-i="live_note">ゲームの「だれかと対戦」を押すと、待っている人と自動でつながります。相手がいないときはCPUと遊びながら待てます。</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="games">
+    <div class="wrap">
+      <div class="sec-title"><h2 data-i="nav_games">ゲーム</h2><span>GAMES</span></div>
+      <div class="apps" id="game-list"></div>
+    </div>
+  </section>
+
+  <section id="news">
+    <div class="wrap">
+      <div class="sec-title"><h2 data-i="nav_news">お知らせ</h2><span>NEWS</span></div>
+      <ul class="news" id="news-list"></ul>
+      <button class="btn ghost news-more" id="news-more" hidden></button>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap">
+      <div class="about">
+        <svg viewBox="0 0 200 240" aria-hidden="true"><use href="#nasubi"/></svg>
+        <div>
+          <p data-ih="about_1"><b>なすびのお庭</b>は、思いついたゲームを1つずつ植えて育てている場所です。</p>
+          <p data-i="about_2">どのゲームも無料で、ブラウザを開くだけで遊べます。新しいゲームが実ったら、ここでお知らせします。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © <span id="year"></span> <span data-i="doc_title">なすびのお庭</span>
+</footer>
+
+<div class="sheet-bg" id="sheet-bg"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sh-name">
+  <div class="grip"></div>
+  <button class="close" id="sh-close" aria-label="とじる" data-ia="close">✕</button>
+  <div class="head"><img id="sh-img" alt=""><div><h3 id="sh-name"></h3><div class="yomi" id="sh-yomi"></div></div></div>
+  <p id="sh-text"></p>
+  <div class="tags" id="sh-tags"></div>
+  <p class="sh-live" id="sh-live"></p>
+  <a class="btn" id="sh-play" href="#" data-i="play">あそぶ</a>
+</div>
+
+<script src="js/i18n.js"></script>
+<script>
+// =============================================
+//  ゲームとお知らせの一覧
+//  新しいゲームやお知らせは、ここに1つ足すだけで表示されます
+//  en / zh / ko は英語・中国語（繁体字）・韓国語の文。なければ日本語のまま出ます
+//  ことばのボタンや見出しの訳は js/i18n.js
+// =============================================
+const GAMES = [
+  {
+    name: 'さかさまドロップ', qm: 'sakasama',
+    url: 'https://nasubi-no-oniwa.github.io/sakasama/',
+    image: 'img/sakasama-drop.png',
+    text: '4つつなげて消す落ちものパズル。ゲージが溜まったら、相手の盤面をさかさまに！ 積み上げた連鎖がひっくり返る、荒れる対戦パズル。',
+    tags: ['パズル', 'CPU対戦', 'だれかと対戦', '合言葉で対戦', '観戦'],
+    en: {"name": "Upside-Down Drop", "text": "A falling-block puzzle: connect 4 to clear. When your gauge fills, flip your opponent's board upside down! Their stacked-up chains get turned over in this wild battle puzzle."},
+    zh: {"name": "顛倒掉落", "text": "連成4個就消除的掉落式益智遊戲。量表集滿後，把對手的盤面上下顛倒！辛苦堆好的連鎖瞬間翻轉，混亂的對戰益智遊戲。"},
+    ko: {"name": "거꾸로 드롭", "text": "4개를 이으면 사라지는 낙하 퍼즐. 게이지가 차면 상대의 판을 거꾸로 뒤집어라! 쌓아 둔 연쇄가 뒤집히는 난장판 대전 퍼즐."},
+  },
+  {
+    name: '4つ目のダルマ', qm: 'daruma',
+    url: 'https://nasubi-no-oniwa.github.io/daruma/',
+    image: 'img/daruma.png',
+    text: '交互にダルマを落として、4つ並べたら勝ち。でも3ターンごとに、小槌が指した段がだるま落としで抜ける！ 並びが崩れるか、逆にそろうか。',
+    tags: ['2人対戦', 'CPU対戦', 'この端末で2人', 'だれかと対戦', '合言葉で対戦', '観戦'],
+    en: {"name": "The 4th Daruma", "text": "Take turns dropping daruma and line up 4 to win. But every 3 turns, the row the mallet points at gets knocked out! Will your line crumble, or fall into place?"},
+    zh: {"name": "第四個達摩", "text": "輪流投下達摩，連成4個就贏。但每3回合，小槌指著的那一層會像打達摩一樣被敲掉！排好的會崩掉，還是反而連起來？"},
+    ko: {"name": "네 번째 달마", "text": "번갈아 달마를 떨어뜨려 4개를 나란히 놓으면 승리. 하지만 3턴마다 망치가 가리킨 단이 달마 떨어뜨리기로 빠진다! 줄이 무너질까, 오히려 맞춰질까?"},
+  },
+  {
+    name: 'ハネタンク', qm: 'hanetank',
+    url: 'https://nasubi-no-oniwa.github.io/hanetank/',
+    image: 'img/hanetank.png',
+    text: 'はね返る弾で撃ち合う、おもちゃの戦車バトル。毎戦スキルを振り直して、ブロックを仕込んで、2本先取！ 自分の弾にも当たるので要注意。',
+    tags: ['3D', 'アクション', 'CPU対戦', '同じPCで2人', 'だれかと対戦', '合言葉で対戦', '観戦'],
+    en: {"name": "Bounce Tank", "text": "A toy tank battle with bouncing bullets. Re-pick your skills every round, set up blocks, and win 2 rounds first! Careful: your own bullets can hit you too."},
+    zh: {"name": "彈跳坦克", "text": "用會反彈的子彈互射的玩具坦克對戰。每局重新分配技能、布置方塊，先拿下2局！自己的子彈也會打到自己，要小心。"},
+    ko: {"name": "튕김 탱크", "text": "튕기는 탄으로 쏘아 대는 장난감 탱크 배틀. 매 판 스킬을 다시 고르고 블록을 깔아 2판 선승! 내 탄에도 맞으니 조심."},
+  },
+  {
+    name: 'さくがえ',
+    url: 'https://nasubi-no-oniwa.github.io/sakugae/',
+    image: 'img/sakugae.png',
+    text: '柵で道をつくって兵士を送りこむ、6レーンのタワーディフェンス。15秒ごとに、自分の柵の列と相手の柵の列をまるごと入れかえ！ 守りの迷路が、一瞬で相手のものに。',
+    tags: ['タワーディフェンス', 'CPU対戦', '合言葉で対戦', '観戦'],
+    en: {"name": "Fence Swap", "text": "A 6-lane tower defense: build paths with fences and send in your soldiers. Every 15 seconds, your fence rows and your opponent's swap places! Your defensive maze becomes theirs in an instant."},
+    zh: {"name": "柵欄互換", "text": "用柵欄造路、派士兵進攻的6路塔防。每15秒，自己和對手的柵欄列整排互換！防守的迷宮瞬間變成對手的。"},
+    ko: {"name": "울타리 체인지", "text": "울타리로 길을 만들어 병사를 보내는 6레인 타워 디펜스. 15초마다 내 울타리 줄과 상대의 울타리 줄이 통째로 바뀐다! 수비 미로가 순식간에 상대 것으로."},
+  },
+  {
+    name: '盤滑', qm: 'panfa', yomi: 'パンファ',
+    url: 'https://nasubi-no-oniwa.github.io/panfa/',
+    image: 'img/panfa.png',
+    text: '3手ごとに、1列がすべるリバーシ。取ったはずの角が、すべって消える。次にすべる列はいつも見えているので、すべったあとの形まで読んで置くのが勝負どころ。',
+    tags: ['リバーシ', 'CPU対戦', 'この端末で2人', 'だれかと対戦', '合言葉で対戦', '観戦'],
+    en: {"name": "Panfa — Sliding Reversi", "short": "Panfa", "text": "Reversi where one row slides every 3 moves. The corner you took can slide away. The next row to slide is always shown, so the key is to read the board after the slide."},
+    zh: {"name": "盤滑（Panfa）滑動黑白棋", "short": "盤滑", "text": "每3手就有1列滑動的黑白棋。拿下的角落也會滑走消失。下一次要滑動的列一直看得到，關鍵是連滑動後的形狀都算進去再下。"},
+    ko: {"name": "판파 — 미끄러지는 리버시", "short": "판파", "text": "3수마다 한 줄이 미끄러지는 리버시. 잡았던 모서리가 미끄러져 사라진다. 다음에 미끄러질 줄은 늘 보이니, 미끄러진 뒤의 모양까지 읽고 두는 게 승부처."},
+  },
+  {
+    name: '回廊快走', qm: 'kairou', yomi: 'かいろうかいそう',
+    url: 'https://nasubi-no-oniwa.github.io/kairou/',
+    image: 'img/kairou.png',
+    text: '通路をまわして、どこまでも走れ。壁も天井も床になる、終わりのない回廊。穴やかべをよけて、コインを集めて、どこまで行けるか。あいことばで2人同時に走る対戦も。',
+    tags: ['ランナー', '1人で記録', 'ゴースト', 'だれかと対戦', '合言葉で対戦'],
+    en: {"name": "Corridor Dash", "text": "Rotate the corridor and run forever. Walls and ceiling become the floor in an endless corridor. Dodge holes and walls, grab coins, and see how far you can go. 2 players can race at once with a passcode, too."},
+    zh: {"name": "迴廊快跑", "text": "旋轉通道，一路跑下去。牆壁和天花板都會變成地板，沒有盡頭的迴廊。閃過洞和牆、收集金幣，看你能跑多遠。也能用暗號2人同時賽跑對戰。"},
+    ko: {"name": "회랑 질주", "text": "통로를 돌려 끝없이 달려라. 벽도 천장도 바닥이 되는 끝없는 회랑. 구멍과 벽을 피하고 코인을 모아 어디까지 갈 수 있을까. 암호로 2명이 동시에 달리는 대전도."},
+  },
+  {
+    name: '絵私', yomi: 'えし',
+    url: 'https://nasubi-no-oniwa.github.io/eshi/',
+    image: 'img/eshi.png',
+    text: '頭と体・うで・あしを描いて、骨を入れて戦う。長い腕は遠くまで届くけれど遅い。殴られたうで・あしはもげて吹っ飛ぶ！ 描いたキャラはIDでだれでも使える。60秒で描いて戦う「らくがきバトル」も。',
+    tags: ['お絵かき', '3D', 'アクション', 'CPU対戦', '合言葉で対戦', '観戦', 'キャラID'],
+    en: {"name": "Eshi — Draw & Fight", "short": "Eshi", "text": "Draw a head, body, arms and legs, add bones, and fight. Long arms reach far but are slow. Arms and legs that get hit snap off and go flying! Anyone can use your character by its ID. There's also Doodle Battle: draw in 60 seconds, then fight."},
+    zh: {"name": "繪我（Eshi）", "short": "繪我", "text": "畫出頭和身體、手、腳，裝上骨頭來戰鬥。長手臂打得遠但比較慢。被打到的手腳會斷掉飛出去！畫好的角色，任何人都能用ID使用。也有60秒畫完就開打的「塗鴉對戰」。"},
+    ko: {"name": "에시 — 그려서 싸우기", "short": "에시", "text": "머리와 몸, 팔, 다리를 그리고 뼈를 넣어 싸운다. 긴 팔은 멀리 닿지만 느리다. 맞은 팔다리는 뽑혀 날아간다! 그린 캐릭터는 ID로 누구나 쓸 수 있다. 60초 안에 그리고 싸우는 '낙서 배틀'도."},
+  },
+  {
+    name: 'バトベイ',
+    url: 'https://nasubi-no-oniwa.github.io/batbey/',
+    image: 'img/batbey.png',
+    text: '自分で描いた形がそのまま当たり判定になる、3Dバトルごま。攻撃・防御・持久・重さにポイントを振り分けて、3・2・1・まわせ！ バースト・場外・回転停止で3点先取。',
+    tags: ['お絵かき', '3D', 'バトル', 'CPU対戦', '合言葉で対戦', '観戦', 'コマID'],
+    en: {"name": "Batbey", "text": "3D battle tops where the shape you draw becomes the hitbox. Split points between attack, defense, stamina and weight, then 3, 2, 1, spin! First to 3 points by burst, ring-out or spin-out wins."},
+    zh: {"name": "對戰陀螺", "text": "自己畫的形狀就是碰撞判定的3D戰鬥陀螺。把點數分配到攻擊、防禦、持久、重量，3、2、1，轉起來！靠爆裂、出場、停轉先拿3分。"},
+    ko: {"name": "배트베이", "text": "직접 그린 모양이 그대로 판정이 되는 3D 배틀 팽이. 공격·방어·지구력·무게에 포인트를 나누고 3, 2, 1, 돌려라! 버스트·장외·회전 정지로 3점 선취."},
+  },
+  {
+    name: 'ユキダマッチ', qm: 'yukidama',
+    url: 'https://nasubi-no-oniwa.github.io/yukidama/',
+    image: 'img/yukidama.png',
+    text: '雪合戦の1対1。走って、すべって、よじ登って、雪玉をぶつけ合う3Dアクション。かくれる雪のかべは時間とともに溶けていき、最後は正面からのぶつかり合い。ココアやカイロで回復、特技は4つから1つ。',
+    tags: ['3D', 'アクション', 'CPU対戦', 'だれかと対戦', '合言葉で対戦', '観戦'],
+    en: {"name": "Snowball Match", "text": "A 1-on-1 snowball fight. Run, slide, climb, and pelt each other in 3D action. The snow walls you hide behind melt over time, until it's a head-on clash. Heal with cocoa or hand warmers, and pick 1 of 4 special skills."},
+    zh: {"name": "雪球對決", "text": "一對一打雪仗。跑、滑、攀爬，互丟雪球的3D動作遊戲。可以躲的雪牆會隨時間融化，最後只能正面對決。用可可或暖暖包回復，特技4選1。"},
+    ko: {"name": "눈싸움 매치", "text": "1대1 눈싸움. 달리고, 미끄러지고, 기어올라 눈덩이를 던지는 3D 액션. 숨을 수 있는 눈벽은 시간이 지나면 녹아, 마지막엔 정면 승부. 코코아와 핫팩으로 회복, 특기는 4개 중 1개."},
+  },
+  {
+    name: 'ピンチボウル',
+    url: 'https://nasubi-no-oniwa.github.io/pinchbowl/',
+    image: 'img/pinchbowl.png',
+    text: 'ボウリングのピンになって、球をよけろ！ 100本のピンのうち1本が自分。投げる番とよける番を3回ずつ交代して、ピンがたくさん残った方が勝ち。前のピンほどボーナス、投げる側はバンパーを置いてはね返りでねらえる。遅くなった球は止められるけれど、速い球に当たったらふっとんで負け。',
+    tags: ['3D', 'アクション', 'CPU対戦', '合言葉で対戦', '観戦'],
+    en: {"name": "Pinch Bowl", "text": "Become a bowling pin and dodge the ball! One of the 100 pins is you. Take 3 turns each at throwing and dodging; whoever has more pins left wins. Pins further forward earn bonuses, and the thrower can place bumpers for bank shots. You can stop a slow ball, but get hit by a fast one and you go flying and lose."},
+    zh: {"name": "閃避保齡球", "text": "變成保齡球瓶，閃開球！100支球瓶中有1支是你。投球和閃避各輪流3次，留下的球瓶多的一方獲勝。越前面的球瓶獎勵越多，投球方可以放置緩衝板，利用反彈瞄準。變慢的球可以擋住，但被快球打中就會被撞飛輸掉。"},
+    ko: {"name": "핀치 볼", "text": "볼링 핀이 되어 공을 피해라! 100개의 핀 중 하나가 나. 던지는 차례와 피하는 차례를 3번씩 바꿔, 핀이 많이 남은 쪽이 승리. 앞쪽 핀일수록 보너스, 던지는 쪽은 범퍼를 놓아 튕겨서 노릴 수 있다. 느려진 공은 막을 수 있지만, 빠른 공에 맞으면 날아가서 패배."},
+  },
+  {
+    name: '地元の最強', qm: 'jimoto', yomi: 'じもとのさいきょう',
+    url: 'https://nasubi-no-oniwa.github.io/jimoto/',
+    image: 'img/jimoto.png',
+    text: '市町村の本物の形でぶつかり合う、全自動の1対1。明治から今までの市町村・区（なくなった町村も）に、世界の国・州・都市・町も加えた24,838が出場できる。体力は面積、勢いは人口。向きと政策カードで、あなたの地元を最強にしよう。',
+    tags: ['市町村', '全自動バトル', '研究', 'だれかと対戦', '挑戦状', '合言葉で対戦', '観戦'],
+    catch: 'あなたの地元の形は、最強か？',
+    en: {"name": "Hometown Champion", "text": "Fully automatic 1-on-1 battles using the real shapes of municipalities. 24,838 entrants: Japanese cities, towns, villages and wards from the Meiji era to today (even ones that no longer exist), plus countries, states, cities and towns around the world. HP is area, momentum is population. Use direction and policy cards to make your hometown the strongest.", "catch": "Is your hometown's shape the strongest?"},
+    zh: {"name": "家鄉最強", "text": "用市町村真實形狀互撞的全自動一對一。從明治到現在的日本市町村・區（包括已消失的町村），再加上世界各國・州・城市・城鎮，共24,838個可以出場。體力是面積，氣勢是人口。用方向和政策卡，讓你的家鄉成為最強。", "catch": "你家鄉的形狀，是最強的嗎？"},
+    ko: {"name": "우리 동네 최강", "text": "시정촌의 실제 모양으로 부딪치는 전자동 1대1. 메이지 시대부터 지금까지의 일본 시정촌·구(사라진 곳도)에 세계의 나라·주·도시·마을까지 24,838곳이 출전. 체력은 면적, 기세는 인구. 방향과 정책 카드로 당신의 동네를 최강으로 만들자.", "catch": "당신 동네의 모양은 최강인가?"},
+  },
+  {
+    name: '自分', yomi: 'じぶん',
+    url: 'https://nasubi-no-oniwa.github.io/jibun/',
+    image: 'img/jibun.png',
+    text: '名前と誕生日と生まれた市町村区を入れると、あなたの前世の一生が年表で出てくる。縄文から昭和まで、日本の歴史のどこかに生きた、だれかの一生。百姓、奉公人、工場の工員、ときには名前がつく前に亡くなった子も。ごくまれに、あの有名人。',
+    tags: ['前世', '歴史', '年表', '市町村', 'ひとりで'],
+    catch: 'あなたの前世は、どんな一生だった？',
+    en: {"name": "Myself — Past Life Timeline", "short": "Myself", "text": "Enter your name, birthday and the Japanese municipality you were born in, and your past life appears as a timeline. Someone who lived somewhere in Japanese history, from the Jomon period to Showa. A farmer, a servant, a factory worker, sometimes a child who died before being named. Very rarely, someone famous.", "catch": "What kind of life was your past life?"},
+    zh: {"name": "自己 — 前世年表", "short": "自己", "text": "輸入名字、生日和出生的市町村區，就會以年表顯示你前世的一生。從繩文到昭和，在日本歷史某處活過的某個人的一生。農民、傭工、工廠作業員，有時是還沒取名就夭折的孩子。極少數情況下，會是那位名人。", "catch": "你的前世，是怎樣的一生？"},
+    ko: {"name": "나 — 전생 연표", "short": "나", "text": "이름과 생일, 태어난 시정촌구를 넣으면 당신 전생의 일생이 연표로 나온다. 조몬부터 쇼와까지, 일본 역사 어딘가를 살았던 누군가의 일생. 농민, 하인, 공장 직공, 때로는 이름이 붙기 전에 세상을 떠난 아이도. 아주 드물게, 그 유명인.", "catch": "당신의 전생은 어떤 일생이었을까?"},
+  },
+  {
+    name: '弾丸合併', qm: 'dangan', yomi: 'だんがんがっぺい',
+    url: 'https://nasubi-no-oniwa.github.io/dangan/',
+    image: 'img/dangan.png',
+    text: '市町村や国を3つ、1本の軸で串ざしにしてコマを作る全自動バトル。どこに刺すか・どの向きにするかで性能が変わる。外にはみ出した本物の形がぶつかって削れ合い、軸のまわりまで削れた段は合併解消！ 24,838の市町村・国から選べる。',
+    tags: ['市町村', '3D', '全自動バトル', 'だれかと対戦', '挑戦状', '合言葉で対戦', '観戦'],
+    catch: '3つくっつけて、回して勝負！',
+    en: {"name": "Bullet Merger", "text": "A fully automatic battle where you skewer 3 municipalities or countries on one axle to build a top. Where you pierce them and which way they face changes its stats. The real shapes sticking out collide and grind each other down, and a layer worn down to the axle gets un-merged! Choose from 24,838 municipalities and countries.", "catch": "Skewer 3 together, spin, and battle!"},
+    zh: {"name": "子彈合併", "text": "把3個市町村或國家用1根軸串起來做成陀螺的全自動對戰。刺在哪裡、朝哪個方向，性能都會改變。突出在外的真實形狀互相碰撞削減，削到軸附近的那一層就解除合併！可從24,838個市町村・國家中選擇。", "catch": "串起3個，轉起來決勝負！"},
+    ko: {"name": "탄환 합병", "text": "시정촌이나 나라 3개를 축 하나로 꿰어 팽이를 만드는 전자동 배틀. 어디를 꿰는지, 어느 방향인지에 따라 성능이 바뀐다. 밖으로 튀어나온 실제 모양이 부딪쳐 깎이고, 축 주변까지 깎인 단은 합병 해소! 24,838곳의 시정촌·나라 중에서 고를 수 있다.", "catch": "3개를 붙이고 돌려서 승부!"},
+  },
+  {
+    name: 'シインクラッド', yomi: 'しいんくらっど',
+    url: 'https://nasubi-no-oniwa.github.io/shiincrad/',
+    image: 'img/shiincrad.png',
+    text: '死ぬと、その場所に屍が残って足場になる横スクロール。屍はみんなで共有。穴を埋め、トゲをふさぎ、魔物を止める壁になる。だれかが越えると次の層が開く。全100層、5層ごとに番人。挑むたびにちがう名前で。',
+    tags: ['2D', 'アクション', 'みんなで協力', '全100層', 'ドット絵'],
+    catch: 'みんなの屍を越えて、頂へ。',
+    en: {"name": "Shiincrad", "text": "A side-scroller where your corpse stays where you die and becomes a foothold. Corpses are shared by everyone: they fill pits, cover spikes, and become walls that stop monsters. When someone gets past, the next layer opens. 100 layers, with a guardian every 5. A different name every time you try.", "catch": "Climb over everyone's corpses to the top."},
+    zh: {"name": "Shiincrad", "text": "死掉後屍體會留在原地變成踏腳處的橫向卷軸遊戲。屍體由所有人共享，能填坑、蓋住尖刺、成為擋住魔物的牆。有人越過後，下一層就會開放。全100層，每5層有守門人。每次挑戰都換一個名字。", "catch": "越過大家的屍體，前往頂點。"},
+    ko: {"name": "시인크래드", "text": "죽으면 그 자리에 시체가 남아 발판이 되는 횡스크롤. 시체는 모두가 공유. 구멍을 메우고, 가시를 막고, 마물을 막는 벽이 된다. 누군가 넘으면 다음 층이 열린다. 전 100층, 5층마다 문지기. 도전할 때마다 다른 이름으로.", "catch": "모두의 시체를 넘어 정상으로."},
+  },
+  {
+    name: '芋娘', yomi: 'いもむすめ',
+    url: 'https://nasubi-no-oniwa.github.io/imomusume/',
+    image: 'img/imomusume.png',
+    text: '教官が背を向けたすきに、芋をほおばれ。振り向いたら敬礼！ チラ見にフェイント、となりの同僚の密告も。続けて食べるとコンボで速くなり、コンボ10で芋祭り。焼き芋・金の芋も出る。60秒で何個食べられるか、めざせ芋将軍。ランキングつき。',
+    tags: ['3D', '2ボタン', 'ひとりで', '60秒', 'コンボ', 'ランキング'],
+    catch: '教官の目を盗んで、芋を食べろ！',
+    en: {"name": "Sweet Potato Girl", "text": "Stuff your face with sweet potatoes while the drill instructor's back is turned. When he turns around, salute! Watch out for glances, feints, and the coworker next to you snitching. Eat in a row to build a faster combo; a 10 combo starts the Potato Festival. Roasted and golden potatoes show up too. How many can you eat in 60 seconds? Aim for Potato General. With rankings.", "catch": "Eat sweet potatoes behind the instructor's back!"},
+    zh: {"name": "地瓜娘", "text": "趁教官轉過身，大口吃地瓜。他一回頭就敬禮！還有偷瞄、假動作、旁邊同袍的告密。連續吃會形成連擊變快，連擊10次就是地瓜祭。還會出現烤地瓜、金地瓜。60秒能吃幾個？目標是地瓜將軍。附排行榜。", "catch": "躲過教官的眼睛，吃地瓜！"},
+    ko: {"name": "고구마 소녀", "text": "교관이 등을 돌린 틈에 고구마를 먹어라. 돌아보면 경례! 힐끗 보기와 페인트, 옆 동료의 밀고도. 연속으로 먹으면 콤보로 빨라지고, 콤보 10이면 고구마 축제. 군고구마, 황금 고구마도 나온다. 60초에 몇 개 먹을 수 있을까, 목표는 고구마 장군. 랭킹 있음.", "catch": "교관 몰래 고구마를 먹어라!"},
+  },
+  {
+    name: "Fairies' Tower", yomi: 'フェアリーズタワー',
+    url: 'https://nasubi-no-oniwa.github.io/fairies-tower/',
+    image: 'img/fairies-tower.png',
+    text: '妖精になって、100層の世界樹を昇る。翅が尽きて倒れた妖精は浮かぶ屍になり、あとから来る仲間の足場になる。3つの陣営に分かれて、どの陣営が先に頂上へたどり着くかの競争。陣営ごとの掲示板と、世界中とつながる広場つき。日本語・英語・中国語・韓国語で遊べる。',
+    tags: ['2D', 'アクション', 'みんなで協力', '3つの陣営', '全100層', '掲示板', 'ドット絵'],
+    catch: '死は、だれかの足場になる。',
+    en: {"name": "Fairies' Tower", "text": "Become a fairy and climb the 100-floor World Tree. Fairies who run out of wing power and fall become floating remains, footholds for allies who come later. Split into 3 factions and race to see which reaches the summit first. With a board for each faction and a plaza connected to the whole world. Playable in Japanese, English, Chinese and Korean.", "catch": "Death becomes someone's foothold."},
+    zh: {"name": "Fairies' Tower", "text": "化身妖精，攀登100層的世界樹。翅膀力量耗盡而倒下的妖精會化為漂浮的屍骸，成為後來同伴的踏腳石。分成3個陣營，比賽哪個陣營先抵達頂端。附各陣營的留言板，和與全世界相連的廣場。可用日文、英文、中文、韓文遊玩。", "catch": "死亡，會成為某人的踏腳石。"},
+    ko: {"name": "Fairies' Tower", "yomi": "페어리즈 타워", "text": "요정이 되어 100층의 세계수를 오른다. 날개 힘이 다해 쓰러진 요정은 떠다니는 시체가 되어 뒤따르는 동료의 발판이 된다. 3개 진영으로 나뉘어 어느 진영이 먼저 정상에 닿는지 경쟁. 진영별 게시판과 전 세계와 이어지는 광장 있음. 일본어·영어·중국어·한국어로 즐길 수 있다.", "catch": "죽음은 누군가의 발판이 된다."},
+  },
+  {
+    name: 'インテグラ・レイヤー', yomi: 'いんてぐられいやー',
+    url: 'https://nasubi-no-oniwa.github.io/integra-layer/',
+    image: 'img/integra-layer.png',
+    text: '倒れた誰かの欠片が、きみの力になる。塔で拾った欠片を5×5の盤面にはめて、同じ色の凸と凹をつなげるほど強くなる。倒れると欠片はその場に残り、あとから来た人が拾える。ボスは次の手を予告してくる。全員で100階の塔のてっぺんへ。日本語・英語・中国語・韓国語で遊べる。',
+    tags: ['ローグライク', 'パズル', 'みんなで協力', '全100階', 'ドット絵', '掲示板'],
+    catch: '倒れた誰かの欠片が、きみの力になる。',
+    en: {"name": "Integra Layer", "text": "The shards of the fallen become your power. Fit shards you find in the tower onto a 5×5 board; the more same-color bumps and sockets you connect, the stronger you get. When you fall, your shards stay behind for others to pick up. Bosses announce their next move. Everyone together, to the top of the 100-floor tower. Playable in Japanese, English, Chinese and Korean.", "catch": "The shards of the fallen become your power."},
+    zh: {"name": "整合層", "text": "倒下之人的碎片，會成為你的力量。把在塔中撿到的碎片嵌進5×5的盤面，同色的凸與凹接得越多就越強。倒下後碎片會留在原地，後來的人可以撿走。頭目會預告下一招。全員一起前往100層之塔的頂端。可用日文、英文、中文、韓文遊玩。", "catch": "倒下之人的碎片，會成為你的力量。"},
+    ko: {"name": "인테그라 레이어", "text": "쓰러진 누군가의 조각이 너의 힘이 된다. 탑에서 주운 조각을 5×5 판에 끼우고, 같은 색의 볼록과 오목을 많이 이을수록 강해진다. 쓰러지면 조각은 그 자리에 남아 나중에 온 사람이 주울 수 있다. 보스는 다음 수를 예고한다. 모두 함께 100층 탑의 꼭대기로. 일본어·영어·중국어·한국어로 즐길 수 있다.", "catch": "쓰러진 누군가의 조각이 너의 힘이 된다."},
+  },
+  {
+    name: '穴の神隠し', yomi: 'あなのかみかくし',
+    url: 'https://nasubi-no-oniwa.github.io/furoya-no-onna/',
+    image: 'img/furoya-no-onna.png',
+    text: '巨大なヘドロのお尻から、○△■がムリムリ出てくる。長押しで綱を引いて、離すとゆるむ。■は強く、△はやさしく、○はそのあいだ。穴のまわりの輪が赤なら強すぎ、青なら弱すぎ。たまに金の○も。抜いた量と形で決まる称号は1万通り、引くのは顔のないデッサン人形。',
+    tags: ['3D', '長押し', 'ひとりで', '力加減', 'ランキング'],
+    catch: 'ムリムリ出てくる○△■を、引っぱり出せ！',
+    en: {"name": "Ana no Kamikakushi", "text": "○△■ come squeezing out of a giant sludge butt. Hold to pull the rope, let go to loosen it. ■ needs strength, △ a gentle touch, ○ something in between. If the ring around the hole is red you are pulling too hard; blue, too soft. Sometimes a golden ○ appears. 10,000 possible titles depending on how much and what shapes you pull out, and the one pulling is a faceless drawing mannequin.", "catch": "Pull out the ○△■ squeezing out!"},
+    zh: {"name": "穴の神隠し", "yomi": "穴之神隱", "text": "巨大的汙泥屁股裡，○△■ 硬是擠了出來。長按拉繩，放開就鬆。■ 要用力，△ 要輕柔，○ 介於兩者之間。洞口周圍的圈是紅色就太用力，藍色就太輕。偶爾還有金色的 ○。依拉出的量和形狀決定的稱號多達1萬種，拉繩的是沒有臉的素描人偶。", "catch": "把擠出來的○△■拉出來！"},
+    ko: {"name": "穴の神隠し", "yomi": "아나노 카미카쿠시", "text": "거대한 진흙 엉덩이에서 ○△■가 끙끙 밀려 나온다. 길게 누르면 밧줄을 당기고, 떼면 느슨해진다. ■는 세게, △는 살살, ○는 그 중간. 구멍 주위 고리가 빨강이면 너무 세고, 파랑이면 너무 약하다. 가끔 황금 ○도. 뽑은 양과 모양으로 정해지는 칭호는 1만 가지, 당기는 건 얼굴 없는 데생 인형.", "catch": "밀려 나오는 ○△■를 끌어내라!"},
+  },
+  {
+    name: 'ごジュウに', yomi: 'ごじゅうに',
+    url: 'https://nasubi-no-oniwa.github.io/gojuuni/',
+    image: 'img/gojuuni.png',
+    text: '銃身はご自由に。撃つ役は、銃の口から先の銃身を指で自由に描く。輪にすると速く、枝分かれで散弾、波線はうねって飛び、自分に向ければ自分に当たる。撃たれる役は射撃場の紙の的になって、一瞬だけ出る予測線を見てよける。銃は8文字の合言葉で渡せて、K/Dのランキングつき。',
+    tags: ['3D', 'お絵かき', 'よける', '合言葉', 'ランキング'],
+    badge: 'NEW', catch: '銃身は、ご自由に。',
+    en: {"name": "GOJUUNI", "text": "Draw your own barrel. The shooter freely draws the barrel from the muzzle: loops make it faster, branches make a shotgun, wavy lines make bullets wobble, and pointing it at yourself shoots you. The target becomes a paper target at the range and dodges after a split-second prediction line. Share guns with an 8-letter code. K/D ranking.", "catch": "The barrel is up to you."},
+    zh: {"name": "ごジュウに", "yomi": "槍管隨你畫", "text": "槍管隨你畫。射擊方從槍口開始用手指自由畫出槍管：畫圈會變快，分岔變散彈，波浪線讓子彈扭著飛，對著自己就會打到自己。被射方變成靶場的紙靶，看準一瞬間的預測線閃躲。槍可以用8個字的暗號分享，附K/D排行榜。", "catch": "槍管，隨你畫。"},
+    ko: {"name": "ごジュウに", "yomi": "고쥬니", "text": "총신은 마음대로. 쏘는 쪽은 총구에서부터 총신을 손가락으로 자유롭게 그린다. 고리를 만들면 빨라지고, 갈라지면 산탄, 물결선은 꿀렁거리며 날아가고, 자기를 향하면 자기가 맞는다. 맞는 쪽은 사격장의 종이 과녁이 되어 한순간 보이는 예측선을 보고 피한다. 총은 8글자 암호로 건넬 수 있고, K/D 랭킹 있음.", "catch": "총신은 마음대로."}
+  },
+  {
+    name: '名刺の整理', yomi: 'めいしのせいり',
+    url: 'https://nasubi-no-oniwa.github.io/meishi-seiri/',
+    image: 'img/meishi-seiri.png',
+    text: '奥さんが帰ってくるまで60秒。机の上の名刺を、会社の名刺は左の名刺入れへ、キャバ嬢・デリヘルの名刺は右のシュレッダーへスライドする。派手な会社の名刺、地味なお店の名刺にだまされるな。まちがえたら4秒止まって、最後に奥さんに見つかる。今日と全期間のランキングつき。',
+    tags: ['3D', 'スライド', 'ひとりで', '60秒', 'ランキング'],
+    badge: 'NEW', catch: '会社の名刺は左、夜の名刺は右。',
+    en: {"name": "BUSINESS CARD CLEANUP", "text": "Your wife gets home in 60 seconds. Swipe the business cards on your desk: company cards left into the card case, hostess club and escort cards right into the shredder. Don't be fooled by flashy company cards or plain-looking club cards. A mistake freezes you for 4 seconds, and your wife will find it in the end. Today and all-time rankings.", "catch": "Company cards left, night cards right."},
+    zh: {"name": "名刺の整理", "yomi": "整理名片", "text": "老婆60秒後就到家。把桌上的名片滑開：公司的名片往左放進名片夾，酒店小姐・外送茶的名片往右丟進碎紙機。別被花俏的公司名片、樸素的店家名片騙了。錯了會停4秒，最後還會被老婆發現。附今天和全部的排行榜。", "catch": "公司名片往左，夜晚名片往右。"},
+    ko: {"name": "名刺の整理", "yomi": "명함 정리", "text": "아내가 돌아오기까지 60초. 책상 위 명함을 밀어라. 회사 명함은 왼쪽 명함집으로, 캬바쿠라·출장 업소 명함은 오른쪽 파쇄기로. 화려한 회사 명함, 수수한 가게 명함에 속지 마라. 틀리면 4초 멈추고, 마지막에 아내에게 들킨다. 오늘과 전체 랭킹 있음.", "catch": "회사 명함은 왼쪽, 밤의 명함은 오른쪽."}
+  },
+  {
+    name: '羊飼いの1日', yomi: 'ひつじかいのいちにち',
+    url: 'https://nasubi-no-oniwa.github.io/hitsujikai/',
+    image: 'img/hitsujikai.png',
+    text: 'ぎゅうぎゅうに流れてくる羊。子羊が来たら押して柵を開け、囲いへ入れる。大人はそのまま通す。羊の着ぐるみのおじさんは指ではじけ。1匹でもまちがえたら終わり。失敗の瞬間を動画にしてXに投稿できる。今日と全期間のランキングつき。',
+    tags: ['3D', 'タイミング', 'ひとりで', 'ランキング'],
+    badge: 'NEW', catch: '子羊だけ、囲いへ。',
+    en: {"name": "A SHEPHERD'S DAY", "text": "Sheep come packed tight down the chute. When a lamb comes, hold to open the gate and send it into the pen. Let the adults pass. Flick away the guy in a sheep costume. One mistake and it's over. Turn your fail into a video and post it to X. Today and all-time rankings.", "catch": "Only lambs go in the pen."},
+    zh: {"name": "羊飼いの1日", "yomi": "牧羊人的一天", "text": "擠得滿滿的羊群流過來。小羊來了就按住打開柵門，讓牠進圍欄。大羊直接通過。穿羊布偶裝的大叔，用手指彈飛他。錯一隻就結束。失敗的瞬間可以做成影片發到X。附今天和全部的排行榜。", "catch": "只有小羊進圍欄。"},
+    ko: {"name": "羊飼いの1日", "yomi": "양치기의 하루", "text": "빽빽하게 밀려오는 양들. 새끼 양이 오면 눌러서 울타리를 열고 우리에 넣는다. 어른 양은 그대로 보낸다. 양 인형 옷을 입은 아저씨는 손가락으로 튕겨라. 한 마리라도 틀리면 끝. 실패 순간을 영상으로 만들어 X에 올릴 수 있다. 오늘과 전체 랭킹 있음.", "catch": "새끼 양만 우리로."}
+  },
+  {
+    name: 'ビス打ち職人', yomi: 'びすうちしょくにん',
+    url: 'https://nasubi-no-oniwa.github.io/bisu-uchi/',
+    image: 'img/bisu-uchi.png',
+    text: '1本目と2本目を、好きな間隔で打つ。あとはその間隔のまま、インパクトでひたすらビスを打ち続ける。0.05秒ずれたらビスが曲がって終わり。打った本数で称号がもらえて、Xに投稿できる。今日と全期間のランキングつき。',
+    tags: ['3D', 'タイミング', 'ひとりで', 'ランキング'],
+    badge: 'NEW', catch: '同じ間隔で、打ち続けろ。',
+    en: {"name": "SCREW MASTER", "text": "Drive the 1st and 2nd screws at any interval you like. Then keep driving screws at that exact interval with your impact driver. Off by 0.05s and the screw bends. Earn a title for how many you drove and post it to X. Today and all-time rankings.", "catch": "Same interval. Forever."},
+    zh: {"name": "ビス打ち職人", "yomi": "鎖螺絲職人", "text": "第1根和第2根螺絲，用你喜歡的間隔鎖下去。之後就用那個間隔，拿起起子機一直鎖。差了0.05秒，螺絲就會歪掉。依鎖的根數得到稱號，可以發到X。附今天和全部的排行榜。", "catch": "用同樣的間隔，一直鎖。"},
+    ko: {"name": "ビス打ち職人", "yomi": "나사 박기 장인", "text": "1번째와 2번째 나사를 원하는 간격으로 박는다. 그다음은 그 간격 그대로 임팩트 드라이버로 계속 박는다. 0.05초 어긋나면 나사가 휘어서 끝. 박은 개수로 칭호를 받고 X에 올릴 수 있다. 오늘과 전체 랭킹 있음.", "catch": "같은 간격으로, 계속 박아라."}
+  },
+  {
+    name: '指バリア', yomi: 'ゆびばりあ',
+    url: 'https://nasubi-no-oniwa.github.io/yubi-barrier/',
+    image: 'img/yubi-barrier.png',
+    text: '含み損、ふくらむ。下落が来たら、チャートを指で左右にこすってバリアを張る。こすりが足りれば反発、足りなければ強制ロスカット。回を重ねるほど下落は速く、長くなる。耐えた回数で称号がもらえて、Xに投稿できる。回数ごとの人数がわかるランキングつき。',
+    tags: ['チャート', 'こする', 'ひとりで', 'ランキング'],
+    badge: 'NEW', catch: '下落を、指で止めろ。',
+    en: {"name": "FINGER BARRIER", "text": "Your position is bleeding. When the crash comes, rub the chart left and right with your finger to raise a barrier. Rub enough and it bounces; not enough and it's a margin call. Each drop comes faster and longer. Earn a title for how many you held and post it to X. The ranking shows how many players held each count.", "catch": "Stop the crash with your finger."},
+    zh: {"name": "手指結界", "yomi": "指バリア", "text": "浮虧越來越大。下跌來了，就用手指左右搓圖表張開結界。搓得夠就反彈，不夠就強制平倉。次數越多，下跌越快越長。依撐住的次數得到稱號，可以發到X。排行榜會顯示每個次數有幾個人。", "catch": "用手指擋住下跌。"},
+    ko: {"name": "손가락 배리어", "yomi": "指バリア", "text": "평가손이 불어난다. 하락이 오면 차트를 손가락으로 좌우로 문질러 배리어를 친다. 충분히 문지르면 반등, 모자라면 강제 로스컷. 횟수가 늘수록 하락은 빠르고 길어진다. 버틴 횟수로 칭호를 받고 X에 올릴 수 있다. 랭킹에서는 횟수별 인원을 볼 수 있다.", "catch": "하락을 손가락으로 막아라."}
+  },
+  {
+    name: '相撲キング', yomi: 'すもうきんぐ',
+    url: 'https://nasubi-no-oniwa.github.io/sumo-king/',
+    image: 'img/sumo-king.png',
+    text: '横綱 紫煙山、一服。マイクにひと息だけ「フーーッ」と吹くと、横綱が煙を吐いてやせていく。吐けた秒数で番付が上がり、横綱は1分、いちばん上の「相撲キング」は3分。声や機械の音は反則。',
+    tags: ['3D', 'マイク', 'ひと息', 'ひとりで', 'ランキング'],
+    badge: 'NEW', catch: 'ひと息で、どれだけ煙を吐ける？',
+    en: {"name": "SUMOKING", "text": "Yokozuna Shienzan takes a smoke break. Blow into your mic in one single breath and he puffs out smoke and slims down. The longer you blow, the higher your sumo rank: Yokozuna at 1 minute, and the top rank, SUMOKING, at 3 minutes. Voices and machines are fouls.", "catch": "How long can you blow smoke in one breath?"},
+    zh: {"name": "相撲キング", "yomi": "相撲王 SUMOKING", "text": "橫綱 紫煙山，來根菸。對著麥克風一口氣「呼——」地吹，橫綱就會吐出煙、慢慢變瘦。吹得越久番付越高，橫綱要1分鐘，最高的「相撲王」要3分鐘。出聲或用機器都算犯規。", "catch": "一口氣，能吐多久的煙？"},
+    ko: {"name": "相撲キング", "yomi": "스모킹", "text": "요코즈나 시엔잔, 담배 한 대. 마이크에 한 숨에 \"후——\" 하고 불면, 요코즈나가 연기를 내뿜으며 살이 빠진다. 오래 불수록 순위가 올라가고, 요코즈나는 1분, 가장 높은 \"스모킹\"은 3분. 목소리나 기계 소리는 반칙.", "catch": "한 숨에 얼마나 오래 연기를 뿜을 수 있을까?"}
+  },
+  {
+    name: '菊とレモン', yomi: 'きくとれもん',
+    url: 'https://nasubi-no-oniwa.github.io/kiku-lemon/',
+    image: 'img/kiku-lemon.png',
+    text: '【下ネタ注意】刺身工場のライン。横から流れてくるディルドには菊を乗せ、アワビにはレモンをかける。真下に来た瞬間にボタンを押す。だんだん速くなり、最高速のあとは並びと間かくがばらばらに。1回でもまちがえたらライン停止。こなした数で称号がもらえて、そのままXに投稿できる。今日と全期間のランキングつき。',
+    tags: ['3D', 'タイミング', 'ひとりで', '下ネタ注意', 'ランキング'],
+    badge: 'NEW', catch: 'ディルドには菊を。アワビにはレモンを。',
+    en: {"name": "Chrysanthemum & Lemon", "text": "[Dirty joke warning] A sashimi factory line. Put a chrysanthemum on each dildo and squeeze lemon on each abalone as they flow in from the side. Press the moment it is right below. It speeds up, and after top speed the order and spacing get messy. One mistake stops the line. Earn a title for how many you handle and post it to X. Today and all-time rankings.", "catch": "A chrysanthemum for the dildo. Lemon for the abalone."},
+    zh: {"name": "菊與檸檬", "text": "【內含黃色笑話】生魚片工廠的產線。從旁邊流過來的按摩棒要放上菊花，鮑魚要擠上檸檬。在正下方的瞬間按下按鈕。會越來越快，到最高速之後順序和間隔都會亂掉。錯一次產線就停止。依處理的數量得到稱號，可以直接發到X。附今天和全部的排行榜。", "catch": "按摩棒放菊花，鮑魚擠檸檬。"},
+    ko: {"name": "국화와 레몬", "text": "【야한 개그 주의】회 공장의 라인. 옆에서 흘러오는 딜도에는 국화를 올리고, 전복에는 레몬을 뿌린다. 바로 아래에 온 순간 버튼을 누른다. 점점 빨라지고, 최고 속도 이후에는 순서와 간격이 뒤죽박죽. 한 번이라도 틀리면 라인 정지. 처리한 개수로 칭호를 받고 그대로 X에 올릴 수 있다. 오늘과 전체 랭킹 있음.", "catch": "딜도에는 국화를. 전복에는 레몬을."},
+  },
+  {
+    name: "接待ゴルフ", yomi: "せったいごるふ",
+    url: "https://nasubi-no-oniwa.github.io/settai-golf/",
+    image: "img/settai-golf.png",
+    text: "最終ホール。部長のパットはカップのふちで止まった。あなたが入れたら勝ってしまうのに、どう打っても何かが起きて入ってしまう。クラブはパターからドライバーまで5本、後ろ向きにも打てる。入る理由は300種類。入るまでの時間が長いほど上で、粘った秒数で称号がもらえる。動画をつくってXに上げられる。今日と全期間のランキングつき。",
+    tags: ["3D", "ゴルフ", "ひとりで", "接待", "動画", "ランキング"],
+    badge: 'NEW', catch: "どう打っても、入ってしまう。",
+    en: {"name": "Let the Boss Win", "text": "The final hole. Your boss's putt stopped on the lip. If you sink yours you win — and that's bad — but no matter how you hit it, something happens and it goes in. Five clubs from putter to driver, and you can even hit it backwards. 300 reasons it goes in. The longer it takes to drop, the higher you rank, with a title for how long you stalled. Make a video and post it to X. Today and all-time rankings.", "catch": "No matter how you hit it, it goes in."},
+    zh: {"name": "接待高爾夫", "text": "最後一洞。部長的推桿停在洞口邊。你要是進了就贏了，但不管怎麼打，總會發生什麼事讓球進洞。球桿從推桿到一號木共5支，也能往後打。進洞的理由有300種。進洞前的時間越長排名越高，拖的秒數會換來稱號。可以做成影片發到X。附今天和全部的排行榜。", "catch": "不管怎麼打，都會進。"},
+    ko: {"name": "접대 골프", "text": "마지막 홀. 부장님의 퍼트는 홀컵 가장자리에서 멈췄다. 당신이 넣으면 이겨 버리는데, 어떻게 쳐도 무슨 일이 일어나서 들어가 버린다. 클럽은 퍼터부터 드라이버까지 5개, 뒤로도 칠 수 있다. 들어가는 이유는 300가지. 들어갈 때까지 오래 걸릴수록 순위가 높고, 버틴 시간으로 칭호를 받는다. 영상을 만들어 X에 올릴 수 있다. 오늘과 전체 랭킹 있음.", "catch": "어떻게 쳐도 들어가 버린다."},
+  },
+  {
+    name: '地球の脱走劇', yomi: 'ちきゅうのだっそうげき',
+    url: 'https://nasubi-no-oniwa.github.io/chikyu-boeigun/',
+    image: 'img/chikyu-boeigun.png',
+    text: '手足の生えた地球を、ぷにコンで動かして宇宙の果てへ逃がす。1回でも隕石に当たったら木っ端みじん。太陽系→天の川銀河→アンドロメダ銀河→銀河の網の目→宇宙の果て、と本物の距離で進む5ステージ。クリアすると次のステージ用のブースターが手に入り、先の段のブースターを使えば前のステージは一瞬でクリア。掲示板でブースターを投げると、先着5人が受け取れる。宇宙の果てで行けた距離のランキングつき。',
+    tags: ['3D', 'ぷにコン', 'よける', '宇宙', '5ステージ', '掲示板', 'ランキング'],
+    badge: 'NEW', catch: '地球、宇宙の果てまで逃げきれる？',
+    en: {"name": "The Great Earth Escape", "text": "Move an Earth with arms and legs using the stick and flee to the edge of the universe. One meteor hit and Earth is blown to bits. Five stages at real distances: the Solar System, the Milky Way, Andromeda, the Cosmic Web and the Edge of the Universe. Clear a stage to get boosters for the next one; a higher-class booster clears earlier stages in an instant. Throw a booster on the board and the first 5 people can take it. With a distance ranking at the Edge of the Universe.", "catch": "How far can the Earth run?"},
+    zh: {"name": "地球大逃亡", "text": "用搖桿移動長了手腳的地球，逃向宇宙盡頭。被隕石撞到一次就粉身碎骨。太陽系→銀河系→仙女座星系→宇宙網→宇宙盡頭，以真實距離前進的5個關卡。過關就能拿到下一關用的推進器，用更高段的推進器，前面的關卡一瞬間就過。在留言板丟出推進器，前5名可以領取。附宇宙盡頭的距離排行榜。", "catch": "地球能逃多遠？"},
+    ko: {"name": "지구 대탈주", "text": "팔다리가 달린 지구를 스틱으로 움직여 우주의 끝으로 도망친다. 운석에 한 번이라도 맞으면 산산조각. 태양계→은하수→안드로메다→우주 거미줄→우주의 끝, 실제 거리로 나아가는 5개 스테이지. 클리어하면 다음 스테이지용 부스터를 얻고, 더 높은 단계의 부스터를 쓰면 앞 스테이지는 순식간에 클리어. 게시판에 부스터를 던지면 선착순 5명이 받을 수 있다. 우주의 끝 거리 랭킹 있음.", "catch": "지구는 어디까지 도망칠 수 있을까?"},
+  },
+  {
+    name: '避難の訓練ですぞ', yomi: 'ひなんのくんれんですぞ',
+    url: 'https://nasubi-no-oniwa.github.io/hinan-kunren/',
+    image: 'img/hinan-kunren.png',
+    text: '校庭に、上から空爆が降ってくる。赤い円が落ちる場所。ぷにコンで逃げて、スライディングでかわす（すべっている間に押せばつながる）。だんだん激しくなっていく。生きのびた秒数で10秒ごとに称号がもらえて、そのままXに投稿できる。やられる瞬間をスローにした動画もつくれる。ランキングつき。',
+    tags: ['3D', 'ぷにコン', 'ひとりで', 'よける', '動画', 'ランキング'],
+    badge: 'NEW', catch: '何秒、生きのびられる？',
+    en: {"name": "It's Only an Evacuation Drill", "text": "Air-raid bombs fall on a schoolyard. Red circles show where they land. Run with the stick and dodge with a slide (tap again while sliding to chain). It keeps getting heavier. Earn a new title every 10 seconds you survive and post it straight to X. You can also make a video of your last moment in slow motion. With a ranking.", "catch": "How long can you survive?"},
+    zh: {"name": "這只是避難訓練喔", "text": "空襲落在校園操場上。紅色圓圈是落下的位置。用搖桿逃跑，用滑壘閃避（滑行中再按可以連續）。會越來越猛烈。每活10秒就有新稱號，可以直接發到X。還能把被炸瞬間做成慢動作影片。附排行榜。", "catch": "你能活幾秒？"},
+    ko: {"name": "대피 훈련입니다요", "text": "학교 운동장에 공습이 떨어진다. 빨간 원이 떨어지는 곳. 스틱으로 도망치고 슬라이딩으로 피한다 (미끄러지는 중에 누르면 이어짐). 점점 격해진다. 살아남은 시간 10초마다 칭호를 받고 그대로 X에 올릴 수 있다. 당하는 순간을 슬로로 보여 주는 영상도 만들 수 있다. 랭킹 있음.", "catch": "몇 초나 살아남을 수 있을까?"},
+  },
+  {
+    name: 'ドパがきにしかできないゲーム', short: 'ドパがきにしか', yomi: 'どぱがきにしかできないげーむ',
+    url: 'https://nasubi-no-oniwa.github.io/dopagaki-catch/',
+    image: 'img/dopagaki-catch.png',
+    text: '長押しで力をためて、ボールを真上に投げる。落ちてくるボールを「ポーン」に合わせてタップして取るだけ。早く取るほど上で、タイムは0.00001秒まで。ちょうどのタイミングほど高得点で、ドパガキングを目指せ。キャッチの瞬間をスローにした動画をつくってXに上げられる。スマホとパソコンで別々のランキングつき。',
+    tags: ['3D', '長押し', 'ひとりで', '反射神経', '動画', 'ランキング'],
+    badge: 'NEW', catch: '投げて、取る。0.00001秒を争え。',
+    en: {"name": "A Game Only Dopamine Kids Can Play", "short": "Dopamine Kids", "text": "Hold to charge and throw the ball straight up. Just tap on the \"ding\" to catch it as it falls back. Faster is better, timed to 0.00001 s. The more exact your timing, the more points; aim for Dopa King. Make a video with the catch in slow motion and post it to X. Separate rankings for phones and PCs.", "catch": "Throw it, catch it. Fight for every 0.00001 s."},
+    zh: {"name": "只有多巴胺小孩才玩得了的遊戲", "short": "多巴胺小孩", "text": "長按蓄力，把球往正上方丟。配合「叮」點擊，接住落下的球就好。越快越好，時間記到0.00001秒。時機越準分數越高，目標是多巴胺之王。可以做成接球瞬間慢動作的影片發到X。手機和電腦各有排行榜。", "catch": "丟出去，接住它。爭奪0.00001秒。"},
+    ko: {"name": "도파민 키즈만 할 수 있는 게임", "short": "도파민 키즈", "text": "길게 눌러 힘을 모아 공을 위로 던진다. 떨어지는 공을 \"띵\"에 맞춰 탭해서 잡기만 하면 된다. 빠를수록 상위, 타임은 0.00001초까지. 타이밍이 정확할수록 고득점, 도파킹을 노려라. 캐치 순간을 슬로로 보여 주는 영상을 만들어 X에 올릴 수 있다. 폰과 PC 랭킹은 따로.", "catch": "던지고, 잡는다. 0.00001초를 다퉈라."},
+  },
+  {
+    name: 'オ？レ？レ？オ？', yomi: 'おれれお',
+    url: 'https://nasubi-no-oniwa.github.io/oreleo/',
+    image: 'img/oreleo.png',
+    text: 'オ（チョコ）とレ（クリーム）を、シーソーで飛ばして皿に積む。長押しで重りを上げて、はなすと落ちて飛ぶ。皿から落ちたら1こにつき1アウト、3アウトで終わり。崩れたら、積んだ順に下から全部読み上げられる。読み上げ動画をつくって、そのままXに上げられる。積んだ数のランキングつき。',
+    tags: ['3D', '物理', '長押し', '読み上げ', '動画', 'ランキング'],
+    badge: 'NEW', catch: '積んだら、読まれる。',
+    en: {"name": "オ？レ？レ？オ？", "text": "Launch オ (chocolate) and レ (cream) onto a plate with a seesaw and stack them. Hold to raise the weight, let go to drop it and launch. Each piece that falls off the plate is 1 out; 3 outs and it's over. Then the whole stack is read out loud from the bottom. Make a read-out video and post it straight to X. With a ranking for the most stacked.", "catch": "Stack it, and it gets read out."},
+    zh: {"name": "オ？レ？レ？オ？", "text": "用翹翹板把オ（巧克力）和レ（奶油）彈到盤子上疊起來。長按把重物抬高，放開就落下彈飛。從盤子掉下去每1塊算1個出局，3出局結束。最後會從下面開始把疊好的全部唸出來。還能做成朗讀影片直接發到X。附疊的數量排行榜。", "catch": "疊好了，就會被唸出來。"},
+    ko: {"name": "オ？レ？レ？オ？", "text": "オ(초코)와 レ(크림)를 시소로 날려 접시에 쌓는다. 길게 눌러 추를 올리고, 떼면 떨어져서 날아간다. 접시에서 떨어지면 1개당 1아웃, 3아웃이면 끝. 마지막에 쌓은 순서대로 아래부터 전부 읽어 준다. 읽어 주는 영상을 만들어 바로 X에 올릴 수 있다. 쌓은 수 랭킹 있음.", "catch": "쌓으면, 읽힌다."},
+  },
+  {
+    name: '魔法の球 バレー', yomi: 'まほうのたま ばれー',
+    url: 'https://nasubi-no-oniwa.github.io/mahou-volley/',
+    image: 'img/mahou-volley.png',
+    text: '「魔法の球」のバレーボール版。ジャンプサーブ・ジャンプフローター・アンダーから選び、打つ高さ・回転・球速を決めて、落ちる所まで線を描けば魔球サーブになる。無回転はゆれて、ドライブは落ちて、左右は曲がる。受ける側は9m×9mのコートを指で走り回り、フライングも使って体に当てればレシーブ成功。1本勝負。',
+    tags: ['3D', '線を描く', '合言葉', 'バレー', 'ランキング'],
+    badge: 'NEW', catch: '上げられるものなら、上げてみろ。',
+    en: {"name": "Magic Pitch Volleyball", "text": "The volleyball version of Magic Pitch. Pick a jump serve, jump float or underhand, set the contact height, spin and speed, then draw a line to where it lands to make a magic serve. Floats wobble, topspin drops, sidespin curves. Receivers run around the 9 m x 9 m court with a finger and dive to get the ball on their body. One serve decides it.", "catch": "Receive it if you can."},
+    zh: {"name": "魔法之球 排球", "text": "「魔法之球」的排球版。從跳發、跳飄、下手發球中選一種，決定擊球高度、旋轉和球速，再畫線到落點，就是你的魔球發球。飄球會晃、上旋會下墜、側旋會轉彎。接球方用手指在9m×9m的場地裡跑來跑去，也能魚躍救球，球碰到身體就算接起。一球定勝負。", "catch": "有本事就接起來看看。"},
+    ko: {"name": "마법의 공 배구", "text": "「마법의 공」의 배구판. 점프 서브・점프 플로터・언더 서브 중에서 고르고 타점 높이・회전・구속을 정한 뒤, 떨어지는 곳까지 선을 그으면 마구 서브가 된다. 무회전은 흔들리고, 드라이브는 떨어지고, 좌우는 휜다. 받는 쪽은 9m×9m 코트를 손가락으로 뛰어다니며 플라잉도 써서 몸에 맞히면 리시브 성공. 한 번 승부.", "catch": "올릴 수 있으면 올려 봐."},
+  },
+  {
+    name: '魔法の球 卓球', yomi: 'まほうのたま たっきゅう',
+    url: 'https://nasubi-no-oniwa.github.io/mahou-takkyu/',
+    image: 'img/mahou-takkyu.png',
+    text: '「魔法の球」の卓球版。ラケットの球から線を描いて、自分のコートで1回、相手のコートで1回はずませれば、それが魔球サーブになる。回転は6種類で、2回目のバウンドのあとに効いてくる。レシーブはスワイプで打ち返すが、回転は打つまで分からない。回転に合った振り方でないとネットやアウトに。3本のうち1本返せば勝ち。',
+    tags: ['3D', '線を描く', '合言葉', '卓球', 'ランキング'],
+    badge: 'NEW', catch: '返せるものなら、返してみろ。',
+    en: {"name": "Magic Pitch Ping-Pong", "text": "The ping-pong version of Magic Pitch. Draw a line from the ball on your paddle, bounce it once on your side and once on theirs, and it becomes your magic serve. Six kinds of spin kick in after the second bounce. Receivers swipe to hit it back, but the spin stays hidden until they swing. Swing the wrong way for the spin and it goes into the net or out. Return 1 of 3 to win.", "catch": "Return it if you can."},
+    zh: {"name": "魔法之球 桌球", "text": "「魔法之球」的桌球版。從球拍上的球畫線，在自己這邊彈1次、對方那邊彈1次，它就是你的魔球發球。旋轉有6種，在第2次彈跳後發揮作用。接發球用滑動回擊，但旋轉要到揮拍時才知道。揮法不合旋轉就會掛網或出界。3球中接回1球就贏。", "catch": "有本事就接接看。"},
+    ko: {"name": "마법의 공 탁구", "text": "「마법의 공」의 탁구판. 라켓의 공에서 선을 그어 내 코트에서 1번, 상대 코트에서 1번 튀기면 그것이 마구 서브가 된다. 회전은 6종류로, 2번째 바운드 뒤에 효과가 나타난다. 리시브는 스와이프로 받아치지만 회전은 칠 때까지 모른다. 회전에 맞게 휘두르지 않으면 네트나 아웃. 3개 중 1개만 받아치면 승리.", "catch": "받을 수 있으면 받아 봐."},
+  },
+  {
+    name: '魔法の球 PK', yomi: 'まほうのたま ぴーけー',
+    url: 'https://nasubi-no-oniwa.github.io/mahou-pk/',
+    image: 'img/mahou-pk.png',
+    text: '「魔法の球」のPK版。ボールからゴールまで好きな線を描けば、それが魔球になる。上から曲げても、横から浮かせても、球速は40〜150km/hで自由。キーパーは合言葉で魔球を呼び出し、ボールが来る所をタップして飛びつく。3本のうち1本止めれば勝ち。止められていない魔球のランキングつき。',
+    tags: ['3D', '線を描く', '合言葉', 'サッカー', 'ランキング'],
+    badge: 'NEW', catch: '止められるものなら、止めてみろ。',
+    en: {"name": "Magic Pitch PK", "text": "The penalty-kick version of Magic Pitch. Draw any line from the ball to the goal and it becomes your magic shot. Bend it from above, lift it from the side, and pick any speed from 40 to 150 km/h. Keepers call up shots with a code and tap where the ball will go to dive. Save 1 of 3 to win. With a ranking of the most unstoppable shots.", "catch": "Save it if you can."},
+    zh: {"name": "魔法之球 PK", "text": "「魔法之球」的PK版。從球畫一條線到球門，它就是你的魔球。可以從上面讓它轉彎、從側面讓它飄起來，球速40〜150km/h自由決定。守門員用暗號叫出魔球，點一下球會來的地方就撲過去。3球中擋下1球就贏。附「沒被擋下的魔球」排行榜。", "catch": "有本事就擋擋看。"},
+    ko: {"name": "마법의 공 PK", "text": "「마법의 공」의 PK판. 공에서 골대까지 원하는 선을 그리면 그것이 마구가 된다. 위에서 휘게 해도, 옆에서 띄워도 좋고, 구속은 40~150km/h 자유. 골키퍼는 암호로 마구를 불러내 공이 올 곳을 탭해 몸을 날린다. 3개 중 1개만 막으면 승리. 막히지 않은 마구 랭킹도 있다.", "catch": "막을 수 있으면 막아 봐."},
+  },
+  {
+    name: 'とんで、こんにゃく', yomi: 'とんでこんにゃく',
+    url: 'https://nasubi-no-oniwa.github.io/konnyaku/',
+    image: 'img/konnyaku.png',
+    text: 'おでんの鍋から逃げたこんにゃくを、フライ返しで弾いて変なところに乗せる。長押しで力をためて、はなすと弾く。ぶよんぶよんで、ぶつかるとよく跳ねるこんにゃくが2秒止まったら着地。まな板、風船、なすび、鳥居、回る十字…全30面。落ちても時計は止まらない、面ごとのクリア時間ランキングつき。',
+    tags: ['3D', '物理', 'ひとりで', 'ふにゃふにゃ', 'ランキング'],
+    badge: 'NEW', catch: 'こんにゃくを、変なところに乗せろ。',
+    en: {"name": "Flying Konnyaku", "text": "A konnyaku escaped the oden pot. Flip it with a spatula and land it on weird things. Hold to charge, let go to flip. The wobbly konnyaku bounces off everything; when it stays still for 2 seconds, it has landed. A cutting board, balloons, an eggplant, a torii gate, a spinning cross... 30 stages in all. The clock never stops even when you fall, with a clear-time ranking for every stage.", "catch": "Land the konnyaku on weird things."},
+    zh: {"name": "飛吧，蒟蒻", "text": "從關東煮鍋裡逃出來的蒟蒻，用鍋鏟把它彈到奇怪的地方。長按蓄力，放開彈出。軟Q又很會彈的蒟蒻停住2秒就算著陸。砧板、氣球、茄子、鳥居、旋轉十字…共30關。掉下去時鐘也不會停，每關都有通關時間排行榜。", "catch": "把蒟蒻放到奇怪的地方。"},
+    ko: {"name": "날아라, 곤약", "text": "오뎅 냄비에서 도망친 곤약을 뒤집개로 튕겨서 이상한 곳에 올린다. 길게 눌러 힘을 모으고, 떼면 튕긴다. 탱글탱글하고 잘 튀는 곤약이 2초 멈추면 착지. 도마, 풍선, 가지, 도리이, 도는 십자… 모두 30스테이지. 떨어져도 시계는 멈추지 않고, 스테이지마다 클리어 시간 랭킹이 있다.", "catch": "곤약을 이상한 곳에 올려라."},
+  },
+  {
+    name: '魔法の球', yomi: 'まほうのたま',
+    url: 'https://nasubi-no-oniwa.github.io/mahou-no-tama/',
+    image: 'img/mahou-no-tama.png',
+    text: '線を描けば、それが魔球になる。ピッチャーの後ろから、ストライクゾーンまで好きな線を描くだけ。曲がっても、一周回っても、画面いっぱいでもいい。できた魔球は合言葉で投げ合い、バッターは3ストライクまでに打ち返す。打たれていない魔球のランキングつき。',
+    tags: ['3D', '線を描く', '合言葉', '野球', 'ランキング'],
+    badge: 'NEW', catch: '線を描けば、それが魔球になる。',
+    en: {"name": "Magic Pitch", "text": "Draw a line and it becomes your magic pitch. From behind the pitcher, draw any line you like to the strike zone. It can curve, loop all the way around, or fill the whole screen. Trade your pitches with a code, and batters try to hit them before 3 strikes. With a ranking of the most unhittable pitches.", "catch": "Draw a line. It becomes your magic pitch."},
+    zh: {"name": "魔法之球", "text": "畫出一條線，它就是你的魔球。從投手身後，隨意畫一條線到好球帶就好。轉彎、繞一圈、塞滿整個畫面都可以。做好的魔球用暗號互相投，打者要在3好球之前擊回。附「沒被打到的魔球」排行榜。", "catch": "畫出一條線，它就是你的魔球。"},
+    ko: {"name": "마법의 공", "text": "선을 그리면 그것이 마구가 된다. 투수 뒤에서 스트라이크 존까지 원하는 선을 그리기만 하면 된다. 휘어도, 한 바퀴 돌아도, 화면 가득해도 좋다. 완성한 마구는 암호로 주고받고, 타자는 3스트라이크 전에 쳐 낸다. 맞지 않은 마구 랭킹도 있다.", "catch": "선을 그리면 그것이 마구가 된다."},
+  },
+  {
+    name: 'もやしの次郎', yomi: 'もやしのじろう',
+    url: 'https://nasubi-no-oniwa.github.io/moyashi-no-jiro/',
+    image: 'img/moyashi-no-jiro.png',
+    text: 'ヤサイ、どこまで盛れる？ 長い・ふつう・短いもやしの小皿から、トングか素手でつかんで丼に盛る。長いほど重いけどくずれやすい。盛ったらカウンター越しにお客さんの前まで運ぶ。こぼしたらちゃぶ台返しで店が爆発。点数は高さ×重さでランキング。',
+    tags: ['3D', '物理', 'ひとりで', 'バランス', 'ランキング'],
+    badge: 'NEW', catch: 'ヤサイ、どこまで盛れる？',
+    en: {"name": "Moyashi no Jiro", "text": "How high can you pile the veggies? Grab bean sprouts from small plates of long, normal or short ones, with tongs or bare hands, and pile them on your bowl. Longer ones are heavier but topple easily. Then carry it across the counter to the customer. Spill it and the table flips and the shop explodes. Score is height × weight, with rankings.", "catch": "How high can you pile the bean sprouts?"},
+    zh: {"name": "豆芽次郎", "text": "蔬菜，到底能堆多高？從長、普通、短的豆芽小碟裡，用夾子或徒手抓起來堆到碗上。越長越重，但越容易垮。堆好後越過吧台端到客人面前。灑出來就會翻桌，店會爆炸。分數是高度×重量，附排行榜。", "catch": "豆芽，到底能堆多高？"},
+    ko: {"name": "숙주의 지로", "text": "야채, 얼마나 쌓을 수 있을까? 긴·보통·짧은 숙주 접시에서 집게나 맨손으로 집어 그릇에 쌓는다. 길수록 무겁지만 무너지기 쉽다. 다 쌓으면 카운터 너머 손님 앞까지 나른다. 쏟으면 밥상 뒤집기로 가게가 폭발. 점수는 높이×무게로 랭킹.", "catch": "숙주, 얼마나 높이 쌓을 수 있을까?"},
+  },
+  {
+    name: '手りゅう弾は帰宅する', yomi: 'てりゅうだんはきたくする',
+    url: 'https://nasubi-no-oniwa.github.io/teryudan-kitaku/',
+    image: 'img/teryudan-kitaku.png',
+    text: '手りゅう弾を渡された。絶対に自爆してはいけない。でも、どう投げても帰ってくる。投げた瞬間に野球部がライナーで打ち返し、鳥がくわえて落としてくる。帰ってくる理由は約200種類。帰ってくるまで生きのびた時間でランキング。',
+    tags: ['3D', '長押し', 'ひとりで', 'なんでやねん', 'ランキング'],
+    badge: 'NEW', catch: 'どう投げても、帰ってくる。',
+    en: {"name": "The Grenade Comes Home", "text": "You've been handed a grenade. You must never blow yourself up. But however you throw it, it comes back. The baseball team lines it straight back the moment you throw it; a bird picks it up and drops it on you. About 200 reasons it comes back. Ranked by how long you survive until it returns.", "catch": "However you throw it, it comes back."},
+    zh: {"name": "手榴彈回家了", "text": "你拿到了一顆手榴彈。絕對不可以自爆。但不管怎麼丟，它都會回來。一丟出去就被棒球隊打成平飛球擊回，被鳥叼回來丟下。回來的理由約有200種。以撐到它回來前活了多久來排名。", "catch": "不管怎麼丟，它都會回來。"},
+    ko: {"name": "수류탄은 귀가한다", "text": "수류탄을 건네받았다. 절대로 자폭해서는 안 된다. 그런데 어떻게 던져도 돌아온다. 던지자마자 야구부가 라이너로 받아치고, 새가 물고 와서 떨어뜨린다. 돌아오는 이유는 약 200가지. 돌아올 때까지 살아남은 시간으로 랭킹.", "catch": "어떻게 던져도, 돌아온다."},
+  },
+  {
+    name: 'つぎのゲーム',
+    soon: true,
+    text: 'ただいま土の中で育てています。芽が出るまでお待ちください。',
+    tags: ['準備中']
+  }
+];
+
+const NEWS = [
+  { date: '2026.11.10', text: '新作「ごジュウに」を公開しました。銃身を自由に描いて撃つ役と、射撃場の紙の的になって弾をよける役のゲームです。描いた形で弾の飛び方が変わり、銃は合言葉で渡せます。', en: "New game: GOJUUNI. One side freely draws a gun barrel and shoots, the other becomes a paper target and dodges. The barrel's shape changes how bullets fly, and guns are shared by code.", zh: "推出新作「ごジュウに」。一方自由畫槍管來射擊，另一方變成靶場的紙靶閃躲子彈。畫出的形狀會改變子彈的飛法，槍可以用暗號分享。", ko: "신작 「ごジュウに」를 공개했어요. 총신을 자유롭게 그려서 쏘는 쪽과, 사격장의 종이 과녁이 되어 총알을 피하는 쪽의 게임이에요. 그린 모양에 따라 총알이 날아가는 방식이 바뀌고, 총은 암호로 건넬 수 있어요." },
+  { date: '2026.11.09', text: '新作「名刺の整理」を公開しました。奥さんが帰ってくるまでの60秒で、会社の名刺は左の名刺入れへ、キャバ嬢・デリヘルの名刺は右のシュレッダーへ仕分けるゲームです。', en: "New game: BUSINESS CARD CLEANUP. In the 60 seconds before your wife gets home, sort company cards left into the card case and hostess club and escort cards right into the shredder.", zh: "新作「名刺の整理」上線了。在老婆回家前的60秒內，把公司名片往左放進名片夾，酒店小姐・外送茶的名片往右丟進碎紙機。", ko: "신작 「名刺の整理」를 공개했습니다. 아내가 돌아오기 전 60초 동안 회사 명함은 왼쪽 명함집으로, 캬바쿠라·출장 업소 명함은 오른쪽 파쇄기로 나누는 게임입니다." },
+  { date: '2026.11.09', text: '新作「羊飼いの1日」を公開しました。ぎゅうぎゅうに流れてくる羊を、柵を開け閉めして分けるゲームです。子羊だけ囲いへ、大人はそのまま通し、着ぐるみのおじさんは指ではじきます。', en: "New game \"A SHEPHERD'S DAY\" is out. Sort a packed flow of sheep by opening and closing the gate. Only lambs go in the pen, adults pass, and you flick away the guy in a sheep costume.", zh: "推出新作「牧羊人的一天」。開關柵門，把擠滿的羊群分開的遊戲。只有小羊進圍欄，大羊直接通過，穿布偶裝的大叔用手指彈飛。", ko: "신작 「양치기의 하루」를 공개했어요. 빽빽하게 밀려오는 양을 울타리를 열고 닫아 나누는 게임이에요. 새끼 양만 우리로, 어른 양은 그대로, 인형 옷 아저씨는 손가락으로 튕겨요." },
+  { date: '2026.11.07', text: '新作「指バリア」を公開しました。下落が来たら、チャートを指で左右にこすって止めるゲームです。何回耐えられるかで称号がもらえます。', en: "New game \"FINGER BARRIER\" is out. When the market crashes, rub the chart left and right with your finger to stop it. Earn a title for how many drops you hold.", zh: "推出新作「手指結界」。下跌來了，就用手指左右搓圖表擋住它。依撐住的次數得到稱號。", ko: "신작 「손가락 배리어」를 공개했어요. 하락이 오면 차트를 손가락으로 좌우로 문질러 막는 게임이에요. 버틴 횟수로 칭호를 받을 수 있어요." },
+  { date: '2026.11.06', text: '新作「相撲キング」を公開しました。マイクにひと息だけ吹くと、横綱が煙を吐いてやせていくゲームです。吐けた秒数で番付が上がります。', en: "New game \"SUMOKING\" is out. Blow into your mic in one breath and the yokozuna puffs out smoke and slims down. The longer you blow, the higher your rank.", zh: "推出新作「相撲キング」。對著麥克風一口氣吹，橫綱就會吐出煙、慢慢變瘦。吹得越久，番付越高。", ko: "신작 「相撲キング」를 공개했습니다. 마이크에 한 숨에 불면 요코즈나가 연기를 내뿜으며 살이 빠지는 게임입니다. 오래 불수록 순위가 올라갑니다." },
+  { date: '2026.11.05', text: '新作「菊とレモン」を公開しました（下ネタ注意）。流れてくるディルドには菊を、アワビにはレモンを。1回まちがえたらライン停止のタイミングゲームです。', en: "New game \"Chrysanthemum & Lemon\" is out (dirty joke warning). A chrysanthemum for each dildo, lemon for each abalone. One mistake and the line stops.", zh: "推出新作「菊與檸檬」（內含黃色笑話）。流過來的按摩棒放菊花，鮑魚擠檸檬。錯一次產線就停止的時機遊戲。", ko: "신작 「국화와 레몬」을 공개했어요 (야한 개그 주의). 흘러오는 딜도에는 국화를, 전복에는 레몬을. 한 번 틀리면 라인이 멈추는 타이밍 게임이에요." },
+  { date: '2026.11.05', text: '新作「接待ゴルフ」を公開しました。部長を勝たせないといけないのに、どう打っても入ってしまうゴルフゲームです。入る理由は300種類。入るまでの時間が長いほど上です。', en: "New game \"Let the Boss Win\" is out. You have to let your boss win, but no matter how you hit it, your ball goes in. 300 reasons it drops. The longer it takes, the higher you rank.", zh: "推出新作「接待高爾夫」。明明得讓部長贏，不管怎麼打球都會進洞的高爾夫遊戲。進洞的理由有300種，進洞前的時間越長排名越高。", ko: "신작 「접대 골프」를 공개했어요. 부장님을 이기게 해야 하는데 어떻게 쳐도 들어가 버리는 골프 게임이에요. 들어가는 이유는 300가지, 들어갈 때까지 오래 걸릴수록 순위가 높아요." },
+  { date: '2026.11.05', text: '新作「地球の脱走劇」を公開しました。手足の生えた地球を動かして隕石をよけ、太陽系から宇宙の果てまで逃げる5ステージのゲームです。掲示板でブースターを投げ合えます。', en: "New game \"The Great Earth Escape\" is out. Move an Earth with arms and legs, dodge meteors and flee from the Solar System to the edge of the universe across 5 stages. Throw boosters to each other on the board.", zh: "推出新作「地球大逃亡」。移動長了手腳的地球閃開隕石，從太陽系一路逃到宇宙盡頭的5關遊戲。可以在留言板互丟推進器。", ko: "신작 「지구 대탈주」를 공개했어요. 팔다리가 달린 지구를 움직여 운석을 피하며 태양계에서 우주의 끝까지 도망치는 5스테이지 게임이에요. 게시판에서 부스터를 주고받을 수 있어요." },
+  { date: '2026.11.04', text: '新作「避難の訓練ですぞ」を公開しました。上から降ってくる空爆を、ぷにコンとスライディングでよけて生きのびるゲームです。10秒ごとに称号がもらえて、Xに投稿できます。', en: "New game \"It's Only an Evacuation Drill\" is out. Dodge falling air-raid bombs with the stick and slides, and survive as long as you can. Earn a title every 10 seconds and post it to X.", zh: "推出新作「這只是避難訓練喔」。用搖桿和滑壘閃避從天而降的空襲，盡量活下去。每10秒得到一個稱號，可以發到X。", ko: "신작 「대피 훈련입니다요」를 공개했어요. 하늘에서 떨어지는 공습을 스틱과 슬라이딩으로 피해 살아남는 게임이에요. 10초마다 칭호를 받고 X에 올릴 수 있어요." },
+  { date: '2026.11.04', text: '新作「ドパがきにしかできないゲーム」を公開しました。投げたボールをキャッチするだけのゲームです。タイムは0.00001秒まで。キャッチの瞬間をスローにした動画をXに上げられます。', en: "New game \"A Game Only Dopamine Kids Can Play\" is out. Just throw a ball and catch it. Timed to 0.00001 s. You can post a video with the catch in slow motion to X.", zh: "推出新作「只有多巴胺小孩才玩得了的遊戲」。把丟出去的球接住就好。時間記到0.00001秒。可以把接球瞬間慢動作的影片發到X。", ko: "신작 「도파민 키즈만 할 수 있는 게임」을 공개했어요. 던진 공을 잡기만 하는 게임이에요. 타임은 0.00001초까지. 캐치 순간을 슬로로 보여 주는 영상을 X에 올릴 수 있어요." },
+  { date: '2026.11.02', text: '新作「オ？レ？レ？オ？」を公開しました。オ（チョコ）とレ（クリーム）をシーソーで飛ばして積み、崩れたら積んだ順に全部読み上げられるゲームです。読み上げ動画をつくってXに上げられます。', en: "New game \"オ？レ？レ？オ？\" is out. Launch オ (chocolate) and レ (cream) with a seesaw and stack them; when it falls apart, the whole stack is read out in order. You can make a read-out video and post it to X.", zh: "推出新作「オ？レ？レ？オ？」。用翹翹板把オ（巧克力）和レ（奶油）彈起來疊好，倒了就會照疊的順序全部唸出來。可以做成朗讀影片發到X。", ko: "신작 「オ？レ？レ？オ？」를 공개했어요. オ(초코)와 レ(크림)를 시소로 날려 쌓고, 무너지면 쌓은 순서대로 전부 읽어 주는 게임이에요. 읽어 주는 영상을 만들어 X에 올릴 수 있어요." },
+  { date: '2026.10.30', text: '新作「魔法の球 バレー」を公開しました。サーブの種類と打つ高さを選んで線を描いた魔球サーブを、コートを走り回ってレシーブします。野球・PK・卓球・バレーはタイトルのタブで行き来できます。', en: "New game \"Magic Pitch Volleyball\" is out. Pick a serve type and contact height, draw your magic serve, and run around the court to receive it. Switch between Baseball, PK, Ping-Pong and Volleyball with the tabs on the title screen.", zh: "推出新作「魔法之球 排球」。選好發球種類和擊球高度，畫出魔球發球，在場地裡跑來跑去接球。棒球・PK・桌球・排球可以用標題畫面的分頁切換。", ko: "신작 「마법의 공 배구」를 공개했어요. 서브 종류와 타점 높이를 골라 선을 그린 마구 서브를, 코트를 뛰어다니며 리시브해요. 야구・PK・탁구・배구는 타이틀의 탭으로 오갈 수 있어요." },
+  { date: '2026.10.30', text: '新作「魔法の球 卓球」を公開しました。魔法の球の卓球版で、線を描いた魔球サーブを、スワイプで打ち返します。回転は打つまで分からない。野球・PK・卓球はタイトルのタブで行き来できます。', en: "New game \"Magic Pitch Ping-Pong\" is out. The ping-pong version of Magic Pitch: draw a magic serve and swipe to return it. You won't know the spin until you swing. Switch between Baseball, PK and Ping-Pong with the tabs on the title screen.", zh: "推出新作「魔法之球 桌球」。魔法之球的桌球版，畫出魔球發球，用滑動回擊。旋轉要到揮拍時才知道。棒球・PK・桌球可以用標題畫面的分頁切換。", ko: "신작 「마법의 공 탁구」를 공개했어요. 마법의 공의 탁구판으로, 선을 그린 마구 서브를 스와이프로 받아쳐요. 회전은 칠 때까지 몰라요. 야구・PK・탁구는 타이틀의 탭으로 오갈 수 있어요." },
+  { date: '2026.10.30', text: '新作「魔法の球 PK」を公開しました。魔法の球のサッカー版で、線を描いた魔球をキーパーが止めます。合言葉でけり合って、止められていない魔球のランキングを目指しましょう。', en: "New game \"Magic Pitch PK\" is out. The soccer version of Magic Pitch: draw a magic shot and let keepers try to stop it. Trade shots with a code and aim for the most unstoppable shot.", zh: "推出新作「魔法之球 PK」。魔法之球的足球版，畫出的魔球由守門員來擋。用暗號互相踢，挑戰「沒被擋下的魔球」排行榜吧。", ko: "신작 「마법의 공 PK」를 공개했어요. 마법의 공의 축구판으로, 선을 그린 마구를 골키퍼가 막아요. 암호로 서로 차며 막히지 않은 마구 랭킹을 노려 보세요." },
+  { date: '2026.10.29', text: '新作「とんで、こんにゃく」を公開しました。おでんの鍋から逃げたこんにゃくを、フライ返しで弾いて変なところに乗せるゲームです。全30面、面ごとのクリア時間ランキングつき。', en: "New game \"Flying Konnyaku\" is out. Flip a konnyaku that escaped the oden pot and land it on weird things. 30 stages, with a clear-time ranking for every stage.", zh: "推出新作「飛吧，蒟蒻」。用鍋鏟把從關東煮鍋裡逃出來的蒟蒻彈到奇怪的地方。共30關，每關都有通關時間排行榜。", ko: "신작 「날아라, 곤약」을 공개했어요. 오뎅 냄비에서 도망친 곤약을 뒤집개로 튕겨 이상한 곳에 올리는 게임이에요. 모두 30스테이지, 스테이지마다 클리어 시간 랭킹이 있어요." },
+  { date: '2026.10.29', text: '新作「魔法の球」を公開しました。ストライクゾーンまで線を描くと、それが魔球になります。合言葉で魔球を投げ合って、打たれていない魔球のランキングを目指しましょう。', en: "New game \"Magic Pitch\" is out. Draw a line to the strike zone and it becomes your magic pitch. Trade pitches with a code and aim for the ranking of the most unhittable pitches.", zh: "推出新作「魔法之球」。畫一條線到好球帶，它就變成魔球。用暗號互相投魔球，挑戰「沒被打到的魔球」排行榜吧。", ko: "신작 「마법의 공」을 공개했어요. 스트라이크 존까지 선을 그리면 그것이 마구가 돼요. 암호로 마구를 주고받으며, 맞지 않은 마구 랭킹을 노려 보세요." },
+  { date: '2026.10.29', text: '新作を2本公開しました。もやしを丼に盛って運ぶ「もやしの次郎」と、どう投げても帰ってくる手りゅう弾から生きのびる「手りゅう弾は帰宅する」。どちらもランキングつきです。', en: "Two new games are out: \"Moyashi no Jiro\", where you pile bean sprouts on a bowl and carry it, and \"The Grenade Comes Home\", where you survive a grenade that comes back however you throw it. Both have rankings.", zh: "推出2款新作：把豆芽堆到碗上端出去的「豆芽次郎」，以及不管怎麼丟都會回來、要從手榴彈下活下來的「手榴彈回家了」。兩款都有排行榜。", ko: "신작 2개를 공개했어요. 숙주를 그릇에 쌓아 나르는 「숙주의 지로」와, 어떻게 던져도 돌아오는 수류탄에서 살아남는 「수류탄은 귀가한다」. 둘 다 랭킹이 있어요." },
+  { date: '2026.10.27', text: '「風呂屋の女」は3Dになって「穴の神隠し」に生まれ変わりました。巨大なお尻から出てくる○△■を引っぱり出して、1万通りの称号を集めましょう。ランキングも新しくなりました。', en: "\"Furoya no Onna\" has been reborn in 3D as \"Ana no Kamikakushi\". Pull the ○△■ out of a giant butt and collect 10,000 titles. The rankings are new, too.", zh: "「風呂屋の女」變成3D，重生為「穴の神隠し」。把巨大屁股裡出來的○△■拉出來，收集1萬種稱號吧。排行榜也更新了。", ko: "「風呂屋の女」가 3D가 되어 「穴の神隠し」로 다시 태어났어요. 거대한 엉덩이에서 나오는 ○△■를 끌어내 1만 가지 칭호를 모아 보세요. 랭킹도 새로워졌어요." },
+  { date: '2026.10.27', text: '新作「風呂屋の女」（いまの「穴の神隠し」）を公開しました。くさい客にからまったガラクタを、綱で引っぱり出す力加減のゲームです。女将の声をたよりに、大きいガラクタを出しつづけましょう。ランキングつき。', en: "New game \"Furoya no Onna\" (now \"Ana no Kamikakushi\") is out. A game of finesse where you pull junk tangled on a smelly customer out with a rope. Follow the landlady's voice and keep pulling out big junk. With rankings.", zh: "推出新作「風呂屋の女」（現在的「穴の神隠し」）。用繩子把纏在臭客人身上的破爛拉出來、考驗力道的遊戲。跟著老闆娘的聲音，不斷拉出大件破爛吧。附排行榜。", ko: "신작 「風呂屋の女」(지금의 「穴の神隠し」)를 공개했어요. 냄새나는 손님에게 엉킨 잡동사니를 밧줄로 끌어내는 힘 조절 게임이에요. 여주인의 목소리를 따라 큰 잡동사니를 계속 끌어내세요. 랭킹 있음." },
+  { date: '2026.10.27', text: '新作「インテグラ・レイヤー」を公開しました。倒れた誰かの欠片を盤面につないで強くなる、全員参加型のローグライクです。ボスの予告、地域の大ボス、合成所つき。みんなで100階の塔を上りましょう。', en: "New game \"Integra Layer\" is out. A roguelike everyone plays together, where you get stronger by linking the shards of the fallen on your board. With boss previews, regional big bosses, and a fusion shop. Let's climb the 100-floor tower together.", zh: "推出新作「整合層」。把倒下之人的碎片接在盤面上變強、全員參與的Roguelike。有頭目預告、地區大頭目、合成所。大家一起登上100層的塔吧。", ko: "신작 「인테그라 레이어」를 공개했어요. 쓰러진 누군가의 조각을 판에 이어 강해지는, 모두가 참여하는 로그라이크예요. 보스 예고, 지역 대보스, 합성소도 있어요. 다 함께 100층 탑을 올라요." },
+  { date: '2026.10.23', text: "新作「Fairies' Tower（フェアリーズタワー）」を公開しました。妖精になって、倒れた仲間の屍を足場に100層の世界樹を昇ります。3つの陣営に分かれて頂上を目指す競争。掲示板つき、4つの言葉で遊べます。", en: "New game \"Fairies' Tower\" is out. Become a fairy and climb the 100-floor World Tree, using fallen allies' remains as footholds. Split into 3 factions and race to the top. With message boards, playable in 4 languages.", zh: "推出新作「Fairies' Tower」。化身妖精，以倒下同伴的屍骸為踏腳石，攀登100層的世界樹。分成3個陣營比賽誰先登頂。附留言板，可用4種語言遊玩。", ko: "신작 「Fairies' Tower」를 공개했어요. 요정이 되어 쓰러진 동료의 시체를 발판 삼아 100층의 세계수를 올라요. 3개 진영으로 나뉘어 정상을 향해 경쟁. 게시판이 있고, 4개 언어로 즐길 수 있어요." },
+  { date: '2026.10.23', text: '新作「芋娘」を公開しました。教官の目を盗んで芋を食べる、2ボタンの3Dゲームです。コンボ・芋祭り・階級・ランキングつき。60秒で何個食べられるか、めざせ芋将軍！', en: "New game \"Sweet Potato Girl\" is out. A 2-button 3D game where you eat sweet potatoes behind the instructor's back. With combos, Potato Festivals, ranks and rankings. How many can you eat in 60 seconds? Aim for Potato General!", zh: "推出新作「地瓜娘」。躲過教官的眼睛吃地瓜、只用2個按鈕的3D遊戲。有連擊、地瓜祭、階級、排行榜。60秒能吃幾個？目標是地瓜將軍！", ko: "신작 「고구마 소녀」를 공개했어요. 교관 몰래 고구마를 먹는 2버튼 3D 게임이에요. 콤보, 고구마 축제, 계급, 랭킹 있음. 60초에 몇 개 먹을 수 있을까, 목표는 고구마 장군!" },
+  { date: '2026.10.20', text: '新作「シインクラッド」を公開しました。死ぬとそこが足場になる、みんなで挑む全100層の横スクロールです。屍はすべての人で共有、だれかが越えると次の層が開きます。', en: "New game \"Shiincrad\" is out. A 100-layer side-scroller everyone takes on together, where the spot you die becomes a foothold. Corpses are shared by all players, and when someone gets past, the next layer opens.", zh: "推出新作「Shiincrad」。死掉的地方會變成踏腳處、大家一起挑戰的全100層橫向卷軸遊戲。屍體由所有人共享，有人越過後下一層就會開放。", ko: "신작 「시인크래드」를 공개했어요. 죽은 곳이 발판이 되는, 모두가 함께 도전하는 전 100층 횡스크롤이에요. 시체는 모든 사람이 공유하고, 누군가 넘으면 다음 층이 열려요." },
+  { date: '2026.10.18', text: '新作「弾丸合併」を公開しました。市町村や国を3つ串ざしにしてコマを作る、全自動の3Dバトルです。だれかと対戦・挑戦状・番付つき。', en: "New game \"Bullet Merger\" is out. A fully automatic 3D battle where you skewer 3 municipalities or countries to make a top. With online matchmaking, challenges and rankings.", zh: "推出新作「子彈合併」。把3個市町村或國家串起來做成陀螺的全自動3D對戰。有隨機對戰、挑戰書、排行。", ko: "신작 「탄환 합병」을 공개했어요. 시정촌이나 나라 3개를 꿰어 팽이를 만드는 전자동 3D 배틀이에요. 아무나와 대전, 도전장, 순위표 있음." },
+  { date: '2026.10.16', text: '新作「自分」を公開しました。名前と誕生日と生まれた市町村区から、あなたの前世の一生を年表で出します。縄文から昭和まで、その土地で本当にあったできごとも。', en: "New game \"Myself\" is out. From your name, birthday and birthplace, it shows your past life as a timeline. From Jomon to Showa, including events that really happened in that place.", zh: "推出新作「自己」。從名字、生日和出生的市町村區，以年表呈現你前世的一生。從繩文到昭和，還有那片土地上真實發生過的事。", ko: "신작 「나」를 공개했어요. 이름과 생일, 태어난 시정촌구로 당신 전생의 일생을 연표로 보여 줘요. 조몬부터 쇼와까지, 그 땅에서 실제로 있었던 일도." },
+  { date: '2026.10.16', text: '「地元の最強」に世界の国・州・都市・町が参戦しました。ソ連やユーゴスラビアなどの昔の国も。全24,838が出場できます。', en: "Countries, states, cities and towns from around the world have joined \"Hometown Champion\". Even former countries like the USSR and Yugoslavia. 24,838 entrants in all.", zh: "世界各國・州・城市・城鎮加入了「家鄉最強」。連蘇聯、南斯拉夫等過去的國家也在。共24,838個可以出場。", ko: "「우리 동네 최강」에 세계의 나라·주·도시·마을이 참전했어요. 소련이나 유고슬라비아 같은 옛 나라도. 총 24,838곳이 출전할 수 있어요." },
+  { date: '2026.10.15', text: '「だれかと対戦」を7つのゲームに追加しました。待っている人と自動でつながります。毎晩21時〜22時は対戦タイム！ 地元の最強には、いつでも戦える「挑戦状」も。', en: "Added \"Play someone online\" to 7 games. You'll be matched automatically with someone who's waiting. Every night 21:00–22:00 JST is Battle Time! Hometown Champion also has \"Challenges\" you can fight anytime.", zh: "在7款遊戲中加入了「隨機對戰」。會自動和正在等待的人配對。每晚日本時間21〜22點是對戰時間！家鄉最強還有隨時都能戰鬥的「挑戰書」。", ko: "7개 게임에 「아무나와 대전」을 추가했어요. 기다리는 사람과 자동으로 연결돼요. 매일 밤 일본 시간 21~22시는 대전 타임! 우리 동네 최강에는 언제든 싸울 수 있는 「도전장」도." },
+  { date: '2026.10.15', text: '新作「地元の最強」を公開しました。全国の市町村の本物の形でぶつかり合う、全自動の対戦ゲームです。明治から今までの、なくなった町村も出場できます。', en: "New game \"Hometown Champion\" is out. A fully automatic battle game where the real shapes of Japan's municipalities clash. Towns and villages from the Meiji era on, even ones that no longer exist, can enter.", zh: "推出新作「家鄉最強」。用全日本市町村真實形狀互相碰撞的全自動對戰遊戲。從明治到現在、已經消失的町村也能出場。", ko: "신작 「우리 동네 최강」을 공개했어요. 일본 전국 시정촌의 실제 모양으로 부딪치는 전자동 대전 게임이에요. 메이지 시대부터 지금까지, 사라진 마을도 출전할 수 있어요." },
+  { date: '2026.10.14', text: '新作「ピンチボウル」を公開しました。ボウリングのピンになって球をよける、1対1の3Dアクションです。ガードレールではね返る球に、ドミノのように倒れるピン。', en: "New game \"Pinch Bowl\" is out. A 1-on-1 3D action game where you become a bowling pin and dodge the ball. Balls that bounce off the guardrails, and pins that fall like dominoes.", zh: "推出新作「閃避保齡球」。變成保齡球瓶閃避球的一對一3D動作遊戲。會被護欄反彈的球，和像骨牌一樣倒下的球瓶。", ko: "신작 「핀치 볼」을 공개했어요. 볼링 핀이 되어 공을 피하는 1대1 3D 액션이에요. 가드레일에 튕기는 공과 도미노처럼 쓰러지는 핀." },
+  { date: '2026.10.14', text: '新作「ユキダマッチ」を公開しました。雪合戦の1対1で戦う3Dアクションです。かべが溶けていく3つのステージ、4つの特技、決着リプレイつき。', en: "New game \"Snowball Match\" is out. A 1-on-1 snowball fight in 3D action. 3 stages where the walls melt away, 4 special skills, and finishing-blow replays.", zh: "推出新作「雪球對決」。一對一打雪仗的3D動作遊戲。牆會融化的3個關卡、4種特技、決勝重播。", ko: "신작 「눈싸움 매치」를 공개했어요. 1대1 눈싸움 3D 액션이에요. 벽이 녹아 가는 3개 스테이지, 4가지 특기, 결착 리플레이 있음." },
+  { date: '2026.10.11', text: '新作「バトベイ」を公開しました。描いたコマで戦う3Dバトルごまです。60秒で描いて戦う、らくがきバトルも。', en: "New game \"Batbey\" is out. 3D battle tops where you fight with a top you drew. There's also Doodle Battle: draw in 60 seconds, then fight.", zh: "推出新作「對戰陀螺」。用自己畫的陀螺戰鬥的3D戰鬥陀螺。也有60秒畫完就開打的塗鴉對戰。", ko: "신작 「배트베이」를 공개했어요. 직접 그린 팽이로 싸우는 3D 배틀 팽이예요. 60초 안에 그리고 싸우는 낙서 배틀도." },
+  { date: '2026.10.09', text: '新作「絵私（えし）」を公開しました。自分で描いたキャラに骨を入れて戦う、お絵かき格闘ゲームです。キャラID・みんなのキャラ・らくがきバトル・観戦つき。', en: "New game \"Eshi\" is out. A drawing fighting game where you put bones into a character you drew and fight. With character IDs, everyone's characters, Doodle Battle and spectating.", zh: "推出新作「繪我（Eshi）」。替自己畫的角色裝上骨頭來戰鬥的塗鴉格鬥遊戲。有角色ID、大家的角色、塗鴉對戰、觀戰。", ko: "신작 「에시」를 공개했어요. 직접 그린 캐릭터에 뼈를 넣어 싸우는 그림 격투 게임이에요. 캐릭터 ID, 모두의 캐릭터, 낙서 배틀, 관전 있음." },
+  { date: '2026.10.09', text: '「さくがえ」に、あいことば対戦と観戦を追加しました。', en: "Added passcode matches and spectating to \"Fence Swap\".", zh: "「柵欄互換」加入了暗號對戰和觀戰。", ko: "「울타리 체인지」에 암호 대전과 관전을 추가했어요." },
+  { date: '2026.10.08', text: '新作「回廊快走（かいろうかいそう）」を公開しました。通路を90度まわしながら走り続ける、終わりのないランゲームです。', en: "New game \"Corridor Dash\" is out. An endless running game where you keep running while rotating the corridor 90 degrees.", zh: "推出新作「迴廊快跑」。一邊把通道旋轉90度一邊不斷奔跑、沒有終點的跑酷遊戲。", ko: "신작 「회랑 질주」를 공개했어요. 통로를 90도씩 돌리며 계속 달리는 끝없는 러닝 게임이에요." },
+  { date: '2026.10.05', text: '新作「盤滑（パンファ）」を公開しました。3手ごとに1列がすべる、リバーシの対戦ゲームです。', en: "New game \"Panfa — Sliding Reversi\" is out. A reversi battle game where one row slides every 3 moves.", zh: "推出新作「盤滑（Panfa）滑動黑白棋」。每3手就有1列滑動的黑白棋對戰遊戲。", ko: "신작 「판파 — 미끄러지는 리버시」를 공개했어요. 3수마다 한 줄이 미끄러지는 리버시 대전 게임이에요." },
+  { date: '2026.10.02', text: '新作「さくがえ」を公開しました。柵の列を相手と入れかえる、6レーンのタワーディフェンスです。', en: "New game \"Fence Swap\" is out. A 6-lane tower defense where you swap fence rows with your opponent.", zh: "推出新作「柵欄互換」。和對手互換柵欄列的6路塔防。", ko: "신작 「울타리 체인지」를 공개했어요. 상대와 울타리 줄을 바꾸는 6레인 타워 디펜스예요." },
+  { date: '2026.10.01', text: '新作「ハネタンク」を公開しました。はね返る弾で撃ち合う3Dの戦車バトルです。スマホとPCで対戦できます。', en: "New game \"Bounce Tank\" is out. A 3D tank battle where you shoot bouncing bullets. Play against each other on phone and PC.", zh: "推出新作「彈跳坦克」。用會反彈的子彈互射的3D坦克對戰。手機和電腦都能對戰。", ko: "신작 「튕김 탱크」를 공개했어요. 튕기는 탄으로 쏘아 대는 3D 탱크 배틀이에요. 스마트폰과 PC로 대전할 수 있어요." },
+  { date: '2026.09.30', text: '新作「4つ目のダルマ」を公開しました。3ターンごとにだるま落としが起きる、4つ並べ対戦ゲームです。', en: "New game \"The 4th Daruma\" is out. A connect-four battle game where a daruma-otoshi knock-out happens every 3 turns.", zh: "推出新作「第四個達摩」。每3回合就會發生「打達摩」的四子棋對戰遊戲。", ko: "신작 「네 번째 달마」를 공개했어요. 3턴마다 달마 떨어뜨리기가 일어나는 사목 대전 게임이에요." },
+  { date: '2026.09.30', text: 'ホームページ「なすびのお庭」をひらきました。', en: "Opened the homepage \"Nasubi's Garden\".", zh: "首頁「茄子的庭院」開張了。", ko: "홈페이지 「가지의 정원」을 열었어요." },
+  { date: '2026.09.30', text: '「さかさまドロップ」を公開しました。合言葉でのオンライン対戦・観戦にも対応しています。', en: "\"Upside-Down Drop\" is out. It also supports online passcode matches and spectating.", zh: "推出「顛倒掉落」。也支援用暗號的線上對戰與觀戰。", ko: "「거꾸로 드롭」을 공개했어요. 암호로 하는 온라인 대전과 관전도 지원해요." }
+];
+
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const $ = id => document.getElementById(id);
+// ---------- ことば（日本語・English・繁體中文・한국어） ----------
+const T = (k, v) => I18N.t(k, v);
+const LG = () => I18N.lang;
+// ゲームの文（名前・紹介・ひとこと）をいまの言葉で。訳がなければ日本語のまま
+const loc = (g, f) => { const o = LG() !== 'ja' && g[LG()]; return o && o[f] != null ? o[f] : g[f]; };
+const shortName = g => loc(g, 'short') || loc(g, 'name');
+const tagText = t => { const k = 'tag:' + t, r = T(k); return r === k ? t : r; };
+// ゲームへのリンクに ?lang=xx をつけて、ゲームも同じ言葉で始まるように（日本語のときはつけない）
+const gameURL = g => LG() === 'ja' ? g.url : g.url + (g.url.includes('?') ? '&' : '?') + 'lang=' + LG();
+const NEW = GAMES.find(g => g.badge && !g.soon);
+let LIVE = {}, liveErr = false, sheetI = -1, newsOpen = false;
+function render() {
+  // 新作（いちばん新しい NEW のゲーム）を大きく
+  if (NEW) {
+    $('feature').innerHTML = `<div class="feature" data-gi="${GAMES.indexOf(NEW)}">
+    <img src="${esc(NEW.image)}" alt="${esc(T('icon_alt', { n: loc(NEW, 'name') }))}">
+    <div><span class="new">${esc(NEW.badge)}</span><h3>${esc(loc(NEW, 'name'))}</h3><p>${esc(loc(NEW, 'catch') || loc(NEW, 'text'))}</p>
+      <div class="row"><a class="btn" href="${esc(gameURL(NEW))}">${esc(T('play'))}</a><button class="btn ghost" type="button">${esc(T('more'))}</button></div></div></div>`;
+  } else $('new').hidden = true;
+  // アイコン一覧
+  $('game-list').innerHTML = GAMES.map((g, i) => g.soon
+    ? `<div class="app soon"><span class="ic" aria-hidden="true">🌱</span><b>${esc(T('soon'))}</b></div>`
+    : `<button class="app" type="button" data-gi="${i}"><span class="ic"><img src="${esc(g.image)}" alt="" loading="lazy">${g.badge ? '<i class="dot"></i>' : ''}</span><b>${esc(shortName(g))}</b></button>`).join('');
+  // お知らせ：新しい3件、のこりは「もっと見る」
+  $('news-list').innerHTML = NEWS.map((n, i) => `<li${i >= SHOW ? ' class="more"' : ''}><time>${esc(n.date)}</time><p>${esc((LG() !== 'ja' && n[LG()]) || n.text)}</p></li>`).join('');
+  drawNewsBtn();
+  drawLive();
+  if (sheetI >= 0) fillSheet(sheetI);
+}
+// くわしく（下から出る）
+let lastFocus = null;
+function fillSheet(i) {
+  const g = GAMES[i];
+  $('sh-img').src = g.image; $('sh-img').alt = T('icon_alt', { n: loc(g, 'name') }); $('sh-name').textContent = loc(g, 'name'); $('sh-yomi').textContent = (LG() === 'ja' ? g.yomi : (g[LG()] || {}).yomi) || ''; // 日本語の読みがなは外国語では出さない
+  $('sh-text').textContent = loc(g, 'text'); $('sh-tags').innerHTML = (g.tags || []).map(t => `<span>${esc(tagText(t))}</span>`).join(''); $('sh-play').href = gameURL(g);
+  const lv = g.qm && LIVE[g.qm]; $('sh-live').textContent = g.qm ? (lv && (lv.wait || lv.pairs) ? T('sh_live', { w: lv.wait, p: lv.pairs }) : T('sh_can')) : '';
+}
+function openSheet(i) {
+  const g = GAMES[i]; if (!g || g.soon) return;
+  sheetI = i; fillSheet(i);
+  lastFocus = document.activeElement; document.body.classList.add('sheet-on'); setTimeout(() => $('sh-play').focus({ preventScroll: true }), 50);
+}
+function closeSheet() { sheetI = -1; document.body.classList.remove('sheet-on'); if (lastFocus) lastFocus.focus({ preventScroll: true }); }
+document.addEventListener('click', e => {
+  if (e.target.closest('.feature a')) return;
+  const el = e.target.closest('[data-gi]'); if (el) openSheet(+el.dataset.gi);
+});
+$('sheet-bg').onclick = closeSheet; $('sh-close').onclick = closeSheet;
+addEventListener('keydown', e => { if (e.key === 'Escape') closeSheet(); });
+const SHOW = 3;
+function drawNewsBtn() {
+  if (NEWS.length <= SHOW) return;
+  const b = $('news-more'); b.hidden = false; $('news-list').classList.toggle('open', newsOpen);
+  b.textContent = newsOpen ? T('close') : T('news_more', { n: NEWS.length - SHOW });
+}
+$('news-more').onclick = () => { newsOpen = !newsOpen; drawNewsBtn(); };
+document.getElementById('year').textContent = new Date().getFullYear();
+// ---------- いまの人数（90秒ごとに見に行く。つながりっぱなしにしないので、同時接続の上限を使わない） ----------
+// 地元の最強は別のデータベース（通信量を分けるため）
+const DBURLS = ['https://sakasama-drop-default-rtdb.asia-southeast1.firebasedatabase.app', 'https://jimoto-saikyo-default-rtdb.asia-southeast1.firebasedatabase.app'];
+const jstHour = () => new Date(Date.now() + 9 * 3600 * 1000).getUTCHours();
+function drawLive() {
+  const prime = jstHour() === 21, pe = $('prime');
+  pe.textContent = T(prime ? 'qm_prime_hot' : 'qm_prime'); pe.classList.toggle('hot', prime);
+  const qg = GAMES.filter(g => g.qm);
+  let w = 0, p = 0; for (const g of qg) { const v = LIVE[g.qm]; if (v) { w += v.wait; p += v.pairs; } }
+  if (liveErr) $('live-sum').textContent = T('live_err'); else $('live-sum').innerHTML = T('live_sum', { w, p });
+  // 人がいるゲームを先に
+  const order = qg.slice().sort((a, b) => ((LIVE[b.qm] || {}).wait || 0) - ((LIVE[a.qm] || {}).wait || 0));
+  $('live-list').innerHTML = order.map(g => { const v = LIVE[g.qm] || { wait: 0, pairs: 0 }; return `<a href="${esc(gameURL(g))}" class="${v.wait ? 'on' : ''}"><img src="${esc(g.image)}" alt="">${esc(shortName(g))}<em>${esc(v.wait ? T('li_wait', { n: v.wait }) : v.pairs ? T('li_play', { n: v.pairs }) : '—')}</em></a>`; }).join('');
+  document.querySelectorAll('#game-list .app[data-gi]').forEach(el => {
+    const g = GAMES[+el.dataset.gi], v = g && g.qm && LIVE[g.qm], ic = el.querySelector('.ic'); let b = ic.querySelector('.wait');
+    if (v && v.wait) { if (!b) { b = document.createElement('span'); b.className = 'wait'; ic.appendChild(b); } b.textContent = T('badge_wait', { n: v.wait }); } else if (b) b.remove();
+  });
+}
+render();
+document.addEventListener('langchange', render);
+async function loadLive() {
+  if (document.hidden) return;
+  try {
+    const all = await Promise.all(DBURLS.map(u => fetch(u + '/pres.json', { cache: 'no-store' }).then(r => r.ok ? r.json() : undefined).catch(() => undefined)));
+    if (all.every(x => x === undefined)) throw new Error('x');
+    // 地元の最強は自分のデータベースの分だけ数える（古いデータベースに残った、もういない人の分を数えない）
+    const v = Object.assign({}, ...all.map((x, i) => { const o = {}; for (const k in (x || {})) { const e = x[k]; if (i === 0 && e && e.g === 'jimoto') continue; o[k] = e; } return o; }));
+    const out = {}; for (const k in v) { const e = v[k]; if (!e || !e.g) continue; const o = out[e.g] = out[e.g] || { wait: 0, play: 0 }; if (e.s === 'p') o.play++; else o.wait++; }
+    for (const g in out) out[g].pairs = Math.ceil(out[g].play / 2);
+    LIVE = out; liveErr = false; drawLive();
+  } catch (e) { liveErr = true; drawLive(); }
+}
+drawLive(); loadLive(); setInterval(loadLive, 90000);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) loadLive(); });
+</script>
+<!-- nasubi-ad: ページのいちばん下に広告の帯を1つ -->
+<div class="nsb-ad" style="width:320px;max-width:100%;height:50px;margin:28px auto 16px;overflow:hidden"><iframe src="/ad/" title="ad" width="320" height="50" scrolling="no" loading="lazy" style="border:0;width:320px;height:50px;display:block;max-width:100%"></iframe></div>
+</body>
+</html>
