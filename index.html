@@ -502,6 +502,17 @@ const GAMES = [
     ko: {"name": "穴の神隠し", "yomi": "아나노 카미카쿠시", "text": "거대한 진흙 엉덩이에서 ○△■가 끙끙 밀려 나온다. 길게 누르면 밧줄을 당기고, 떼면 느슨해진다. ■는 세게, △는 살살, ○는 그 중간. 구멍 주위 고리가 빨강이면 너무 세고, 파랑이면 너무 약하다. 가끔 황금 ○도. 뽑은 양과 모양으로 정해지는 칭호는 1만 가지, 당기는 건 얼굴 없는 데생 인형.", "catch": "밀려 나오는 ○△■를 끌어내라!"},
   },
   {
+    name: 'エンピツライフ', yomi: 'えんぴつらいふ',
+    url: 'https://nasubi-no-oniwa.github.io/enpitsu-life/',
+    image: 'img/enpitsu-life.png',
+    text: '引っぱって、ロケット鉛筆を飛ばす。鉛筆の上に落ちればもう一度飛べるが、地面に落ちたら芯を上にして刺さり、その場で鉛筆になる。壁にぶつかると真下に落ちて積み重なる。みんなの鉛筆は20秒ごとに届き、あとから来るだれかの足場になる。赤い線より上には積めない。だれかが鉛筆立てに入ると、次の層がみんなに開く。全100層。',
+    tags: ['2D', 'みんなで', '横スクロール', '全100層', '鉛筆'],
+    badge: 'NEW', catch: '死は、だれかの足場になる。',
+    en: {"name": "PENCIL LIFE", "text": "Pull back and launch a rocket pencil. Land on a pencil and you can fly again; hit the ground and you stick in point-up and become a pencil right there. Hit a wall and you drop and stack. Everyone's pencils are shared, refreshed every 20 seconds, and become footholds for whoever comes next. Nothing stacks above the red line. When anyone reaches the pencil cup, the next floor opens for everyone. 100 floors.", "catch": "Every death becomes someone's foothold."},
+    zh: {"name": "エンピツライフ", "yomi": "鉛筆人生", "text": "往後拉，射出火箭鉛筆。落在鉛筆上就能再飛一次，掉到地上就筆芯朝上插在那裡，變成一支鉛筆。撞到牆會往下掉、疊上去。大家的鉛筆都共用，每20秒更新一次，成為後來者的立足點。紅線以上疊不上去。有人進了筆筒，下一層就對大家開放。共100層。", "catch": "死亡，會成為某人的立足點。"},
+    ko: {"name": "エンピツライフ", "yomi": "연필 라이프", "text": "당겼다 놓아서 로켓 연필을 쏜다. 연필 위에 떨어지면 다시 날 수 있고, 땅에 떨어지면 심을 위로 하고 그 자리에 꽂혀 연필이 된다. 벽에 부딪히면 아래로 떨어져 쌓인다. 모두의 연필은 공유되고 20초마다 갱신되어, 뒤에 오는 사람의 발판이 된다. 빨간 선보다 위로는 쌓을 수 없다. 누군가 연필꽂이에 들어가면 다음 층이 모두에게 열린다. 전 100층.", "catch": "죽음은 누군가의 발판이 된다."}
+  },
+  {
     name: '達人の手', yomi: 'たつじんのて',
     url: 'https://nasubi-no-oniwa.github.io/tatsujin-no-te/',
     image: 'img/tatsujin-no-te.png',
@@ -741,6 +752,7 @@ const GAMES = [
 ];
 
 const NEWS = [
+  { date: '2026.11.11', text: '新作「エンピツライフ」を公開しました。ロケット鉛筆を飛ばし、地面に落ちたらその場で鉛筆になる、みんなで100層を越えていくゲームです。みんなの鉛筆が足場になります。', en: "New game: PENCIL LIFE. Launch a rocket pencil; hit the ground and you become a pencil right there. Everyone's pencils become footholds as we climb 100 floors together.", zh: "推出新作「エンピツライフ」。射出火箭鉛筆，掉到地上就在那裡變成鉛筆，大家一起越過100層。大家的鉛筆就是立足點。", ko: "신작 「エンピツライフ」를 공개했어요. 로켓 연필을 쏘고, 땅에 떨어지면 그 자리에서 연필이 되는, 모두 함께 100층을 넘는 게임이에요. 모두의 연필이 발판이 돼요." },
   { date: '2026.11.11', text: '新作「達人の手」を公開しました。〇・△・■・✖を、見本なし・一発勝負・7秒で、指でどれだけきれいに描けるかを競うゲームです。種目ごとに精度のランキングがあります。', en: "New game: MASTER'S HAND. How cleanly can you draw 〇 △ ■ ✖ with a finger? No guide, one shot, 7 seconds. Each shape has its own accuracy ranking.", zh: "推出新作「達人の手」。沒有範本、一次決勝、7秒，比誰能用手指把〇・△・■・✖畫得最漂亮。每個項目都有精度排行榜。", ko: "신작 「達人の手」를 공개했어요. 견본 없음, 단판 승부, 7초로 〇・△・■・✖를 손가락으로 얼마나 깔끔하게 그리는지 겨루는 게임이에요. 종목별 정밀도 랭킹이 있어요." },
   { date: '2026.11.11', text: '新作「ヒトウマ」を公開しました。指を足にして画面を歩き、人間の競走馬にフォームを覚えさせるゲームです。2本脚は100m・200m、4本脚は1000m・2000mを走ります。', en: "New game: HITOUMA. Walk on the screen with your fingers as legs to teach a human racehorse its form. 2 legs race 100m and 200m, 4 legs race 1000m and 2000m.", zh: "推出新作「ヒトウマ」。把手指當成腳在畫面上走，讓人類賽馬記住跑法。2隻腳跑100m・200m，4隻腳跑1000m・2000m。", ko: "신작 「ヒトウマ」를 공개했어요. 손가락을 다리로 삼아 화면을 걸으며 인간 경주마에게 폼을 익히게 하는 게임이에요. 2발은 100m・200m, 4발은 1000m・2000m를 달려요." },
   { date: '2026.11.10', text: '新作「ごジュウに」を公開しました。銃身を自由に描いて撃つ役と、射撃場の紙の的になって弾をよける役のゲームです。描いた形で弾の飛び方が変わり、銃は合言葉で渡せます。', en: "New game: GOJUUNI. One side freely draws a gun barrel and shoots, the other becomes a paper target and dodges. The barrel's shape changes how bullets fly, and guns are shared by code.", zh: "推出新作「ごジュウに」。一方自由畫槍管來射擊，另一方變成靶場的紙靶閃躲子彈。畫出的形狀會改變子彈的飛法，槍可以用暗號分享。", ko: "신작 「ごジュウに」를 공개했어요. 총신을 자유롭게 그려서 쏘는 쪽과, 사격장의 종이 과녁이 되어 총알을 피하는 쪽의 게임이에요. 그린 모양에 따라 총알이 날아가는 방식이 바뀌고, 총은 암호로 건넬 수 있어요." },
