@@ -502,6 +502,17 @@ const GAMES = [
     ko: {"name": "穴の神隠し", "yomi": "아나노 카미카쿠시", "text": "거대한 진흙 엉덩이에서 ○△■가 끙끙 밀려 나온다. 길게 누르면 밧줄을 당기고, 떼면 느슨해진다. ■는 세게, △는 살살, ○는 그 중간. 구멍 주위 고리가 빨강이면 너무 세고, 파랑이면 너무 약하다. 가끔 황금 ○도. 뽑은 양과 모양으로 정해지는 칭호는 1만 가지, 당기는 건 얼굴 없는 데생 인형.", "catch": "밀려 나오는 ○△■를 끌어내라!"},
   },
   {
+    name: '達人の手', yomi: 'たつじんのて',
+    url: 'https://nasubi-no-oniwa.github.io/tatsujin-no-te/',
+    image: 'img/tatsujin-no-te.png',
+    text: '〇・△・■・✖を、指でどれだけきれいに描けるか。見本なし・一発勝負・7秒。描き終わると、きれいな形を同じ大きさで重ねて、どこがずれたかを教えてくれる。精度は0.001%まで出る。描いた〇はタイヤに、△はおにぎりに、■は豆腐に、✖は手裏剣になる。種目ごとのランキングつきで、上位の人が描くところを再生できる。',
+    tags: ['お絵かき', '一発勝負', 'ひとりで', '精度', 'ランキング'],
+    badge: 'NEW', catch: 'ただ、きれいな丸を描け。',
+    en: {"name": "MASTER'S HAND", "text": "How cleanly can you draw 〇 △ ■ ✖ with a finger? No guide, one shot, 7 seconds. A perfect shape is laid over your drawing at the same size and the game points out where you were off, down to 0.001%. Your circle turns into a tire, your triangle into a rice ball, your square into tofu and your cross into a shuriken. Separate rankings for each shape, and you can replay how the top players drew.", "catch": "Just draw a clean circle."},
+    zh: {"name": "達人の手", "yomi": "達人之手", "text": "用手指能把〇・△・■・✖畫得多漂亮？沒有範本、一次決勝、7秒。畫完後會把完美的形狀以同樣大小疊上去，指出哪裡歪了，精度算到0.001%。畫的圓會變成輪胎，三角變成飯糰，四方變成豆腐，叉變成手裏劍。每個項目都有排行榜，還能重播高手畫的過程。", "catch": "就只是，畫一個漂亮的圓。"},
+    ko: {"name": "達人の手", "yomi": "달인의 손", "text": "〇・△・■・✖를 손가락으로 얼마나 깔끔하게 그릴 수 있을까. 견본 없음, 단판 승부, 7초. 다 그리면 완벽한 도형을 같은 크기로 겹쳐서 어디가 어긋났는지 알려 주고, 정밀도는 0.001%까지 나온다. 그린 동그라미는 타이어, 세모는 주먹밥, 네모는 두부, 엑스는 수리검이 된다. 종목별 랭킹이 있고, 상위권이 그리는 모습도 다시 볼 수 있다.", "catch": "그냥, 깔끔한 동그라미를 그려라."}
+  },
+  {
     name: 'ヒトウマ', yomi: 'ひとうま',
     url: 'https://nasubi-no-oniwa.github.io/hitouma/',
     image: 'img/hitouma.png',
@@ -730,6 +741,7 @@ const GAMES = [
 ];
 
 const NEWS = [
+  { date: '2026.11.11', text: '新作「達人の手」を公開しました。〇・△・■・✖を、見本なし・一発勝負・7秒で、指でどれだけきれいに描けるかを競うゲームです。種目ごとに精度のランキングがあります。', en: "New game: MASTER'S HAND. How cleanly can you draw 〇 △ ■ ✖ with a finger? No guide, one shot, 7 seconds. Each shape has its own accuracy ranking.", zh: "推出新作「達人の手」。沒有範本、一次決勝、7秒，比誰能用手指把〇・△・■・✖畫得最漂亮。每個項目都有精度排行榜。", ko: "신작 「達人の手」를 공개했어요. 견본 없음, 단판 승부, 7초로 〇・△・■・✖를 손가락으로 얼마나 깔끔하게 그리는지 겨루는 게임이에요. 종목별 정밀도 랭킹이 있어요." },
   { date: '2026.11.11', text: '新作「ヒトウマ」を公開しました。指を足にして画面を歩き、人間の競走馬にフォームを覚えさせるゲームです。2本脚は100m・200m、4本脚は1000m・2000mを走ります。', en: "New game: HITOUMA. Walk on the screen with your fingers as legs to teach a human racehorse its form. 2 legs race 100m and 200m, 4 legs race 1000m and 2000m.", zh: "推出新作「ヒトウマ」。把手指當成腳在畫面上走，讓人類賽馬記住跑法。2隻腳跑100m・200m，4隻腳跑1000m・2000m。", ko: "신작 「ヒトウマ」를 공개했어요. 손가락을 다리로 삼아 화면을 걸으며 인간 경주마에게 폼을 익히게 하는 게임이에요. 2발은 100m・200m, 4발은 1000m・2000m를 달려요." },
   { date: '2026.11.10', text: '新作「ごジュウに」を公開しました。銃身を自由に描いて撃つ役と、射撃場の紙の的になって弾をよける役のゲームです。描いた形で弾の飛び方が変わり、銃は合言葉で渡せます。', en: "New game: GOJUUNI. One side freely draws a gun barrel and shoots, the other becomes a paper target and dodges. The barrel's shape changes how bullets fly, and guns are shared by code.", zh: "推出新作「ごジュウに」。一方自由畫槍管來射擊，另一方變成靶場的紙靶閃躲子彈。畫出的形狀會改變子彈的飛法，槍可以用暗號分享。", ko: "신작 「ごジュウに」를 공개했어요. 총신을 자유롭게 그려서 쏘는 쪽과, 사격장의 종이 과녁이 되어 총알을 피하는 쪽의 게임이에요. 그린 모양에 따라 총알이 날아가는 방식이 바뀌고, 총은 암호로 건넬 수 있어요." },
   { date: '2026.11.09', text: '新作「名刺の整理」を公開しました。奥さんが帰ってくるまでの60秒で、会社の名刺は左の名刺入れへ、キャバ嬢・デリヘルの名刺は右のシュレッダーへ仕分けるゲームです。', en: "New game: BUSINESS CARD CLEANUP. In the 60 seconds before your wife gets home, sort company cards left into the card case and hostess club and escort cards right into the shredder.", zh: "新作「名刺の整理」上線了。在老婆回家前的60秒內，把公司名片往左放進名片夾，酒店小姐・外送茶的名片往右丟進碎紙機。", ko: "신작 「名刺の整理」를 공개했습니다. 아내가 돌아오기 전 60초 동안 회사 명함은 왼쪽 명함집으로, 캬바쿠라·출장 업소 명함은 오른쪽 파쇄기로 나누는 게임입니다." },
