@@ -502,6 +502,17 @@ const GAMES = [
     ko: {"name": "穴の神隠し", "yomi": "아나노 카미카쿠시", "text": "거대한 진흙 엉덩이에서 ○△■가 끙끙 밀려 나온다. 길게 누르면 밧줄을 당기고, 떼면 느슨해진다. ■는 세게, △는 살살, ○는 그 중간. 구멍 주위 고리가 빨강이면 너무 세고, 파랑이면 너무 약하다. 가끔 황금 ○도. 뽑은 양과 모양으로 정해지는 칭호는 1만 가지, 당기는 건 얼굴 없는 데생 인형.", "catch": "밀려 나오는 ○△■를 끌어내라!"},
   },
   {
+    name: 'ヒトウマ', yomi: 'ひとうま',
+    url: 'https://nasubi-no-oniwa.github.io/hitouma/',
+    image: 'img/hitouma.png',
+    text: '指を足にして画面を歩き、人間の競走馬にフォームを覚えさせる。歩幅・ピッチ・リズム・左右のそろい方で、本番の走りが決まる。2本脚は指2本で100m・200m、4本脚は指4本で1000m・2000m。飛ばしすぎると脚が止まる。最後の直線は動画にしてXに投稿できる。今日と全期間のランキングつき。',
+    tags: ['3D', '指で歩く', 'ひとりで', '競馬', 'ランキング'],
+    badge: 'NEW', catch: '指で歩いて、走りを覚えさせろ。',
+    en: {"name": "HITOUMA", "text": "Use your fingers as legs and walk on the screen to teach a human racehorse its form. Stride, pitch, rhythm and left-right balance decide how it races. 2 legs: 2 fingers, 100m and 200m. 4 legs: 4 fingers, 1000m and 2000m. Go out too fast and it runs out of legs. Turn the home stretch into a video and post it on X. Today and all-time rankings.", "catch": "Walk with your fingers. Teach it to run."},
+    zh: {"name": "ヒトウマ", "yomi": "人馬", "text": "把手指當成腳在畫面上走，讓人類賽馬記住跑法。步幅、步頻、節奏和左右平衡決定正式比賽的跑法。2隻腳用2根手指跑100m・200m，4隻腳用4根手指跑1000m・2000m。衝太快腳步就會停住。最後直線可以做成影片發到X。附今天和全期間排行榜。", "catch": "用手指走路，教牠怎麼跑。"},
+    ko: {"name": "ヒトウマ", "yomi": "히토우마", "text": "손가락을 다리로 삼아 화면을 걸으며 인간 경주마에게 폼을 익히게 한다. 보폭·피치·리듬·좌우 균형으로 본 경주의 달리기가 정해진다. 2발은 손가락 2개로 100m・200m, 4발은 손가락 4개로 1000m・2000m. 너무 달리면 다리가 멈춘다. 마지막 직선은 영상으로 만들어 X에 올릴 수 있다. 오늘과 전체 랭킹 있음.", "catch": "손가락으로 걸어서, 달리기를 가르쳐라."}
+  },
+  {
     name: 'ごジュウに', yomi: 'ごじゅうに',
     url: 'https://nasubi-no-oniwa.github.io/gojuuni/',
     image: 'img/gojuuni.png',
@@ -719,6 +730,7 @@ const GAMES = [
 ];
 
 const NEWS = [
+  { date: '2026.11.11', text: '新作「ヒトウマ」を公開しました。指を足にして画面を歩き、人間の競走馬にフォームを覚えさせるゲームです。2本脚は100m・200m、4本脚は1000m・2000mを走ります。', en: "New game: HITOUMA. Walk on the screen with your fingers as legs to teach a human racehorse its form. 2 legs race 100m and 200m, 4 legs race 1000m and 2000m.", zh: "推出新作「ヒトウマ」。把手指當成腳在畫面上走，讓人類賽馬記住跑法。2隻腳跑100m・200m，4隻腳跑1000m・2000m。", ko: "신작 「ヒトウマ」를 공개했어요. 손가락을 다리로 삼아 화면을 걸으며 인간 경주마에게 폼을 익히게 하는 게임이에요. 2발은 100m・200m, 4발은 1000m・2000m를 달려요." },
   { date: '2026.11.10', text: '新作「ごジュウに」を公開しました。銃身を自由に描いて撃つ役と、射撃場の紙の的になって弾をよける役のゲームです。描いた形で弾の飛び方が変わり、銃は合言葉で渡せます。', en: "New game: GOJUUNI. One side freely draws a gun barrel and shoots, the other becomes a paper target and dodges. The barrel's shape changes how bullets fly, and guns are shared by code.", zh: "推出新作「ごジュウに」。一方自由畫槍管來射擊，另一方變成靶場的紙靶閃躲子彈。畫出的形狀會改變子彈的飛法，槍可以用暗號分享。", ko: "신작 「ごジュウに」를 공개했어요. 총신을 자유롭게 그려서 쏘는 쪽과, 사격장의 종이 과녁이 되어 총알을 피하는 쪽의 게임이에요. 그린 모양에 따라 총알이 날아가는 방식이 바뀌고, 총은 암호로 건넬 수 있어요." },
   { date: '2026.11.09', text: '新作「名刺の整理」を公開しました。奥さんが帰ってくるまでの60秒で、会社の名刺は左の名刺入れへ、キャバ嬢・デリヘルの名刺は右のシュレッダーへ仕分けるゲームです。', en: "New game: BUSINESS CARD CLEANUP. In the 60 seconds before your wife gets home, sort company cards left into the card case and hostess club and escort cards right into the shredder.", zh: "新作「名刺の整理」上線了。在老婆回家前的60秒內，把公司名片往左放進名片夾，酒店小姐・外送茶的名片往右丟進碎紙機。", ko: "신작 「名刺の整理」를 공개했습니다. 아내가 돌아오기 전 60초 동안 회사 명함은 왼쪽 명함집으로, 캬바쿠라·출장 업소 명함은 오른쪽 파쇄기로 나누는 게임입니다." },
   { date: '2026.11.09', text: '新作「羊飼いの1日」を公開しました。ぎゅうぎゅうに流れてくる羊を、柵を開け閉めして分けるゲームです。子羊だけ囲いへ、大人はそのまま通し、着ぐるみのおじさんは指ではじきます。', en: "New game \"A SHEPHERD'S DAY\" is out. Sort a packed flow of sheep by opening and closing the gate. Only lambs go in the pen, adults pass, and you flick away the guy in a sheep costume.", zh: "推出新作「牧羊人的一天」。開關柵門，把擠滿的羊群分開的遊戲。只有小羊進圍欄，大羊直接通過，穿布偶裝的大叔用手指彈飛。", ko: "신작 「양치기의 하루」를 공개했어요. 빽빽하게 밀려오는 양을 울타리를 열고 닫아 나누는 게임이에요. 새끼 양만 우리로, 어른 양은 그대로, 인형 옷 아저씨는 손가락으로 튕겨요." },
