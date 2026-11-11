@@ -502,6 +502,17 @@ const GAMES = [
     ko: {"name": "穴の神隠し", "yomi": "아나노 카미카쿠시", "text": "거대한 진흙 엉덩이에서 ○△■가 끙끙 밀려 나온다. 길게 누르면 밧줄을 당기고, 떼면 느슨해진다. ■는 세게, △는 살살, ○는 그 중간. 구멍 주위 고리가 빨강이면 너무 세고, 파랑이면 너무 약하다. 가끔 황금 ○도. 뽑은 양과 모양으로 정해지는 칭호는 1만 가지, 당기는 건 얼굴 없는 데생 인형.", "catch": "밀려 나오는 ○△■를 끌어내라!"},
   },
   {
+    name: '四ツ目のダルマ', yomi: 'よつめのだるま',
+    url: 'https://nasubi-no-oniwa.github.io/yotsume/',
+    image: 'img/yotsume.png',
+    text: '「4つ目のダルマ」を、縁日の夜・漆と金の立体の盤に作り直した版。交互にダルマを落として、4つ並べたら勝ち。でも3ターンごとに、打ち出の小槌が指した段がだるま落としで抜ける。勝った列のダルマには両目が入り、夜空に花火が上がる。祭囃子の音楽つき。ルールは「4つ目のダルマ」と同じで、対戦の相手も共通。結果はXに投稿できる。',
+    tags: ['3D', '2人対戦', 'CPU対戦', 'だれかと対戦', '合言葉で対戦', '観戦'],
+    badge: 'NEW', catch: '四つ並べろ。段が抜ける、その前に。',
+    en: {"name": "The Fourth Daruma", "text": "\"The 4th Daruma\", rebuilt as a 3D board of black lacquer and gold on a festival night. Take turns dropping daruma and line up 4 to win. But every 3 turns, the row the lucky mallet points at gets knocked out. The winning daruma get both eyes painted in and fireworks go up. Festival music included. Same rules as The 4th Daruma, and you can be matched with players of either version. Post your result on X.", "catch": "Line up four. Before the row drops out."},
+    zh: {"name": "四ツ目のダルマ", "yomi": "第四尊達摩", "text": "把「第四個達摩」重新做成祭典之夜、黑漆與金箔的立體棋盤。輪流投下達摩，連成4個就贏。但每3回合，萬寶槌指著的那一層會被敲掉。獲勝的達摩會點上雙眼，夜空升起煙火。附祭典音樂。規則與「第四個達摩」相同，對戰對手也共通。結果可以分享到 X。", "catch": "連成四個。趁那一層還沒被敲掉。"},
+    ko: {"name": "四ツ目のダルマ", "yomi": "네 번째 달마", "text": "「네 번째 달마」를 축제의 밤, 옻칠과 금박의 입체 판으로 새로 만든 버전. 번갈아 달마를 떨어뜨려 4개를 나란히 놓으면 승리. 하지만 3턴마다 요술 망치가 가리킨 단이 빠진다. 이긴 줄의 달마에는 두 눈이 그려지고 밤하늘에 불꽃이 터진다. 축제 음악 포함. 규칙은 「네 번째 달마」와 같고 대전 상대도 공통. 결과는 X에 올릴 수 있다.", "catch": "네 개를 이어라. 단이 빠지기 전에."}
+  },
+  {
     name: 'エンピツライフ', yomi: 'えんぴつらいふ',
     url: 'https://nasubi-no-oniwa.github.io/enpitsu-life/',
     image: 'img/enpitsu-life.png',
@@ -752,6 +763,7 @@ const GAMES = [
 ];
 
 const NEWS = [
+  { date: '2026.11.11', text: '新作「四ツ目のダルマ」を公開しました。「4つ目のダルマ」を、縁日の夜・漆と金の立体の盤に作り直した版です。ルールは同じで、対戦の相手も共通です。', en: "New game: The Fourth Daruma. \"The 4th Daruma\" rebuilt as a 3D board of black lacquer and gold on a festival night. Same rules, and matchmaking is shared.", zh: "推出新作「四ツ目のダルマ」。把「第四個達摩」重新做成祭典之夜、黑漆與金箔的立體棋盤。規則相同，對戰對手也共通。", ko: "신작 「四ツ目のダルマ」를 공개했어요. 「네 번째 달마」를 축제의 밤, 옻칠과 금박의 입체 판으로 새로 만든 버전입니다. 규칙은 같고 대전 상대도 공통입니다." },
   { date: '2026.11.11', text: '新作「エンピツライフ」を公開しました。ロケット鉛筆を飛ばし、地面に落ちたらその場で鉛筆になる、みんなで100層を越えていくゲームです。みんなの鉛筆が足場になります。', en: "New game: PENCIL LIFE. Launch a rocket pencil; hit the ground and you become a pencil right there. Everyone's pencils become footholds as we climb 100 floors together.", zh: "推出新作「エンピツライフ」。射出火箭鉛筆，掉到地上就在那裡變成鉛筆，大家一起越過100層。大家的鉛筆就是立足點。", ko: "신작 「エンピツライフ」를 공개했어요. 로켓 연필을 쏘고, 땅에 떨어지면 그 자리에서 연필이 되는, 모두 함께 100층을 넘는 게임이에요. 모두의 연필이 발판이 돼요." },
   { date: '2026.11.11', text: '新作「達人の手」を公開しました。〇・△・■・✖を、見本なし・一発勝負・7秒で、指でどれだけきれいに描けるかを競うゲームです。種目ごとに精度のランキングがあります。', en: "New game: MASTER'S HAND. How cleanly can you draw 〇 △ ■ ✖ with a finger? No guide, one shot, 7 seconds. Each shape has its own accuracy ranking.", zh: "推出新作「達人の手」。沒有範本、一次決勝、7秒，比誰能用手指把〇・△・■・✖畫得最漂亮。每個項目都有精度排行榜。", ko: "신작 「達人の手」를 공개했어요. 견본 없음, 단판 승부, 7초로 〇・△・■・✖를 손가락으로 얼마나 깔끔하게 그리는지 겨루는 게임이에요. 종목별 정밀도 랭킹이 있어요." },
   { date: '2026.11.11', text: '新作「ヒトウマ」を公開しました。指を足にして画面を歩き、人間の競走馬にフォームを覚えさせるゲームです。2本脚は100m・200m、4本脚は1000m・2000mを走ります。', en: "New game: HITOUMA. Walk on the screen with your fingers as legs to teach a human racehorse its form. 2 legs race 100m and 200m, 4 legs race 1000m and 2000m.", zh: "推出新作「ヒトウマ」。把手指當成腳在畫面上走，讓人類賽馬記住跑法。2隻腳跑100m・200m，4隻腳跑1000m・2000m。", ko: "신작 「ヒトウマ」를 공개했어요. 손가락을 다리로 삼아 화면을 걸으며 인간 경주마에게 폼을 익히게 하는 게임이에요. 2발은 100m・200m, 4발은 1000m・2000m를 달려요." },
