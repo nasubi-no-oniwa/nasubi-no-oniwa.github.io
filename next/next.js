@@ -23,7 +23,7 @@
       ko: { row: '다음 게임　오른쪽으로 밀기', ttl: '다음엔 이거 할래?', back: '◀ 왼쪽으로 밀거나 ✖ 로 결과로 돌아가기', t1: '지금 1위', t2: '지금 2위', nw: '최신작' }
     };
     var t = T[lang] || T.en;
-    var D = null, picks = [], rows = [], panel = null, opened = false, hid = [], adf = null, adf2 = null, adLast = 0, adTimer = 0;
+    var openedAt = 0, D = null, picks = [], rows = [], panel = null, opened = false, hid = [], adf = null, adf2 = null, adLast = 0, adTimer = 0;
 
     function el(tag, css, html) { var e = document.createElement(tag); if (css) e.style.cssText = css; if (html != null) e.innerHTML = html; return e; }
     function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -52,11 +52,12 @@
       var k = r.querySelector('.k'), sx = null, moved = 0;
       function down(e) { stop(e); sx = (e.touches ? e.touches[0].clientX : e.clientX); moved = 0; k.style.transition = 'none'; }
       function move(e) { if (sx == null) return; stop(e); if (e.cancelable) e.preventDefault(); var x = (e.touches ? e.touches[0].clientX : e.clientX) - sx; moved = Math.max(moved, Math.abs(x)); x = Math.max(0, Math.min(r.clientWidth - 46, x)); k.style.transform = 'translateX(' + x + 'px)'; if (x > (r.clientWidth - 46) * 0.6) { sx = null; reset(); open(); } }
-      function up(e) { if (sx == null) return; stop(e); sx = null; if (moved < 8) open(); reset(); }
+      function up(e) { if (sx == null) return; stop(e); sx = null; reset(); }
       function reset() { k.style.transition = 'transform .2s'; k.style.transform = 'translateX(0)'; }
       if (window.PointerEvent) { r.addEventListener('pointerdown', function (e) { try { r.setPointerCapture(e.pointerId); } catch (_) {} down(e); }); r.addEventListener('pointermove', move); r.addEventListener('pointerup', up); r.addEventListener('pointercancel', function (e) { stop(e); sx = null; reset(); }); }
       else { r.addEventListener('touchstart', down, { passive: true }); r.addEventListener('touchmove', move, { passive: false }); r.addEventListener('touchend', up); r.addEventListener('mousedown', down); r.addEventListener('mousemove', move); r.addEventListener('mouseup', up); }
-      ['touchstart', 'touchmove', 'touchend', 'click', 'mousedown', 'mouseup'].forEach(function (n) { r.addEventListener(n, stop); });
+      ['touchstart', 'touchmove', 'touchend', 'mousedown', 'mouseup'].forEach(function (n) { r.addEventListener(n, stop); });
+      r.addEventListener('click', function (e) { stop(e); if (moved < 8) open(); });
       return r;
     }
     function placeRows() {
@@ -89,8 +90,8 @@
         '<div style="display:flex;gap:10px;justify-content:center;margin:26px 12px 0">' + cards + '</div>' +
         (ADS ? '<div class="b2" style="width:300px;height:250px;margin:26px auto 0;overflow:hidden"></div>' : '') +
         '<div style="color:#888;font:13px sans-serif;margin:18px 12px 28px">' + esc(t.back) + '</div>';
-      p.querySelector('.x').addEventListener('click', function (e) { stop(e); close(); });
-      Array.prototype.forEach.call(p.querySelectorAll('a[data-g]'), function (a) { a.addEventListener('click', function () { ev('next_click'); }); });
+      p.querySelector('.x').addEventListener('click', function (e) { stop(e); if (Date.now() - openedAt < 500) return; close(); });
+      Array.prototype.forEach.call(p.querySelectorAll('a[data-g]'), function (a) { a.addEventListener('click', function (e) { if (Date.now() - openedAt < 500) { e.preventDefault(); return; } ev('next_click'); }); });
       // 左にスライドで戻る（広告の上で始まった指の動きは広告の中に入るので、ここには来ない）
       var sx = null, sy = 0;
       p.addEventListener('touchstart', function (e) { stop(e); var q = e.touches[0]; sx = q.clientX; sy = q.clientY; }, { passive: true });
@@ -115,7 +116,7 @@
       // タイトル画面などほかの場所の広告も、おすすめの画面のうしろでは出さない（広告の箱ごと隠すと、いつもの広告の仕組みが止める）
       Array.prototype.forEach.call(document.querySelectorAll('.nsb-ad'), function (e) { if (!panel.contains(e) && hid.indexOf(e) < 0) { hid.push(e); e.__nsbVis = [e.style.getPropertyValue('visibility'), e.style.getPropertyPriority('visibility')]; e.style.setProperty('visibility', 'hidden', 'important'); } });
       Array.prototype.forEach.call(document.querySelectorAll('.nsb-ad iframe'), function (f) { if (!panel.contains(f)) { f.style.visibility = 'hidden'; f.style.pointerEvents = 'none'; } });
-      panel.style.display = 'block'; panel.scrollTop = 0; opened = true;
+      panel.style.display = 'block'; panel.scrollTop = 0; opened = true; openedAt = Date.now();
       if (ADS) {
         clearTimeout(adTimer);
         if (!adf) { adf = mkf(AD, 320, 50); adf2 = mkf(AD2, 300, 250); panel.querySelector('.b1').appendChild(adf); panel.querySelector('.b2').appendChild(adf2); adLast = Date.now(); }
