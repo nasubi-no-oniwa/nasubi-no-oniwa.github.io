@@ -40,13 +40,13 @@ h3{font-size:13px;color:var(--sub);margin:22px 4px 8px}
   <p class="note" style="margin:0">ツイートを開いて「共有」→「リンクをコピー」で出たURLを貼り、「保存」を押します。<br>
   遊んだ人が日本語で遊んでいれば「日本語」の欄、英語・繁体中文・韓国語なら「英語」の欄のツイートが引用されます。<br>
   空の欄は引用なしになります。保存するとすぐ（ゲームを開きなおした人から）反映されます。<br>
-  「対応ずみ」のゲームだけが、いま引用の仕組みを持っています。ほかのゲームは欄だけ先に用意しています。</p>
+  いちばん下の「投稿ボタンなし」のゲームは、ゲームに「Xに投稿」ボタンがないので、貼っても引用はつきません（欄だけ用意しています）。</p>
  </div>
  <div id="games"></div>
 </div>
 </main>
 <script>
-const GAMES=[["hiyoko-kantei", "ひよこ鑑定士だぜ", true], ["jihanki", "携帯自販機", true], ["tatsujin-no-te", "達人の手", true], ["gojuuni", "ごジュウに", true], ["meishi-seiri", "名刺の整理", true], ["bisu-uchi", "ビス打ち職人", true], ["settai-golf", "接待ゴルフ", true], ["hinan-kunren", "避難の訓練ですぞ", true], ["sakasama", "さかさまドロップ", false], ["daruma", "4つ目のダルマ", false], ["hanetank", "ハネタンク", false], ["sakugae", "さくがえ", false], ["panfa", "盤滑", false], ["kairou", "回廊快走", false], ["eshi", "絵私", false], ["batbey", "バトベイ", false], ["yukidama", "ユキダマッチ", false], ["pinchbowl", "ピンチボウル", false], ["jimoto", "地元の最強", false], ["jibun", "自分", false], ["dangan", "弾丸合併", false], ["shiincrad", "シインクラッド", false], ["imomusume", "芋娘", false], ["integra-layer", "インテグラ・レイヤー", false], ["furoya-no-onna", "穴の神隠し", false], ["yotsume", "四ツ目のダルマ", false], ["enpitsu-life", "エンピツライフ", false], ["hitouma", "ヒトウマ", false], ["hitsujikai", "羊飼いの1日", false], ["yubi-barrier", "指バリア", false], ["sumo-king", "相撲キング", false], ["kiku-lemon", "菊とレモン", false], ["osunayo", "空気を読むゲーム", false], ["tequila", "ドパがきにはできないゲーム", false], ["chikyu-boeigun", "地球の脱走劇", false], ["dopagaki-catch", "ドパがきにしかできないゲーム", false], ["oreleo", "オ？レ？レ？オ？", false], ["mahou-volley", "魔法の球 バレー", false], ["mahou-takkyu", "魔法の球 卓球", false], ["mahou-pk", "魔法の球 PK", false], ["konnyaku", "とんで、こんにゃく", false], ["mahou-no-tama", "魔法の球", false], ["moyashi-no-jiro", "もやしの次郎", false], ["teryudan-kitaku", "手りゅう弾は帰宅する", false], ["kopamijin", "木っ端みじん", false], ["nabe", "なべなべすくい", false], ["otokonoji", "漢ノ字", false]];
+const GAMES=[["hiyoko-kantei", "ひよこ鑑定士だぜ", true], ["jihanki", "携帯自販機", true], ["tatsujin-no-te", "達人の手", true], ["gojuuni", "ごジュウに", true], ["meishi-seiri", "名刺の整理", true], ["bisu-uchi", "ビス打ち職人", true], ["settai-golf", "接待ゴルフ", true], ["hinan-kunren", "避難の訓練ですぞ", true], ["hanetank", "ハネタンク", true], ["jimoto", "地元の最強", true], ["jibun", "自分", true], ["dangan", "弾丸合併", true], ["shiincrad", "シインクラッド", true], ["imomusume", "芋娘", true], ["fairies-tower", "Fairies' Tower", true], ["integra-layer", "インテグラ・レイヤー", true], ["furoya-no-onna", "穴の神隠し", true], ["yotsume", "四ツ目のダルマ", true], ["enpitsu-life", "エンピツライフ", true], ["hitouma", "ヒトウマ", true], ["hitsujikai", "羊飼いの1日", true], ["yubi-barrier", "指バリア", true], ["sumo-king", "相撲キング", true], ["kiku-lemon", "菊とレモン", true], ["osunayo", "空気を読むゲーム", true], ["tequila", "ドパがきにはできないゲーム", true], ["chikyu-boeigun", "地球の脱走劇", true], ["dopagaki-catch", "ドパがきにしかできないゲーム", true], ["oreleo", "オ？レ？レ？オ？", true], ["mahou-volley", "魔法の球 バレー", true], ["mahou-takkyu", "魔法の球 卓球", true], ["mahou-pk", "魔法の球 PK", true], ["konnyaku", "とんで、こんにゃく", true], ["mahou-no-tama", "魔法の球", true], ["teryudan-kitaku", "手りゅう弾は帰宅する", true], ["kopamijin", "木っ端みじん", true], ["nabe", "なべなべすくい", true], ["otokonoji", "漢ノ字", true], ["sakasama", "さかさまドロップ", false], ["daruma", "4つ目のダルマ", false], ["sakugae", "さくがえ", false], ["panfa", "盤滑", false], ["kairou", "回廊快走", false], ["eshi", "絵私", false], ["batbey", "バトベイ", false], ["yukidama", "ユキダマッチ", false], ["pinchbowl", "ピンチボウル", false], ["moyashi-no-jiro", "もやしの次郎", false]];
 const FB={apiKey:'AIzaSyBCzVyblBmfNQq4XdPHdQppE94gyiYxDkA',db:'https://ft-red-default-rtdb.asia-southeast1.firebasedatabase.app'};
 const $=id=>document.getElementById(id);
 const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
@@ -81,10 +81,10 @@ async function unlock(pw,first){
 function render(){
   const box=$('games');box.innerHTML='';let head=null;
   for(const [k,name,on] of GAMES){
-    const h=on?'引用の仕組みがあるゲーム':'まだ仕組みがないゲーム（欄だけ）';
+    const h=on?'引用の仕組みがあるゲーム':'「Xに投稿」ボタンがないゲーム（欄だけ）';
     if(h!==head){head=h;const e=document.createElement('h3');e.textContent=h;box.appendChild(e);}
     const d=DATA[k]||{};const el=document.createElement('div');el.className='g';
-    el.innerHTML='<div class="top"><span class="nm"></span><span class="tag '+(on?'on':'off')+'">'+(on?'対応ずみ':'まだ')+'</span></div>'+
+    el.innerHTML='<div class="top"><span class="nm"></span><span class="tag '+(on?'on':'off')+'">'+(on?'対応ずみ':'投稿ボタンなし')+'</span></div>'+
      '<label>日本語で遊んだ人に引用するツイート</label><input type="text" class="ja" inputmode="url" placeholder="https://x.com/nath12345678901/status/...">'+
      '<label>英語などで遊んだ人に引用するツイート</label><input type="text" class="en" inputmode="url" placeholder="https://x.com/nath12345678901/status/...">'+
      '<div class="row" style="margin-top:8px"><button class="sv">保存</button><a target="_blank" rel="noopener" href="https://nasubi-no-oniwa.github.io/'+k+'/">ゲームを開く</a></div><div class="st"></div>';
