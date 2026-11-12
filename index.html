@@ -502,6 +502,17 @@ const GAMES = [
     ko: {"name": "穴の神隠し", "yomi": "아나노 카미카쿠시", "text": "거대한 진흙 엉덩이에서 ○△■가 끙끙 밀려 나온다. 길게 누르면 밧줄을 당기고, 떼면 느슨해진다. ■는 세게, △는 살살, ○는 그 중간. 구멍 주위 고리가 빨강이면 너무 세고, 파랑이면 너무 약하다. 가끔 황금 ○도. 뽑은 양과 모양으로 정해지는 칭호는 1만 가지, 당기는 건 얼굴 없는 데생 인형.", "catch": "밀려 나오는 ○△■를 끌어내라!"},
   },
   {
+    name: 'ひよこ鑑定士だぜ', yomi: 'ひよこかんていしだぜ',
+    url: 'https://nasubi-no-oniwa.github.io/hiyoko-kantei/',
+    image: 'img/hiyoko-kantei.png',
+    text: 'ひよこのお尻を見て、60秒でオスとメスに分けるゲーム。お尻のまんなかにポチ（突起）があればオスで左の青い箱、なければメスで右のピンクの箱へスワイプ。リボンやモヒカン、ちょんまげは、オスかメスかと関係ない。まちがえると3秒止まって、場長に怒られる。プロ鑑定士の速さ（1時間に約1000羽）の何%だったかも出る。結果は動画にしてXに投稿できる。',
+    tags: ['3D', 'ひとりで', 'スワイプ', '見分ける', 'ランキング'],
+    badge: 'NEW', catch: 'ポチがあれば、オス。',
+    en: {"name": "CHICK SEXER, YO", "text": "Look at a chick's butt and sort males from females in 60 seconds. A little bump in the middle means male: swipe it left into the blue box. No bump means female: swipe it right into the pink box. Bows, mohawks and topknots have nothing to do with it. A mistake freezes you for 3 seconds and the boss yells at you. You also see what percent of a pro chick sexer's speed (about 1,000 an hour) you hit. Results can be turned into a video and posted on X.", "catch": "A bump? Male."},
+    zh: {"name": "ひよこ鑑定士だぜ", "yomi": "小雞鑑定師", "text": "看小雞的屁股，在60秒內分出公的和母的。屁股中間有小突起就是公的，往左滑進藍色箱子；沒有就是母的，往右滑進粉紅箱子。蝴蝶結、雞冠頭、武士髮髻都跟公母無關。錯了會停3秒，還會被場長罵。也會顯示你達到專業鑑定師速度（1小時約1000隻）的幾%。結果可以做成影片發到X。", "catch": "有突起，是公的。"},
+    ko: {"name": "ひよこ鑑定士だぜ", "yomi": "병아리 감별사", "text": "병아리 엉덩이를 보고 60초 안에 수컷과 암컷을 나누는 게임. 엉덩이 가운데에 작은 돌기가 있으면 수컷이니 왼쪽 파란 상자로, 없으면 암컷이니 오른쪽 분홍 상자로 스와이프. 리본, 모히칸, 상투는 수컷 암컷과 상관없다. 틀리면 3초 멈추고 장장에게 혼난다. 프로 감별사 속도(1시간에 약 1000마리)의 몇 %였는지도 나온다. 결과는 영상으로 만들어 X에 올릴 수 있다.", "catch": "돌기가 있으면 수컷."}
+  },
+  {
     name: '携帯自販機', yomi: 'けいたいじはんき',
     url: 'https://nasubi-no-oniwa.github.io/jihanki/',
     image: 'img/jihanki.png',
@@ -774,6 +785,7 @@ const GAMES = [
 ];
 
 const NEWS = [
+  { date: '2026.11.12', text: '新作「ひよこ鑑定士だぜ」を公開しました。ひよこのお尻を見て、60秒でオスとメスに分けるゲームです。ポチ（突起）があればオス、なければメス。', en: "New game: CHICK SEXER, YO. Look at chicks' butts and sort males from females in 60 seconds. A bump means male, no bump means female.", zh: "推出新作「ひよこ鑑定士だぜ」。看小雞的屁股，在60秒內分出公母。有突起是公的，沒有是母的。", ko: "신작 「ひよこ鑑定士だぜ」를 공개했어요. 병아리 엉덩이를 보고 60초 안에 수컷과 암컷을 나누는 게임이에요. 돌기가 있으면 수컷, 없으면 암컷." },
   { date: '2026.11.12', text: '新作「携帯自販機」を公開しました。自販機の当たりを当てるだけのゲームです。当たる確率は本物と同じ50本に1本。当たりは虹の7色で、色ごとに演出がちがいます。', en: "New game: POCKET VENDING. All you do is try to hit the prize on a vending machine. The odds are the real ones: 1 in 50. Wins come in 7 rainbow colors, each with its own show.", zh: "推出新作「携帯自販機」。就只是抽販賣機的獎。中獎機率和真的一樣，50罐中1罐。獎有彩虹7色，每種顏色的演出都不同。", ko: "신작 「携帯自販機」를 공개했어요. 자판기 당첨을 노리기만 하는 게임이에요. 당첨 확률은 진짜와 같은 50캔에 1캔. 당첨은 무지개 7색이고, 색마다 연출이 달라요." },
   { date: '2026.11.11', text: '新作「四ツ目のダルマ」を公開しました。「4つ目のダルマ」を、縁日の夜・漆と金の立体の盤に作り直した版です。ルールは同じで、対戦の相手も共通です。', en: "New game: The Fourth Daruma. \"The 4th Daruma\" rebuilt as a 3D board of black lacquer and gold on a festival night. Same rules, and matchmaking is shared.", zh: "推出新作「四ツ目のダルマ」。把「第四個達摩」重新做成祭典之夜、黑漆與金箔的立體棋盤。規則相同，對戰對手也共通。", ko: "신작 「四ツ目のダルマ」를 공개했어요. 「네 번째 달마」를 축제의 밤, 옻칠과 금박의 입체 판으로 새로 만든 버전입니다. 규칙은 같고 대전 상대도 공통입니다." },
   { date: '2026.11.11', text: '新作「エンピツライフ」を公開しました。ロケット鉛筆を飛ばし、地面に落ちたらその場で鉛筆になる、みんなで100層を越えていくゲームです。みんなの鉛筆が足場になります。', en: "New game: PENCIL LIFE. Launch a rocket pencil; hit the ground and you become a pencil right there. Everyone's pencils become footholds as we climb 100 floors together.", zh: "推出新作「エンピツライフ」。射出火箭鉛筆，掉到地上就在那裡變成鉛筆，大家一起越過100層。大家的鉛筆就是立足點。", ko: "신작 「エンピツライフ」를 공개했어요. 로켓 연필을 쏘고, 땅에 떨어지면 그 자리에서 연필이 되는, 모두 함께 100층을 넘는 게임이에요. 모두의 연필이 발판이 돼요." },
