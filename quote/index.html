@@ -46,7 +46,9 @@ h3{font-size:13px;color:var(--sub);margin:22px 4px 8px}
 </div>
 </main>
 <script>
-const GAMES=[["hiyoko-kantei", "ひよこ鑑定士だぜ", true], ["jihanki", "携帯自販機", true], ["tatsujin-no-te", "達人の手", true], ["gojuuni", "ごジュウに", true], ["meishi-seiri", "名刺の整理", true], ["bisu-uchi", "ビス打ち職人", true], ["settai-golf", "接待ゴルフ", true], ["hinan-kunren", "避難の訓練ですぞ", true], ["hanetank", "ハネタンク", true], ["jimoto", "地元の最強", true], ["jibun", "自分", true], ["dangan", "弾丸合併", true], ["shiincrad", "シインクラッド", true], ["imomusume", "芋娘", true], ["fairies-tower", "Fairies' Tower", true], ["integra-layer", "インテグラ・レイヤー", true], ["furoya-no-onna", "穴の神隠し", true], ["yotsume", "四ツ目のダルマ", true], ["enpitsu-life", "エンピツライフ", true], ["hitouma", "ヒトウマ", true], ["hitsujikai", "羊飼いの1日", true], ["yubi-barrier", "指バリア", true], ["sumo-king", "相撲キング", true], ["kiku-lemon", "菊とレモン", true], ["osunayo", "空気を読むゲーム", true], ["tequila", "ドパがきにはできないゲーム", true], ["chikyu-boeigun", "地球の脱走劇", true], ["dopagaki-catch", "ドパがきにしかできないゲーム", true], ["oreleo", "オ？レ？レ？オ？", true], ["mahou-volley", "魔法の球 バレー", true], ["mahou-takkyu", "魔法の球 卓球", true], ["mahou-pk", "魔法の球 PK", true], ["konnyaku", "とんで、こんにゃく", true], ["mahou-no-tama", "魔法の球", true], ["teryudan-kitaku", "手りゅう弾は帰宅する", true], ["kopamijin", "木っ端みじん", true], ["nabe", "なべなべすくい", true], ["otokonoji", "漢ノ字", true], ["sakasama", "さかさまドロップ", false], ["daruma", "4つ目のダルマ", false], ["sakugae", "さくがえ", false], ["panfa", "盤滑", false], ["kairou", "回廊快走", false], ["eshi", "絵私", false], ["batbey", "バトベイ", false], ["yukidama", "ユキダマッチ", false], ["pinchbowl", "ピンチボウル", false], ["moyashi-no-jiro", "もやしの次郎", false]];
+let GAMES=[["hiyoko-kantei", "ひよこ鑑定士だぜ", true], ["jihanki", "携帯自販機", true], ["yotsume", "四ツ目のダルマ", true], ["enpitsu-life", "エンピツライフ", true], ["tatsujin-no-te", "達人の手", true], ["hitouma", "ヒトウマ", true], ["gojuuni", "ごジュウに", true], ["meishi-seiri", "名刺の整理", true], ["hitsujikai", "羊飼いの1日", true], ["bisu-uchi", "ビス打ち職人", true], ["yubi-barrier", "指バリア", true], ["sumo-king", "相撲キング", true], ["osunayo", "空気を読むゲーム", true], ["kiku-lemon", "菊とレモン", true], ["settai-golf", "接待ゴルフ", true], ["chikyu-boeigun", "地球の脱走劇", true], ["hinan-kunren", "避難の訓練ですぞ", true], ["dopagaki-catch", "ドパがきにしかできないゲーム", true], ["oreleo", "オ？レ？レ？オ？", true], ["nabe", "なべなべすくい", true], ["tequila", "ドパがきにはできないゲーム", true], ["mahou-volley", "魔法の球 バレー", true], ["kopamijin", "木っ端みじん", true], ["otokonoji", "漢ノ字", true], ["mahou-takkyu", "魔法の球 卓球", true], ["mahou-pk", "魔法の球 PK", true], ["konnyaku", "とんで、こんにゃく", true], ["mahou-no-tama", "魔法の球", true], ["moyashi-no-jiro", "もやしの次郎", false], ["teryudan-kitaku", "手りゅう弾は帰宅する", true], ["furoya-no-onna", "穴の神隠し", true], ["integra-layer", "インテグラ・レイヤー", true], ["fairies-tower", "Fairies' Tower", true], ["imomusume", "芋娘", true], ["shiincrad", "シインクラッド", true], ["dangan", "弾丸合併", true], ["jibun", "自分", true], ["jimoto", "地元の最強", true], ["pinchbowl", "ピンチボウル", false], ["yukidama", "ユキダマッチ", false], ["batbey", "バトベイ", false], ["eshi", "絵私", false], ["kairou", "回廊快走", false], ["panfa", "盤滑", false], ["sakugae", "さくがえ", false], ["hanetank", "ハネタンク", true], ["daruma", "4つ目のダルマ", false], ["sakasama", "さかさまドロップ", false]];
+// ホームページ（なすびのお庭）に載ったのにこの一覧にないゲームは、新作として一番上に足す
+async function addNew(){try{const t=await (await fetch('/index.html',{cache:'no-store'})).text();const a=t.indexOf('const GAMES'),b=t.indexOf('const NEWS');const g=t.slice(a,b>a?b:undefined);const have=new Set(GAMES.map(x=>x[0]));const add=[];const re=/name:\s*(['"])(.*?)\1[\s\S]*?url:\s*'https:\/\/nasubi-no-oniwa\.github\.io\/([a-z0-9-]+)\/?'/g;let m;while((m=re.exec(g))){if(!have.has(m[3])){have.add(m[3]);add.push([m[3],m[2],true]);}}if(add.length)GAMES=add.concat(GAMES);}catch(e){}}
 const FB={apiKey:'AIzaSyBCzVyblBmfNQq4XdPHdQppE94gyiYxDkA',db:'https://ft-red-default-rtdb.asia-southeast1.firebasedatabase.app'};
 const $=id=>document.getElementById(id);
 const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
@@ -73,15 +75,15 @@ async function unlock(pw,first){
     if(first)await db('PATCH','/xquote',{set:true,pass:pw});
     await db('PUT','/xquote/claim/'+UID,pw);
     ls.set('nq_pw',pw);
-    DATA=(await db('GET','/xquote/g'))||{};
+    DATA=(await db('GET','/xquote/g'))||{};await addNew();
     $('lock').hidden=true;$('list').hidden=false;render();
   }catch(e){$('lockErr').textContent=first?'合言葉を決められませんでした（もう決まっているかもしれません。ページを開きなおしてください）':'合言葉がちがいます';ls.set('nq_pw','');}
   $('pwBtn').disabled=false;
 }
 function render(){
   const box=$('games');box.innerHTML='';let head=null;
-  for(const [k,name,on] of GAMES){
-    const h=on?'引用の仕組みがあるゲーム':'「Xに投稿」ボタンがないゲーム（欄だけ）';
+  for(const [k,name,on] of GAMES.filter(x=>x[2]).concat(GAMES.filter(x=>!x[2]))){
+    const h=on?'引用の仕組みがあるゲーム（新しい順）':'「Xに投稿」ボタンがないゲーム（欄だけ）';
     if(h!==head){head=h;const e=document.createElement('h3');e.textContent=h;box.appendChild(e);}
     const d=DATA[k]||{};const el=document.createElement('div');el.className='g';
     el.innerHTML='<div class="top"><span class="nm"></span><span class="tag '+(on?'on':'off')+'">'+(on?'対応ずみ':'投稿ボタンなし')+'</span></div>'+
