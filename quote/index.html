@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>引用するツイートの一覧（なすびのお庭・管理）</title>
+<style>
+:root{--bg:#f6f3ee;--card:#fff;--ink:#2b2622;--sub:#7a716a;--line:#e4ddd4;--acc:#6a3fa0;--ok:#2e8b57;--ng:#c0392b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;font-size:15px;line-height:1.5}
+header{position:sticky;top:0;z-index:5;background:var(--acc);color:#fff;padding:12px 16px}
+header h1{margin:0;font-size:17px}header p{margin:2px 0 0;font-size:12px;opacity:.85}
+main{max-width:760px;margin:0 auto;padding:14px 12px 80px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
+.box h2{margin:0 0 8px;font-size:15px}
+.note{font-size:13px;color:var(--sub);margin:6px 0 0}
+input[type=text],input[type=password]{width:100%;padding:10px;border:1px solid var(--line);border-radius:8px;font-size:15px;background:#fff}
+button{border:0;border-radius:8px;padding:10px 14px;font-size:15px;font-weight:600;cursor:pointer;background:var(--acc);color:#fff}
+button.sub{background:#eee;color:var(--ink)}button:disabled{opacity:.45;cursor:default}
+.row{display:flex;gap:8px;align-items:center}.row input{flex:1}
+.g{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:10px}
+.g .top{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.g .nm{font-weight:700}.tag{font-size:11px;padding:2px 8px;border-radius:99px;white-space:nowrap}
+.tag.on{background:#e6f4ec;color:var(--ok)}.tag.off{background:#f1eeea;color:var(--sub)}
+.g label{display:block;font-size:12px;color:var(--sub);margin:6px 0 2px}
+.g .st{font-size:12px;margin-top:6px;min-height:18px}.ok{color:var(--ok)}.ng{color:var(--ng)}
+.g a{font-size:12px;color:var(--acc)}
+h3{font-size:13px;color:var(--sub);margin:22px 4px 8px}
+#lock[hidden],#list[hidden]{display:none}
+</style></head><body>
+<header><h1>引用するツイートの一覧</h1><p>遊んだ人が「Xに投稿」したとき、ここに貼ったツイートが引用でつきます</p></header>
+<main>
+<div class="box" id="lock">
+ <h2 id="lockTitle">合言葉を入れてください</h2>
+ <div class="row"><input type="password" id="pw" placeholder="合言葉（英数字8〜40文字）" autocomplete="current-password"><button id="pwBtn">開く</button></div>
+ <p class="note" id="lockNote">あなただけが書きかえられるようにするための合言葉です。</p>
+ <p class="note ng" id="lockErr"></p>
+</div>
+<div id="list" hidden>
+ <div class="box">
+  <h2>使い方</h2>
+  <p class="note" style="margin:0">ツイートを開いて「共有」→「リンクをコピー」で出たURLを貼り、「保存」を押します。<br>
+  遊んだ人が日本語で遊んでいれば「日本語」の欄、英語・繁体中文・韓国語なら「英語」の欄のツイートが引用されます。<br>
+  空の欄は引用なしになります。保存するとすぐ（ゲームを開きなおした人から）反映されます。<br>
+  「対応ずみ」のゲームだけが、いま引用の仕組みを持っています。ほかのゲームは欄だけ先に用意しています。</p>
+ </div>
+ <div id="games"></div>
+</div>
+</main>
+<script>
+const GAMES=[["hiyoko-kantei", "ひよこ鑑定士だぜ", true], ["jihanki", "携帯自販機", true], ["tatsujin-no-te", "達人の手", true], ["gojuuni", "ごジュウに", true], ["meishi-seiri", "名刺の整理", true], ["bisu-uchi", "ビス打ち職人", true], ["settai-golf", "接待ゴルフ", true], ["hinan-kunren", "避難の訓練ですぞ", true], ["sakasama", "さかさまドロップ", false], ["daruma", "4つ目のダルマ", false], ["hanetank", "ハネタンク", false], ["sakugae", "さくがえ", false], ["panfa", "盤滑", false], ["kairou", "回廊快走", false], ["eshi", "絵私", false], ["batbey", "バトベイ", false], ["yukidama", "ユキダマッチ", false], ["pinchbowl", "ピンチボウル", false], ["jimoto", "地元の最強", false], ["jibun", "自分", false], ["dangan", "弾丸合併", false], ["shiincrad", "シインクラッド", false], ["imomusume", "芋娘", false], ["integra-layer", "インテグラ・レイヤー", false], ["furoya-no-onna", "穴の神隠し", false], ["yotsume", "四ツ目のダルマ", false], ["enpitsu-life", "エンピツライフ", false], ["hitouma", "ヒトウマ", false], ["hitsujikai", "羊飼いの1日", false], ["yubi-barrier", "指バリア", false], ["sumo-king", "相撲キング", false], ["kiku-lemon", "菊とレモン", false], ["osunayo", "空気を読むゲーム", false], ["tequila", "ドパがきにはできないゲーム", false], ["chikyu-boeigun", "地球の脱走劇", false], ["dopagaki-catch", "ドパがきにしかできないゲーム", false], ["oreleo", "オ？レ？レ？オ？", false], ["mahou-volley", "魔法の球 バレー", false], ["mahou-takkyu", "魔法の球 卓球", false], ["mahou-pk", "魔法の球 PK", false], ["konnyaku", "とんで、こんにゃく", false], ["mahou-no-tama", "魔法の球", false], ["moyashi-no-jiro", "もやしの次郎", false], ["teryudan-kitaku", "手りゅう弾は帰宅する", false]];
+const FB={apiKey:'AIzaSyBCzVyblBmfNQq4XdPHdQppE94gyiYxDkA',db:'https://ft-red-default-rtdb.asia-southeast1.firebasedatabase.app'};
+const $=id=>document.getElementById(id);
+const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+let ID=null,UID=null,DATA={};
+async function signIn(){
+  const r=await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key='+FB.apiKey,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({returnSecureToken:true})});
+  const j=await r.json();if(!j.idToken)throw new Error('サインインできませんでした');ID=j.idToken;UID=j.localId;
+}
+async function db(method,path,body){
+  const r=await fetch(FB.db+path+'.json?auth='+encodeURIComponent(ID),{method,headers:{'Content-Type':'application/json'},body:body===undefined?undefined:JSON.stringify(body)});
+  const t=await r.text();if(!r.ok)throw new Error(r.status===401?'許可されていません':'保存できませんでした（'+r.status+'）');return t?JSON.parse(t):null;
+}
+// 貼られたURLを x.com/名前/status/番号 の形にそろえる
+function clean(u){
+  u=(u||'').trim();if(!u)return '';
+  const m=u.match(/^(?:https?:\/\/)?(?:www\.|mobile\.)?(?:x|twitter)\.com\/([A-Za-z0-9_]{1,15})\/status(?:es)?\/(\d{5,25})/i);
+  return m?'https://x.com/'+m[1]+'/status/'+m[2]:null;
+}
+async function unlock(pw,first){
+  if(!/^[A-Za-z0-9]{8,40}$/.test(pw)){$('lockErr').textContent='合言葉は英数字8〜40文字です';return;}
+  $('pwBtn').disabled=true;$('lockErr').textContent='';
+  try{
+    if(!ID)await signIn();
+    if(first)await db('PATCH','/xquote',{set:true,pass:pw});
+    await db('PUT','/xquote/claim/'+UID,pw);
+    ls.set('nq_pw',pw);
+    DATA=(await db('GET','/xquote/g'))||{};
+    $('lock').hidden=true;$('list').hidden=false;render();
+  }catch(e){$('lockErr').textContent=first?'合言葉を決められませんでした（もう決まっているかもしれません。ページを開きなおしてください）':'合言葉がちがいます';ls.set('nq_pw','');}
+  $('pwBtn').disabled=false;
+}
+function render(){
+  const box=$('games');box.innerHTML='';let head=null;
+  for(const [k,name,on] of GAMES){
+    const h=on?'引用の仕組みがあるゲーム':'まだ仕組みがないゲーム（欄だけ）';
+    if(h!==head){head=h;const e=document.createElement('h3');e.textContent=h;box.appendChild(e);}
+    const d=DATA[k]||{};const el=document.createElement('div');el.className='g';
+    el.innerHTML='<div class="top"><span class="nm"></span><span class="tag '+(on?'on':'off')+'">'+(on?'対応ずみ':'まだ')+'</span></div>'+
+     '<label>日本語で遊んだ人に引用するツイート</label><input type="text" class="ja" inputmode="url" placeholder="https://x.com/nath12345678901/status/...">'+
+     '<label>英語などで遊んだ人に引用するツイート</label><input type="text" class="en" inputmode="url" placeholder="https://x.com/nath12345678901/status/...">'+
+     '<div class="row" style="margin-top:8px"><button class="sv">保存</button><a target="_blank" rel="noopener" href="https://nasubi-no-oniwa.github.io/'+k+'/">ゲームを開く</a></div><div class="st"></div>';
+    el.querySelector('.nm').textContent=name;
+    const ja=el.querySelector('.ja'),en=el.querySelector('.en'),st=el.querySelector('.st'),sv=el.querySelector('.sv');
+    ja.value=d.ja||'';en.value=d.en||'';
+    if(d.t)st.textContent='保存ずみ（'+new Date(d.t).toLocaleString('ja-JP')+'）';
+    const dirty=()=>{st.className='st';st.textContent='まだ保存していません';};
+    ja.oninput=dirty;en.oninput=dirty;
+    sv.onclick=async()=>{
+      const a=clean(ja.value),b=clean(en.value);
+      if(a===null||b===null){st.className='st ng';st.textContent='ツイートのURLの形ではありません（x.com/…/status/… のURLを貼ってください）';return;}
+      ja.value=a;en.value=b;sv.disabled=true;st.className='st';st.textContent='保存しています…';
+      try{
+        if(!a&&!b)await db('DELETE','/xquote/g/'+k);else await db('PUT','/xquote/g/'+k,{ja:a,en:b,t:{'.sv':'timestamp'}});
+        DATA[k]={ja:a,en:b,t:Date.now()};st.className='st ok';st.textContent=(!a&&!b)?'空にしました（引用なし）':'保存しました';
+      }catch(e){st.className='st ng';st.textContent=e.message+'。ページを開きなおしてください';}
+      sv.disabled=false;
+    };
+    box.appendChild(el);
+  }
+}
+(async()=>{
+  let first=false;
+  try{const r=await fetch(FB.db+'/xquote/set.json');first=(await r.json())!==true;}catch(e){}
+  if(first){$('lockTitle').textContent='はじめに合言葉を決めてください';$('lockNote').textContent='英数字8〜40文字で決めてください。次からはこの合言葉で開きます（このスマホ・PCでは自動で開きます）。忘れないように控えておいてください。';$('pwBtn').textContent='決める';$('pw').autocomplete='new-password';}
+  $('pwBtn').onclick=()=>unlock($('pw').value.trim(),first);
+  $('pw').onkeydown=e=>{if(e.key==='Enter')$('pwBtn').click();};
+  const saved=ls.get('nq_pw');if(saved&&!first)unlock(saved,false);
+})();
+</script>
+</body></html>
