@@ -2,7 +2,7 @@
 // ・結果画面のボタンの下（広告の帯の上）に「▶ 次のゲーム 右にスライド」の行を足す
 // ・右にスライドするか押すと「おすすめの画面」に切りかわる（帯 → おすすめ3つ → 大きい広告。広告はスマホのときだけ）
 // ・左にスライドするか右上の ✖ で結果画面に戻る
-// ・おすすめは next.json（1時間ごとに自動で作る）の「いま遊ばれている1位・2位」と「最新作」。自分の作品は出さない
+// ・おすすめは next.json（1時間ごとに自動で作る）の「いま遊ばれている1位・2位」と「最新作」。固定の作品があれば「注目」としていちばん上。自分の作品は出さない
 // ・おすすめの画面を出しているあいだは、結果画面の広告の場所を隠す（広告の上に画面を重ねないため。AdMax規約 第10条12号(2)）
 // ・おすすめの画面の広告は、開いてから1.2秒は押せない。同じ広告の読みこみは30秒に1回まで
 // ・作品ごとの設定は window.NSB_NEXT = {g:作品の名前, r:[{a:行を入れる場所, v:結果画面}], ad:広告を出すか}
@@ -17,10 +17,10 @@
     var AD = BASE + 'ad/', AD2 = BASE + 'ad/big.html', LOCK = 1200, MIN = 30000;
     var lang = (navigator.language || 'ja').slice(0, 2).toLowerCase();
     var T = {
-      ja: { row: '次のゲーム　右にスライド', ttl: '次はこれで遊ぶ？', back: '◀ 左にスライドか ✖ で、結果にもどる', t1: 'いま1位', t2: 'いま2位', nw: '最新作' },
-      en: { row: 'Next game — slide right', ttl: 'Play this next?', back: '◀ Slide left or tap ✖ to go back', t1: 'Top now', t2: '#2 now', nw: 'Newest' },
-      zh: { row: '下一個遊戲　往右滑', ttl: '接下來玩這個？', back: '◀ 往左滑或按 ✖ 回到結果', t1: '現在第1名', t2: '現在第2名', nw: '最新作' },
-      ko: { row: '다음 게임　오른쪽으로 밀기', ttl: '다음엔 이거 할래?', back: '◀ 왼쪽으로 밀거나 ✖ 로 결과로 돌아가기', t1: '지금 1위', t2: '지금 2위', nw: '최신작' }
+      ja: { row: '次のゲーム　右にスライド', ttl: '次はこれで遊ぶ？', back: '◀ 左にスライドか ✖ で、結果にもどる', t1: 'いま1位', t2: 'いま2位', nw: '最新作', pin: '注目' },
+      en: { row: 'Next game — slide right', ttl: 'Play this next?', back: '◀ Slide left or tap ✖ to go back', t1: 'Top now', t2: '#2 now', nw: 'Newest', pin: 'Featured' },
+      zh: { row: '下一個遊戲　往右滑', ttl: '接下來玩這個？', back: '◀ 往左滑或按 ✖ 回到結果', t1: '現在第1名', t2: '現在第2名', nw: '最新作', pin: '注目' },
+      ko: { row: '다음 게임　오른쪽으로 밀기', ttl: '다음엔 이거 할래?', back: '◀ 왼쪽으로 밀거나 ✖ 로 결과로 돌아가기', t1: '지금 1위', t2: '지금 2위', nw: '최신작', pin: '주목' }
     };
     var t = T[lang] || T.en;
     var openedAt = 0, D = null, picks = [], rows = [], panel = null, opened = false, hid = [], adf = null, adf2 = null, adLast = 0, adTimer = 0;
@@ -33,9 +33,9 @@
 
     function pick() {
       var ok = function (x) { return x && x.g !== C.g && !x.ex; };
-      var top = (D.top || []).filter(ok), out = [];
-      if (top[0]) out.push([t.t1, top[0]]);
-      if (top[1]) out.push([t.t2, top[1]]);
+      // 固定の作品（pin）は「注目」、それ以外は本当の順位で「いま1位」「いま2位」
+      var top = (D.top || []).filter(ok), out = [], rank = 0;
+      for (var i = 0; i < top.length && out.length < 2; i++) out.push([top[i].pin ? t.pin : (rank++ === 0 ? t.t1 : t.t2), top[i]]);
       var nw = (D.new || []).filter(function (x) { return ok(x) && out.every(function (p) { return p[1].g !== x.g; }); })[0];
       if (nw) out.push([t.nw, nw]);
       return out;
@@ -80,7 +80,7 @@
       var cards = picks.map(function (q) {
         var x = q[1];
         return '<a href="' + esc(BASE + x.g + '/') + '" data-g="' + esc(x.g) + '" style="flex:1 1 0;max-width:112px;min-width:0;display:block;text-decoration:none;color:#222;background:#fff;border:1px solid #ddd;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.12)">' +
-          '<div style="font:bold 11px sans-serif;color:#fff;background:' + (q[0] === t.nw ? '#e0457b' : '#3a7bd5') + ';padding:3px 0">' + esc(q[0]) + '</div>' +
+          '<div style="font:bold 11px sans-serif;color:#fff;background:' + (q[0] === t.nw ? '#e0457b' : q[0] === t.pin ? '#e8900c' : '#3a7bd5') + ';padding:3px 0">' + esc(q[0]) + '</div>' +
           (x.img ? '<img alt="" src="' + esc(BASE + x.img) + '" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">' : '<div style="aspect-ratio:1/1;background:#f1ede4"></div>') +
           '<div style="font:bold 12px sans-serif;padding:6px 3px 8px;line-height:1.25;word-break:break-all">' + esc(nm(x)) + '</div></a>';
       }).join('');
