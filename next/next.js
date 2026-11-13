@@ -18,10 +18,10 @@
     var AD = BASE + 'ad/', AD2 = BASE + 'ad/big.html', LOCK = 1200, MIN = 30000;
     var lang = (navigator.language || 'ja').slice(0, 2).toLowerCase();
     var T = {
-      ja: { row: '次のゲーム　右にスライド', ttl: '次はこれで遊ぶ？', back: '◀ 左にスライドか ✖ で、結果にもどる', t1: 'いま1位', t2: 'いま2位', nw: '最新作', pin: '注目', lv: '配信中' },
-      en: { row: 'Next game — slide right', ttl: 'Play this next?', back: '◀ Slide left or tap ✖ to go back', t1: 'Top now', t2: '#2 now', nw: 'Newest', pin: 'Featured', lv: 'LIVE' },
-      zh: { row: '下一個遊戲　往右滑', ttl: '接下來玩這個？', back: '◀ 往左滑或按 ✖ 回到結果', t1: '現在第1名', t2: '現在第2名', nw: '最新作', pin: '注目', lv: '直播中' },
-      ko: { row: '다음 게임　오른쪽으로 밀기', ttl: '다음엔 이거 할래?', back: '◀ 왼쪽으로 밀거나 ✖ 로 결과로 돌아가기', t1: '지금 1위', t2: '지금 2위', nw: '최신작', pin: '주목', lv: '방송 중' }
+      ja: { row: '次のゲーム　右にスライド', ttl: '次はこれで遊ぶ？', back: '◀ 左にスライドか ✖ で、結果にもどる', t1: 'いま1位', t2: 'いま2位', nw: '最新作', pin: '注目', lv: '配信中', fl1: '新作を毎日出してます', fl2: 'なすPをフォロー' },
+      en: { row: 'Next game — slide right', ttl: 'Play this next?', back: '◀ Slide left or tap ✖ to go back', t1: 'Top now', t2: '#2 now', nw: 'Newest', pin: 'Featured', lv: 'LIVE', fl1: 'New games every day', fl2: 'Follow NasuP' },
+      zh: { row: '下一個遊戲　往右滑', ttl: '接下來玩這個？', back: '◀ 往左滑或按 ✖ 回到結果', t1: '現在第1名', t2: '現在第2名', nw: '最新作', pin: '注目', lv: '直播中', fl1: '每天都有新作', fl2: '追蹤 なすP' },
+      ko: { row: '다음 게임　오른쪽으로 밀기', ttl: '다음엔 이거 할래?', back: '◀ 왼쪽으로 밀거나 ✖ 로 결과로 돌아가기', t1: '지금 1위', t2: '지금 2위', nw: '최신작', pin: '주목', lv: '방송 중', fl1: '매일 신작 공개', fl2: 'なすP 팔로우' }
     };
     var t = T[lang] || T.en;
     // 配信中かどうかの置き場所（だれでも読める所だけ）。list：配信の一覧（中身があれば配信中）、flag：{on:true} の印
@@ -33,6 +33,16 @@
       'integra-layer': ['https://integra-layer' + RT + 'stream.json', 'flag']
     };
     var liveAt = {};
+    // 行の下に「作った人をフォロー」の1行（押すとXのフォローの画面が開く）
+    var FOLLOW = 'https://x.com/intent/follow?screen_name=nath12345678901', follows = [];
+    function mkFollow() {
+      var a = el('a', 'display:block;box-sizing:border-box;width:100%;max-width:320px;margin:8px auto 0;padding:4px 0;text-align:center;font:12px/1.5 sans-serif;color:#667;text-decoration:none');
+      a.className = 'nsb-follow'; a.href = FOLLOW; a.target = '_blank'; a.rel = 'noopener';
+      a.innerHTML = esc(t.fl1) + '　<b style="color:#1d9bf0">𝕏 ' + esc(t.fl2) + ' ›</b>';
+      ['touchstart', 'touchend', 'pointerdown', 'pointerup', 'mousedown', 'mouseup'].forEach(function (n) { a.addEventListener(n, stop); });
+      a.addEventListener('click', function (e) { stop(e); ev('follow_click'); });
+      return a;
+    }
     function isLive(v, kind) {
       if (!v || typeof v !== 'object') return false;
       if (kind === 'flag') return !!v.on && /^https:\/\//.test(v.url || '');
@@ -91,9 +101,11 @@
         var r = rows[i] || (rows[i] = mkRow());
         // 行は、広告の箱ではないいちばん後ろの中身のすぐ後ろに置く（広告が下にある作品では「ボタン → 行 → 帯」になる）
         var last = null;
-        for (var n = a.lastElementChild; n; n = n.previousElementSibling) { if (n !== r && !(n.classList && n.classList.contains('nsb-ad'))) { last = n; break; } }
+        for (var n = a.lastElementChild; n; n = n.previousElementSibling) { if (n !== r && !(n.classList && (n.classList.contains('nsb-ad') || n.classList.contains('nsb-follow')))) { last = n; break; } }
         var want = last ? last.nextSibling : a.firstChild;
         if (r.parentNode !== a || (r !== want && r.previousElementSibling !== last)) a.insertBefore(r, want);
+        var f = follows[i] || (follows[i] = mkFollow());
+        if (r.nextSibling !== f) a.insertBefore(f, r.nextSibling);
       }
     }
 
