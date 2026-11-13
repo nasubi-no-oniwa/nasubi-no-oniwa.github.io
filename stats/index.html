@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>いまの人数 ― なすびのお庭</title>
+<style>
+:root{--bg:#f4f3ef;--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#8a8984;--line:#e3e2dd;--grid:#ecebe6;--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#eda100;--s5:#e87ba4;--s6:#008300;--s7:#6250d6;--s8:#e34948;--on:#0b0b0b}
+@media (prefers-color-scheme:dark){:root{--bg:#121211;--surface:#1a1a19;--ink:#f0efec;--ink2:#c3c2b7;--muted:#8f8e86;--line:#2e2e2b;--grid:#262624;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#c98500;--s5:#d55181;--s6:#008300;--s7:#9085e9;--s8:#e66767;--on:#f0efec}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Hiragino Sans","Noto Sans JP",sans-serif;-webkit-text-size-adjust:100%}
+.wrap{max-width:960px;margin:0 auto;padding:14px 14px 40px}
+h1{font-size:18px;margin:4px 0 2px}
+.sub{color:var(--ink2);font-size:13px;margin:0 0 12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.tile .k{font-size:12px;color:var(--ink2)}
+.tile .v{font-size:28px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.2;margin-top:2px}
+.tile .d{font-size:12px;color:var(--ink2);margin-top:2px}
+@media (max-width:560px){.tiles{grid-template-columns:1fr 1fr}.tile .v{font-size:24px}}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:none;color:var(--ink2);font:inherit;font-size:13px;padding:7px 11px;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--ink);color:var(--surface);font-weight:700}
+select,input[type=date]{font:inherit;font-size:13px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+label.chk{font-size:13px;color:var(--ink2);display:inline-flex;gap:4px;align-items:center}
+.chartbox{position:relative}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font-size:12px;box-shadow:0 2px 8px rgba(0,0,0,.12);display:none;white-space:nowrap;z-index:2}
+.tip b{font-variant-numeric:tabular-nums}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--ink2);margin:6px 0 0}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}
+.note{font-size:12px;color:var(--muted);margin:8px 0 0}
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+th,td{padding:7px 6px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left;min-width:9em}
+@media (max-width:560px){table{font-size:12px}th,td{padding:6px 4px}}
+#more{margin-top:8px;font:inherit;font-size:13px;border:1px solid var(--line);background:var(--surface);color:var(--ink2);border-radius:8px;padding:6px 12px;cursor:pointer}
+th{color:var(--ink2);font-weight:600;cursor:pointer;white-space:nowrap}
+h2{font-size:15px;margin:18px 0 6px}
+#lock{max-width:360px;margin:12vh auto;padding:0 16px}
+#lock input{width:100%;font:inherit;padding:11px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);margin:8px 0}
+#lock button.go{width:100%;font:inherit;font-weight:700;padding:11px;border:0;border-radius:10px;background:var(--ink);color:var(--surface);cursor:pointer}
+.err{color:#d03b3b;font-size:13px;min-height:1.4em}
+</style>
+</head>
+<body>
+<div id="lock">
+  <h1>いまの人数</h1>
+  <p class="sub">合言葉を入れてください</p>
+  <input type="password" id="pw" autocomplete="current-password" placeholder="合言葉">
+  <label class="chk"><input type="checkbox" id="remember" checked> この端末で覚える</label>
+  <p class="err" id="err"></p>
+  <button class="go" id="open">開く</button>
+</div>
+
+<div class="wrap" id="app" hidden>
+  <h1>なすびのお庭　いまの人数</h1>
+  <p class="sub" id="at"></p>
+
+  <div class="tiles">
+    <div class="card tile"><div class="k">過去30分に遊んでいた人</div><div class="v" id="t30">-</div><div class="d" id="t30d"></div></div>
+    <div class="card tile"><div class="k">過去5分に遊んでいた人</div><div class="v" id="t5">-</div><div class="d" id="t5d"></div></div>
+    <div class="card tile"><div class="k" id="tpk-k">今日のいちばん多いとき（1分）</div><div class="v" id="tpk">-</div><div class="d" id="tpkd"></div></div>
+  </div>
+
+  <div class="filters">
+    <div class="seg" id="fPeriod">
+      <button data-v="today" aria-pressed="true">今日</button><button data-v="yest">昨日</button><button data-v="7">7日</button><button data-v="28">28日</button>
+    </div>
+    <input type="date" id="fDate" aria-label="日付をえらぶ">
+    <select id="fGame" aria-label="作品"></select>
+    <div class="seg" id="fMetric">
+      <button data-v="min" aria-pressed="true">1分ごと</button><button data-v="s30">30分の人数</button>
+    </div>
+    <label class="chk"><input type="checkbox" id="fCmp" checked> 前の日の同じ時間とくらべる</label>
+  </div>
+
+  <div class="card">
+    <div class="chartbox" id="chartbox"><svg id="chart" viewBox="0 0 900 320" role="img" aria-label="人数の移り変わり"></svg><div class="tip" id="tip"></div></div>
+    <div class="legend" id="legend"></div>
+    <p class="note" id="cnote"></p>
+  </div>
+
+  <h2 id="tblTitle">作品ごと</h2>
+  <div class="card" style="overflow-x:auto">
+    <table id="tbl"><thead><tr><th data-k="name">作品</th><th data-k="now">いま（30分）</th><th data-k="peak">この期間の最高</th><th data-k="avg">この期間の平均</th></tr></thead><tbody></tbody></table>
+    <button id="more" hidden>すべて表示</button>
+    <p class="note">「30分の人数」は、記録した時点の過去30分に遊んでいた人です（30分ごと・夜中は1時間ごとに記録）。「1分ごと」は全体が7日分、作品ごとが3日分残っています。</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var DATA_URL = 'data.enc';
+  var $ = function (id) { return document.getElementById(id); };
+  var D = null, PASS = null;
+  var st = { period: 'today', date: '', game: '_all', metric: 'min', cmp: true, sortK: 'peak', all: false };
+  var COLORS = ['--s1', '--s2', '--s3', '--s4', '--s5', '--s6', '--s7', '--s8'].map(function (v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); });
+  var css = function (v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); };
+  var ms = function (s) { return Date.parse(s.replace(' ', 'T') + ':00+09:00'); };
+  var jst = function (t) { return new Date(t + 9 * 3600e3).toISOString().slice(0, 16).replace('T', ' '); };
+  var fmt = function (n) { return n == null ? '-' : Math.round(n).toLocaleString('ja-JP'); };
+
+  // ── 合言葉で鍵をあける
+  function b64(s) { var b = atob(s), u = new Uint8Array(b.length); for (var i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u; }
+  async function load(pass) {
+    var r = await fetch(DATA_URL + '?t=' + Date.now(), { cache: 'no-store' });
+    if (!r.ok) throw new Error('まだ数字がありません（最初の記録を待っています）');
+    var e = await r.json();
+    var base = await crypto.subtle.importKey('raw', new TextEncoder().encode(pass), 'PBKDF2', false, ['deriveKey']);
+    var key = await crypto.subtle.deriveKey({ name: 'PBKDF2', salt: b64(e.s), iterations: e.it, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+    var plain;
+    try { plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(e.i) }, key, b64(e.d)); } catch (_) { throw new Error('合言葉がちがいます'); }
+    var txt = await new Response(new Blob([plain]).stream().pipeThrough(new DecompressionStream('gzip'))).text();
+    return JSON.parse(txt);
+  }
+  async function tryOpen(pass, quiet) {
+    $('err').textContent = quiet ? '' : '読みこみ中…';
+    try {
+      D = await load(pass); PASS = pass;
+      if ($('remember').checked) try { localStorage.setItem('nsb-stats-pw', pass); } catch (_) {}
+      $('lock').hidden = true; $('app').hidden = false; setup(); render();
+    } catch (e) { $('err').textContent = e.message; try { if (/ちがいます/.test(e.message)) localStorage.removeItem('nsb-stats-pw'); } catch (_) {} }
+  }
+  $('open').onclick = function () { tryOpen($('pw').value); };
+  $('pw').onkeydown = function (e) { if (e.key === 'Enter') tryOpen($('pw').value); };
+  try { var saved = localStorage.getItem('nsb-stats-pw'); if (saved) tryOpen(saved, true); } catch (_) {}
+  // 5分ごとに読みなおす（記録は30分ごと）
+  setInterval(async function () { if (!PASS) return; try { D = await load(PASS); setupGames(); render(); } catch (_) {} }, 5 * 60e3);
+
+  // ── 絞りこみ
+  function setup() {
+    seg('fPeriod', function (v) { st.period = v; st.date = ''; $('fDate').value = ''; render(); });
+    seg('fMetric', function (v) { st.metric = v; render(); });
+    $('fDate').onchange = function () { if (!this.value) return; st.period = 'date'; st.date = this.value; Array.prototype.forEach.call($('fPeriod').children, function (b) { b.setAttribute('aria-pressed', 'false'); }); render(); };
+    $('fGame').onchange = function () { st.game = this.value; render(); };
+    $('fCmp').onchange = function () { st.cmp = this.checked; render(); };
+    Array.prototype.forEach.call(document.querySelectorAll('#tbl th'), function (th) { th.onclick = function () { st.sortK = th.dataset.k; render(); }; });
+    $('more').onclick = function () { st.all = !st.all; render(); };
+    var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(render, 200); });
+    setupGames();
+  }
+  function seg(id, fn) { var el = $(id); Array.prototype.forEach.call(el.children, function (b) { b.onclick = function () { Array.prototype.forEach.call(el.children, function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); fn(b.dataset.v); }; }); }
+  function setupGames() {
+    var tot = {}; D.s.slice(-48).forEach(function (r) { for (var g in r[3]) tot[g] = (tot[g] || 0) + r[3][g]; });
+    var gs = Object.keys(tot).filter(function (g) { return g !== '_'; }).sort(function (a, b) { return tot[b] - tot[a]; });
+    var sel = $('fGame'), cur = st.game; sel.innerHTML = '';
+    [['_all', '全体'], ['_top5', '上位5作品をくらべる']].concat(gs.map(function (g) { return [g, D.names[g] || g]; })).forEach(function (o) { var op = document.createElement('option'); op.value = o[0]; op.textContent = o[1]; sel.appendChild(op); });
+    sel.value = cur; if (sel.value !== cur) { sel.value = '_all'; st.game = '_all'; }
+  }
+
+  // ── 期間
+  function range() {
+    var now = ms(D.at), day = 86400e3;
+    var t0 = function (t) { var s = jst(t).slice(0, 10); return ms(s + ' 00:00'); };
+    if (st.period === 'today') return [t0(now), now, '今日'];
+    if (st.period === 'yest') return [t0(now) - day, t0(now), '昨日'];
+    if (st.period === 'date') { var a = ms(st.date + ' 00:00'); return [a, Math.min(a + day, now), st.date.replace(/-/g, '/')]; }
+    var n = +st.period; return [now - n * day, now, n + '日'];
+  }
+
+  // ── 線の点を作る
+  function minuteSeries(g, a, b) {
+    var out = [];
+    if (g === '_all') { for (var k in D.m) { var t = ms(k); if (t >= a && t < b) out.push([t, D.m[k]]); } }
+    else { for (var k2 in D.gm) { var t2 = ms(k2); if (t2 >= a && t2 < b) out.push([t2, D.gm[k2][g] || 0]); } }
+    return out.sort(function (x, y) { return x[0] - y[0]; });
+  }
+  function snapSeries(g, a, b) {
+    var out = [];
+    D.s.forEach(function (r) { var t = ms(r[0]); if (t < a || t >= b) return; out.push([t, g === '_all' ? r[1] : (r[3][g] || 0)]); });
+    return out;
+  }
+  function thin(p, max) { if (p.length <= max) return p; var k = Math.ceil(p.length / max), o = []; for (var i = 0; i < p.length; i += k) { var s = 0, n = 0; for (var j = i; j < i + k && j < p.length; j++) { s += p[j][1]; n++; } o.push([p[i][0], s / n]); } return o; }
+  function topGames(a, b) {
+    var tot = {}; D.s.forEach(function (r) { var t = ms(r[0]); if (t < a || t >= b) return; for (var g in r[3]) if (g !== '_') tot[g] = (tot[g] || 0) + r[3][g]; });
+    return Object.keys(tot).sort(function (x, y) { return tot[y] - tot[x]; }).slice(0, 5);
+  }
+  // 作品の色は作品に固定（順位では変えない）：最近いちばん多い順に色を割り当てて覚えておく
+  var colorOf = {};
+  function gColor(g) { if (!colorOf[g]) { var used = Object.keys(colorOf).length; colorOf[g] = COLORS[used % COLORS.length]; } return colorOf[g]; }
+
+  function render() {
+    var r = range(), a = r[0], b = r[1], label = r[2], day = 86400e3;
+    var useMin = st.metric === 'min';
+    var minFrom = st.game === '_all' || st.game === '_top5' ? (st.game === '_all' ? Object.keys(D.m)[0] : Object.keys(D.gm)[0]) : Object.keys(D.gm)[0];
+    var note = '';
+    if (useMin && (!minFrom || ms(minFrom) > a + 3600e3)) { note = '1分ごとの記録は全体が7日分、作品ごとが3日分だけなので、ない所は30分の人数で出しています。'; }
+    var get = function (g, A, B) { var p = useMin ? minuteSeries(g, A, B) : snapSeries(g, A, B); if (useMin && p.length < 2) p = snapSeries(g, A, B); return thin(p, 900); };
+    var series = [];
+    if (st.game === '_top5') {
+      topGames(a, b).forEach(function (g) { series.push({ name: D.names[g] || g, color: gColor(g), pts: get(g, a, b) }); });
+    } else {
+      var g = st.game, name = g === '_all' ? '全体' : (D.names[g] || g);
+      series.push({ name: name + '（' + label + '）', color: COLORS[0], pts: get(g, a, b) });
+      if (st.cmp) {
+        var shift = (st.period === '7' || st.period === '28') ? +st.period * day : day;
+        var prev = get(g, a - shift, b - shift).map(function (p) { return [p[0] + shift, p[1]]; });
+        series.push({ name: (shift === day ? '前の日' : 'その前の' + st.period + '日') + '（同じ時間）', color: css('--muted'), pts: prev, dash: true });
+      }
+    }
+    draw(series, a, b);
+    $('cnote').textContent = note + (useMin ? '' : '　30分の人数は、記録した時点の過去30分の人数です。');
+
+    // 上の数字
+    var last = D.s[D.s.length - 1];
+    $('at').textContent = '最終更新 ' + D.at.replace(/-/g, '/') + '（日本時間）　記録は30分ごと（夜中は1時間ごと）';
+    $('t30').textContent = fmt(last[1]); $('t5').textContent = last[2] == null ? '-' : fmt(last[2]);
+    var y = nearest(ms(last[0]) - day);
+    $('t30d').textContent = y ? '前の日の同じ時間 ' + fmt(y[1]) + '（' + diff(last[1], y[1]) + '）' : '';
+    $('t5d').textContent = y && y[2] != null && last[2] != null ? '前の日の同じ時間 ' + fmt(y[2]) + '（' + diff(last[2], y[2]) + '）' : '';
+    var tod = ms(jst(ms(D.at)).slice(0, 10) + ' 00:00'), pk = null;
+    for (var k in D.m) { var t = ms(k); if (t >= tod && (!pk || D.m[k] > pk[1])) pk = [k, D.m[k]]; }
+    $('tpk').textContent = pk ? fmt(pk[1]) : '-'; $('tpkd').textContent = pk ? pk[0].slice(11) + ' ごろ' : '';
+
+    // 表
+    var rows = {};
+    D.s.forEach(function (rr) { var t = ms(rr[0]); if (t < a || t >= b) return; for (var g2 in rr[3]) { if (g2 === '_') continue; var o = rows[g2] || (rows[g2] = { name: D.names[g2] || g2, peak: 0, sum: 0, n: 0 }); o.peak = Math.max(o.peak, rr[3][g2]); o.sum += rr[3][g2]; o.n++; } });
+    var nCount = D.s.filter(function (rr) { var t = ms(rr[0]); return t >= a && t < b; }).length || 1;
+    var list = Object.keys(rows).map(function (g2) { var o = rows[g2]; o.avg = o.sum / nCount; o.now = last[3][g2] || 0; return o; });
+    var k2 = st.sortK; list.sort(function (x, y2) { return k2 === 'name' ? x.name.localeCompare(y2.name, 'ja') : y2[k2] - x[k2]; });
+    $('tblTitle').textContent = '作品ごと（' + label + '）';
+    $('more').hidden = list.length <= 20; $('more').textContent = st.all ? '上位20だけ表示' : 'すべて表示（' + list.length + '作品）';
+    $('tbl').querySelector('tbody').innerHTML = list.slice(0, st.all ? 999 : 20).map(function (o) { return '<tr><td>' + esc(o.name) + '</td><td>' + fmt(o.now) + '</td><td>' + fmt(o.peak) + '</td><td>' + fmt(o.avg) + '</td></tr>'; }).join('') || '<tr><td colspan="4" style="text-align:center;color:var(--muted)">この期間の記録はまだありません</td></tr>';
+  }
+  function nearest(t) { var best = null, bd = 50 * 60e3; D.s.forEach(function (r) { var d = Math.abs(ms(r[0]) - t); if (d < bd) { bd = d; best = r; } }); return best; }
+  function diff(x, y) { if (!y) return '-'; var p = Math.round((x - y) / y * 100); return (p >= 0 ? '+' : '') + p + '%'; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  // ── 線グラフ（1本の軸だけ。十字線と吹き出しつき）
+  function draw(series, a, b) {
+    var svg = $('chart'), W = Math.max(340, Math.min(900, $('chartbox').clientWidth || 900)), H = W < 600 ? 260 : 320, L = 44, R = 10, T = 12, B = 30;
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    var maxY = 0; series.forEach(function (s) { s.pts.forEach(function (p) { if (p[1] > maxY) maxY = p[1]; }); });
+    var nice = function (v) { if (v <= 10) return 10; var e = Math.pow(10, Math.floor(Math.log10(v))), f = v / e; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * e; };
+    var top = nice(maxY * 1.08 || 10), X = function (t) { return L + (t - a) / (b - a || 1) * (W - L - R); }, Y = function (v) { return T + (1 - v / top) * (H - T - B); };
+    var h = '', grid = css('--grid'), ink2 = css('--ink2');
+    for (var i = 0; i <= 4; i++) { var v = top * i / 4, y = Y(v); h += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + y + '" y2="' + y + '" stroke="' + grid + '" stroke-width="1"/><text x="' + (L - 6) + '" y="' + (y + 4) + '" text-anchor="end" font-size="11" fill="' + ink2 + '">' + fmt(v) + '</text>'; }
+    var span = b - a, small = W < 600, step = span <= 1.1 * 86400e3 ? (small ? 6 : 3) * 3600e3 : span <= 8 * 86400e3 ? (small ? 2 : 1) * 86400e3 : (small ? 7 : 4) * 86400e3;
+    var first = Math.ceil((a + 9 * 3600e3) / step) * step - 9 * 3600e3;
+    for (var t = first; t <= b; t += step) { var lb = jst(t); lb = step < 86400e3 ? lb.slice(11, 13) + '時' : lb.slice(5, 10).replace('-', '/'); h += '<text x="' + X(t) + '" y="' + (H - 12) + '" text-anchor="middle" font-size="11" fill="' + ink2 + '">' + lb + '</text>'; }
+    series.slice().reverse().forEach(function (s) {
+      if (s.pts.length < 2) return;
+      var d = s.pts.map(function (p, i) { return (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ' ' + Y(p[1]).toFixed(1); }).join('');
+      h += '<path d="' + d + '" fill="none" stroke="' + s.color + '" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"' + (s.dash ? ' stroke-dasharray="5 4"' : '') + '/>';
+    });
+    h += '<line id="xh" y1="' + T + '" y2="' + (H - B) + '" stroke="' + ink2 + '" stroke-width="1" visibility="hidden"/><g id="dots"></g><rect id="hit" x="' + L + '" y="0" width="' + (W - L - R) + '" height="' + H + '" fill="transparent"/>';
+    svg.innerHTML = h;
+    $('legend').innerHTML = series.length > 1 ? series.map(function (s) { return '<span><i style="background:' + s.color + (s.dash ? ';opacity:.7' : '') + '"></i>' + esc(s.name) + '</span>'; }).join('') : '';
+    if (!series.some(function (s) { return s.pts.length; })) svg.innerHTML += '<text x="' + (W / 2) + '" y="' + (H / 2) + '" text-anchor="middle" font-size="13" fill="' + ink2 + '">この期間の記録はまだありません</text>';
+    var hit = $('hit'), tip = $('tip'), xh = $('xh'), dots = $('dots'), box = $('chartbox');
+    function at(s, t) { var best = null, bd = Infinity; s.pts.forEach(function (p) { var dd = Math.abs(p[0] - t); if (dd < bd) { bd = dd; best = p; } }); return bd < (b - a) / 40 + 60e3 ? best : null; }
+    function move(ev) {
+      var rc = svg.getBoundingClientRect(), cx = (ev.touches ? ev.touches[0].clientX : ev.clientX) - rc.left, sx = cx / rc.width * W;
+      var t = a + (sx - L) / (W - L - R) * (b - a); if (t < a || t > b) return out();
+      xh.setAttribute('x1', X(t)); xh.setAttribute('x2', X(t)); xh.setAttribute('visibility', 'visible');
+      var rowsH = '', dh = '';
+      series.forEach(function (s) { var p = at(s, t); if (!p) return; rowsH += '<div><span style="color:' + s.color + '">●</span> ' + esc(s.name) + '　<b>' + fmt(p[1]) + '</b></div>'; dh += '<circle cx="' + X(p[0]) + '" cy="' + Y(p[1]) + '" r="4" fill="' + s.color + '" stroke="' + css('--surface') + '" stroke-width="2"/>'; });
+      dots.innerHTML = dh;
+      if (!rowsH) return out();
+      tip.innerHTML = '<div style="color:var(--ink2)">' + jst(t).slice(5).replace('-', '/') + '</div>' + rowsH; tip.style.display = 'block';
+      var px = cx + 12; if (px + tip.offsetWidth > box.clientWidth) px = cx - tip.offsetWidth - 12; tip.style.left = Math.max(0, px) + 'px'; tip.style.top = '8px';
+    }
+    function out() { tip.style.display = 'none'; xh.setAttribute('visibility', 'hidden'); dots.innerHTML = ''; }
+    hit.addEventListener('mousemove', move); hit.addEventListener('touchmove', function (e) { move(e); }, { passive: true }); hit.addEventListener('touchstart', move, { passive: true }); hit.addEventListener('mouseleave', out);
+  }
+})();
+</script>
+</body>
+</html>
