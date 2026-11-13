@@ -5,6 +5,7 @@
 // ・おすすめは next.json（1時間ごとに自動で作る）の「いま遊ばれている1位・2位」と「最新作」。固定の作品があれば「注目」としていちばん上。自分の作品は出さない
 // ・おすすめの画面を出しているあいだは、結果画面の広告の場所を隠す（広告の上に画面を重ねないため。AdMax規約 第10条12号(2)）
 // ・おすすめの画面の広告は、開いてから1.2秒は押せない。同じ広告の読みこみは30秒に1回まで
+// ・おすすめに並んだ作品が配信中なら、そのカードの絵に「● 配信中」の帯を出す（開くたびに確かめる。1分に1回まで）。配信の一覧がある作品は下の LIVE に足す
 // ・作品ごとの設定は window.NSB_NEXT = {g:作品の名前, r:[{a:行を入れる場所, v:結果画面}], ad:広告を出すか}
 (function () {
   try {
@@ -17,12 +18,36 @@
     var AD = BASE + 'ad/', AD2 = BASE + 'ad/big.html', LOCK = 1200, MIN = 30000;
     var lang = (navigator.language || 'ja').slice(0, 2).toLowerCase();
     var T = {
-      ja: { row: '次のゲーム　右にスライド', ttl: '次はこれで遊ぶ？', back: '◀ 左にスライドか ✖ で、結果にもどる', t1: 'いま1位', t2: 'いま2位', nw: '最新作', pin: '注目' },
-      en: { row: 'Next game — slide right', ttl: 'Play this next?', back: '◀ Slide left or tap ✖ to go back', t1: 'Top now', t2: '#2 now', nw: 'Newest', pin: 'Featured' },
-      zh: { row: '下一個遊戲　往右滑', ttl: '接下來玩這個？', back: '◀ 往左滑或按 ✖ 回到結果', t1: '現在第1名', t2: '現在第2名', nw: '最新作', pin: '注目' },
-      ko: { row: '다음 게임　오른쪽으로 밀기', ttl: '다음엔 이거 할래?', back: '◀ 왼쪽으로 밀거나 ✖ 로 결과로 돌아가기', t1: '지금 1위', t2: '지금 2위', nw: '최신작', pin: '주목' }
+      ja: { row: '次のゲーム　右にスライド', ttl: '次はこれで遊ぶ？', back: '◀ 左にスライドか ✖ で、結果にもどる', t1: 'いま1位', t2: 'いま2位', nw: '最新作', pin: '注目', lv: '配信中' },
+      en: { row: 'Next game — slide right', ttl: 'Play this next?', back: '◀ Slide left or tap ✖ to go back', t1: 'Top now', t2: '#2 now', nw: 'Newest', pin: 'Featured', lv: 'LIVE' },
+      zh: { row: '下一個遊戲　往右滑', ttl: '接下來玩這個？', back: '◀ 往左滑或按 ✖ 回到結果', t1: '現在第1名', t2: '現在第2名', nw: '最新作', pin: '注目', lv: '直播中' },
+      ko: { row: '다음 게임　오른쪽으로 밀기', ttl: '다음엔 이거 할래?', back: '◀ 왼쪽으로 밀거나 ✖ 로 결과로 돌아가기', t1: '지금 1위', t2: '지금 2위', nw: '최신작', pin: '주목', lv: '방송 중' }
     };
     var t = T[lang] || T.en;
+    // 配信中かどうかの置き場所（だれでも読める所だけ）。list：配信の一覧（中身があれば配信中）、flag：{on:true} の印
+    var RT = '-default-rtdb.asia-southeast1.firebasedatabase.app/';
+    var LIVE = {
+      'enpitsu-life': ['https://ft-blue' + RT + 'el/live.json', 'list'],
+      'fairies-tower': ['https://ft-green' + RT + 'ft_live.json', 'list'],
+      'shiincrad': ['https://shiincrad' + RT + 'sh_live.json', 'list'],
+      'integra-layer': ['https://integra-layer' + RT + 'stream.json', 'flag']
+    };
+    var liveAt = {};
+    function isLive(v, kind) {
+      if (!v || typeof v !== 'object') return false;
+      if (kind === 'flag') return !!v.on && /^https:\/\//.test(v.url || '');
+      for (var k in v) { var x = v[k]; if (x && typeof x === 'object' && x.n && /^https:\/\//.test(x.u || '')) return true; }
+      return false;
+    }
+    function checkLive() {
+      if (!panel || !window.fetch) return;
+      Array.prototype.forEach.call(panel.querySelectorAll('[data-lv]'), function (b) {
+        var g = b.getAttribute('data-lv'), L = LIVE[g]; if (!L || Date.now() - (liveAt[g] || 0) < 60000) return;
+        liveAt[g] = Date.now();
+        fetch(L[0], { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (v) { b.style.display = isLive(v, L[1]) ? 'block' : 'none'; }).catch(function () {});
+      });
+    }
     var openedAt = 0, D = null, picks = [], rows = [], panel = null, opened = false, hid = [], adf = null, adf2 = null, adLast = 0, adTimer = 0;
 
     function el(tag, css, html) { var e = document.createElement(tag); if (css) e.style.cssText = css; if (html != null) e.innerHTML = html; return e; }
@@ -81,7 +106,8 @@
         var x = q[1];
         return '<a href="' + esc(BASE + x.g + '/') + '" data-g="' + esc(x.g) + '" style="flex:1 1 0;max-width:112px;min-width:0;display:block;text-decoration:none;color:#222;background:#fff;border:1px solid #ddd;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.12)">' +
           '<div style="font:bold 11px sans-serif;color:#fff;background:' + (q[0] === t.nw ? '#e0457b' : q[0] === t.pin ? '#e8900c' : '#3a7bd5') + ';padding:3px 0">' + esc(q[0]) + '</div>' +
-          (x.img ? '<img alt="" src="' + esc(BASE + x.img) + '" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">' : '<div style="aspect-ratio:1/1;background:#f1ede4"></div>') +
+          '<div style="position:relative">' + (x.img ? '<img alt="" src="' + esc(BASE + x.img) + '" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">' : '<div style="aspect-ratio:1/1;background:#f1ede4"></div>') +
+          (LIVE[x.g] ? '<div data-lv="' + esc(x.g) + '" style="display:none;position:absolute;left:0;right:0;bottom:0;background:#e5262b;color:#fff;font:bold 11px sans-serif;padding:3px 0;letter-spacing:.05em">● ' + esc(t.lv) + '</div>' : '') + '</div>' +
           '<div style="font:bold 12px sans-serif;padding:6px 3px 8px;line-height:1.25;word-break:break-all">' + esc(nm(x)) + '</div></a>';
       }).join('');
       p.innerHTML = '<div style="position:sticky;top:0;background:#fffdf7;padding:14px 56px 10px;font:bold 18px sans-serif;color:#333;border-bottom:1px solid #eee;z-index:2">' + esc(t.ttl) +
@@ -117,6 +143,7 @@
       Array.prototype.forEach.call(document.querySelectorAll('.nsb-ad'), function (e) { if (!panel.contains(e) && hid.indexOf(e) < 0) { hid.push(e); e.__nsbVis = [e.style.getPropertyValue('visibility'), e.style.getPropertyPriority('visibility')]; e.style.setProperty('visibility', 'hidden', 'important'); } });
       Array.prototype.forEach.call(document.querySelectorAll('.nsb-ad iframe'), function (f) { if (!panel.contains(f)) { f.style.visibility = 'hidden'; f.style.pointerEvents = 'none'; } });
       panel.style.display = 'block'; panel.scrollTop = 0; opened = true; openedAt = Date.now();
+      checkLive();
       if (ADS) {
         clearTimeout(adTimer);
         if (!adf) { adf = mkf(AD, 320, 50); adf2 = mkf(AD2, 300, 250); panel.querySelector('.b1').appendChild(adf); panel.querySelector('.b2').appendChild(adf2); adLast = Date.now(); }
