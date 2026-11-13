@@ -5,5 +5,4 @@
 - 1本 25MB 以下にする。
 
 ## いま入っているもの（2026-11-14）
-batbey, bisu-uchi, dangan, enpitsu-life, eshi, gojuuni（英語版だけ）, hanetank, hinan-kunren, imomusume, integra-layer, jibun, jihanki, kairou,
-konnyaku, kopamijin, meishi-seiri, nabe, oreleo, otokonoji, panfa, sakugae, settai-golf, shiincrad, tatsujin-no-te, teryudan-kitaku, yubi-barrier, yukidama
+batbey, bisu-uchi, chikyu-boeigun, dangan, daruma, enpitsu-life, eshi, furoya-no-onna, gojuuni, hanetank, hinan-kunren, hitouma, hitsujikai, hiyoko-kantei, imomusume, integra-layer, jibun, jihanki, jimoto, kairou, konnyaku, kopamijin, mahou-no-tama, meishi-seiri, moyashi-no-jiro, nabe, oreleo, otokonoji, panfa, sakugae, settai-golf, shiincrad, tatsujin-no-te, teryudan-kitaku, yotsume, yubi-barrier, yukidama
