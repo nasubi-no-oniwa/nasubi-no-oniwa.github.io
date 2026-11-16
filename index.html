@@ -502,6 +502,17 @@ const GAMES = [
     ko: {"name": "穴の神隠し", "yomi": "아나노 카미카쿠시", "text": "거대한 진흙 엉덩이에서 ○△■가 끙끙 밀려 나온다. 길게 누르면 밧줄을 당기고, 떼면 느슨해진다. ■는 세게, △는 살살, ○는 그 중간. 구멍 주위 고리가 빨강이면 너무 세고, 파랑이면 너무 약하다. 가끔 황금 ○도. 뽑은 양과 모양으로 정해지는 칭호는 1만 가지, 당기는 건 얼굴 없는 데생 인형.", "catch": "밀려 나오는 ○△■를 끌어내라!"},
   },
   {
+    name: '天下取りマース', yomi: 'てんかとりまーす',
+    url: 'https://nasubi-no-oniwa.github.io/tenkatori/',
+    image: 'img/tenkatori.png',
+    text: '戦国時代の日本を5000マスで奪い合う、全員参加の国盗り。10の問いに答えると、仕える武将（20人）が決まる。取れるのは、自軍の領地のとなりのマスを、3時間に1つだけ。天守閣は取られない。3日に1回、マスがいちばん少ない武将のもとへ寝返ることもできる。陣営ごとの軍議の板で作戦を相談できる。どこかの陣営が半分の2500マスを取るか、11月30日23時59分になったら終わり。取ったマスは、画像つきでXに投稿できる。',
+    tags: ['みんなで', '陣取り', '戦国', '診断つき', '11/30まで'],
+    badge: 'NEW', catch: '3時間に1マス。みんなで国盗り。',
+    en: {"name": "Tenka-tori MASU", "text": "A land-grab for everyone: Sengoku-era Japan split into 5,000 tiles. Answer 10 questions to learn which of 20 warlords you serve. You may take one tile next to your side's land every 3 hours. Castle tiles can never be taken. Once every 3 days you can defect to the warlord with the fewest tiles. Plan with your side on the war council board. It ends when one side holds half the map (2,500 tiles), or at 23:59 on Nov 30 (Japan time). Post the tile you took on X with an image.", "catch": "One tile every 3 hours. Everyone fights for Japan."},
+    zh: {"name": "天下取りマース", "yomi": "奪取天下一格", "text": "把戰國時代的日本分成5000格來爭奪，全員參加的奪地戰。回答10道問題，決定你侍奉的武將（共20人）。每3小時只能拿下1格緊鄰我方領地的格子。天守閣不會被奪走。每3天可以倒戈一次，投向格子最少的武將。可以在各陣營的軍議板上商量作戰。任一陣營拿下一半的2500格，或到11月30日23點59分（日本時間）就結束。拿下的格子可以附圖發到X。", "catch": "每3小時1格。大家一起奪天下。"},
+    ko: {"name": "天下取りマース", "yomi": "천하를 잡는 한 칸", "text": "전국시대 일본을 5000칸으로 나눠 다투는, 모두가 참가하는 천하 쟁탈전. 10가지 질문에 답하면 섬길 무장(20명)이 정해진다. 아군 영지 옆의 칸을 3시간에 하나씩만 차지할 수 있다. 천수각은 빼앗기지 않는다. 3일에 한 번, 칸이 가장 적은 무장에게 배신해 갈 수도 있다. 진영별 군의 게시판에서 작전을 의논할 수 있다. 어느 진영이 절반인 2500칸을 차지하거나 11월 30일 23시 59분(일본 시간)이 되면 끝. 차지한 칸은 이미지와 함께 X에 올릴 수 있다.", "catch": "3시간에 한 칸. 모두 함께 천하 쟁탈."}
+  },
+  {
     name: '円', yomi: 'えん',
     url: 'https://nasubi-no-oniwa.github.io/en/',
     image: 'img/en.png',
@@ -829,6 +840,7 @@ const GAMES = [
 ];
 
 const NEWS = [
+  { date: '2026.11.16', text: '新作「天下取りマース」を公開しました。戦国時代の日本を5000マスで奪い合う、全員参加の国盗りです。10の問いで仕える武将が決まり、3時間に1マスずつ陣地を取ります。11月30日まで。', en: "New game: Tenka-tori MASU. A land-grab for everyone across Sengoku-era Japan, split into 5,000 tiles. Ten questions decide your warlord, and you take one tile every 3 hours. Runs until Nov 30.", zh: "推出新作「天下取りマース」。把戰國時代的日本分成5000格來爭奪的全員參加奪地戰。10道問題決定你侍奉的武將，每3小時拿下1格。到11月30日為止。", ko: "신작 「天下取りマース」를 공개했습니다. 전국시대 일본을 5000칸으로 나눠 다투는, 모두가 참가하는 천하 쟁탈전입니다. 10가지 질문으로 섬길 무장이 정해지고, 3시간에 한 칸씩 땅을 차지합니다. 11월 30일까지." },
   { date: '2026.11.15', text: '新作「円」を公開しました。120秒で、跳ねるボールが円をいくつこわせるかを競うゲームです。ボールの数・速さ・攻撃力を、いつ強化するかで結果が変わります。', en: "New game: EN (Rings). See how many rings your bouncing balls can break in 120 seconds. What you upgrade — ball count, speed or power — and when, changes the result.", zh: "推出新作「円」。比120秒內彈跳的球能打碎幾個圓的遊戲。什麼時候強化球數・速度・攻擊力，結果就會不同。", ko: "신작 「円」을 공개했어요. 120초 동안 튀는 공이 원을 몇 개 부수는지 겨루는 게임이에요. 공 개수·속도·공격력을 언제 강화하느냐에 따라 결과가 달라져요." },
   { date: '2026.11.14', text: '新作「フィフティー」を公開しました。中身の見えないシェイカーから、グラスにぴったり50%注ぐだけのゲームです。グラスは1000種類。ろくろで自分のグラスを作って、合言葉で出題もできます。', en: "New game: FIFTY. Just pour exactly 50% into the glass from a shaker you can't see into. 1000 glasses, and you can shape your own on a potter's wheel and share it with a code.", zh: "推出新作「FIFTY」。從看不到內容的雪克杯，往杯子裡倒剛好50%的遊戲。杯子有1000種，還能用轆轤做自己的杯子、用暗號出題。", ko: "신작 「FIFTY」를 공개했어요. 속이 안 보이는 셰이커에서 글라스에 딱 50%만 따르는 게임이에요. 글라스는 1000종류. 물레로 나만의 글라스를 만들어 암호로 문제를 낼 수도 있어요." },
   { date: '2026.11.13', text: '新作「接待麻雀」を公開しました。部長が海底で切った白で、自分も部下も女同僚も役満。ロンするか、見逃すか、それとも……。エンドは全部で11種類の、エンド探しのゲームです。', en: "New game: Settai Mahjong. Your boss discards the White Dragon on the last tile, and you, your junior and your coworker all have a yakuman. Call RON, let it go, or… An ending hunt with 11 endings.", zh: "推出新作「接待麻雀」。部長在海底打出的白板，讓你、部下、女同事全都役滿。要榮和、要放過，還是……。結局共有11種的「找結局」遊戲。", ko: "신작 「접대 마작」을 공개했어요. 부장이 마지막에 버린 백으로 나도, 부하도, 여자 동료도 역만. 론을 할까, 봐줄까, 아니면…. 엔딩이 모두 11가지인 엔딩 찾기 게임입니다." },
