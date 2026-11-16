@@ -502,6 +502,17 @@ const GAMES = [
     ko: {"name": "穴の神隠し", "yomi": "아나노 카미카쿠시", "text": "거대한 진흙 엉덩이에서 ○△■가 끙끙 밀려 나온다. 길게 누르면 밧줄을 당기고, 떼면 느슨해진다. ■는 세게, △는 살살, ○는 그 중간. 구멍 주위 고리가 빨강이면 너무 세고, 파랑이면 너무 약하다. 가끔 황금 ○도. 뽑은 양과 모양으로 정해지는 칭호는 1만 가지, 당기는 건 얼굴 없는 데생 인형.", "catch": "밀려 나오는 ○△■를 끌어내라!"},
   },
   {
+    name: 'プチプチ職人', yomi: 'ぷちぷちしょくにん',
+    url: 'https://nasubi-no-oniwa.github.io/puchipuchi/',
+    image: 'img/puchipuchi.png',
+    text: '最初に速さを0.2秒〜1.0秒の9段階から選び、そのリズムのままプチプチを左から順番につぶし続ける。0.05秒ずれたら終わり。ときどき流れてくる「つぶれたプチプチ」は押さずに1拍休む。押したら終わり。速さは練習の画面で、カチカチ音に合わせて試せる。つぶした数で称号とランキング、結果はXに投稿できる。',
+    tags: ['リズム', '一発勝負', 'ひとりで', '3D', 'ランキング'],
+    badge: 'NEW', catch: '同じリズムで、つぶし続けろ。',
+    en: {"name": "BUBBLE WRAP MASTER", "text": "Pick a speed from 9 steps (0.2s to 1.0s), then keep popping bubble wrap left to right at that exact rhythm. Off by 0.05s and it's over. Now and then an already-popped bubble comes by: don't press it, rest one beat. Press it and it's over. Try each speed on the practice screen with a click track. Earn a title and a ranking spot for how many you pop, and post your result on X.", "catch": "Same rhythm. Keep popping."},
+    zh: {"name": "プチプチ職人", "yomi": "泡泡紙職人", "text": "先從0.2秒到1.0秒的9段中選好速度，然後用那個節奏，從左邊開始依序一直捏破泡泡紙。差了0.05秒就結束。偶爾會出現「已經破掉的泡泡」，不要按，休息一拍。按下去就結束。速度可以在練習畫面配合喀喀聲試試看。依捏破的數量得到稱號和排行榜，結果可以發到X。", "catch": "用同樣的節奏，一直捏。"},
+    ko: {"name": "プチプチ職人", "yomi": "뽁뽁이 장인", "text": "먼저 0.2초~1.0초의 9단계 중에서 속도를 고르고, 그 리듬 그대로 뽁뽁이를 왼쪽부터 차례로 계속 터뜨린다. 0.05초 어긋나면 끝. 가끔 나오는 '이미 터진 뽁뽁이'는 누르지 말고 한 박자 쉰다. 누르면 끝. 속도는 연습 화면에서 딱딱 소리에 맞춰 시험해 볼 수 있다. 터뜨린 개수로 칭호와 랭킹, 결과는 X에 올릴 수 있다.", "catch": "같은 리듬으로, 계속 터뜨려라."}
+  },
+  {
     name: '達人の手２', yomi: 'たつじんのてツー',
     url: 'https://nasubi-no-oniwa.github.io/tatsujin-no-te/2/',
     image: 'img/tatsujin-no-te-2.png',
@@ -851,6 +862,7 @@ const GAMES = [
 ];
 
 const NEWS = [
+  { date: '2026.11.17', text: '新作「プチプチ職人」を公開しました。最初に決めた速さのまま、プチプチを左から順番につぶし続けるゲームです。0.05秒ずれたら終わり。つぶれたプチプチは押さずに1拍休みます。', en: "New game \"BUBBLE WRAP MASTER\" is out. Keep popping bubble wrap left to right at the speed you picked. Off by 0.05s and it's over. Rest a beat on the already-popped ones.", zh: '新作「プチプチ職人（泡泡紙職人）」上線了。用一開始決定的速度，從左邊依序一直捏破泡泡紙。差了0.05秒就結束。破掉的泡泡不要按，休息一拍。', ko: '신작 「プチプチ職人（뽁뽁이 장인）」을 공개했습니다. 처음 정한 속도 그대로 뽁뽁이를 왼쪽부터 차례로 계속 터뜨리는 게임입니다. 0.05초 어긋나면 끝. 터진 건 누르지 말고 한 박자 쉽니다.' },
   { date: '2026.11.16', text: '新作「達人の手２」を公開しました。星・ハート・渦巻き・直線・花を、見本なし・一発勝負・7秒で、指でどれだけきれいに描けるかを競うゲームです。描いた形は流れ星や蚊取り線香になって動きだします。' },
   { date: '2026.11.16', text: '新作「天下取りマース」を公開しました。戦国時代の日本を5000マスで奪い合う、全員参加の国盗りです。10の問いで仕える武将が決まり、3時間に1マスずつ陣地を取ります。11月30日まで。', en: "New game: Tenka-tori MASU. A land-grab for everyone across Sengoku-era Japan, split into 5,000 tiles. Ten questions decide your warlord, and you take one tile every 3 hours. Runs until Nov 30.", zh: "推出新作「天下取りマース」。把戰國時代的日本分成5000格來爭奪的全員參加奪地戰。10道問題決定你侍奉的武將，每3小時拿下1格。到11月30日為止。", ko: "신작 「天下取りマース」를 공개했습니다. 전국시대 일본을 5000칸으로 나눠 다투는, 모두가 참가하는 천하 쟁탈전입니다. 10가지 질문으로 섬길 무장이 정해지고, 3시간에 한 칸씩 땅을 차지합니다. 11월 30일까지." },
   { date: '2026.11.15', text: '新作「円」を公開しました。120秒で、跳ねるボールが円をいくつこわせるかを競うゲームです。ボールの数・速さ・攻撃力を、いつ強化するかで結果が変わります。', en: "New game: EN (Rings). See how many rings your bouncing balls can break in 120 seconds. What you upgrade — ball count, speed or power — and when, changes the result.", zh: "推出新作「円」。比120秒內彈跳的球能打碎幾個圓的遊戲。什麼時候強化球數・速度・攻擊力，結果就會不同。", ko: "신작 「円」을 공개했어요. 120초 동안 튀는 공이 원을 몇 개 부수는지 겨루는 게임이에요. 공 개수·속도·공격력을 언제 강화하느냐에 따라 결과가 달라져요." },
