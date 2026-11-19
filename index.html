@@ -502,6 +502,17 @@ const GAMES = [
     ko: {"name": "穴の神隠し", "yomi": "아나노 카미카쿠시", "text": "거대한 진흙 엉덩이에서 ○△■가 끙끙 밀려 나온다. 길게 누르면 밧줄을 당기고, 떼면 느슨해진다. ■는 세게, △는 살살, ○는 그 중간. 구멍 주위 고리가 빨강이면 너무 세고, 파랑이면 너무 약하다. 가끔 황금 ○도. 뽑은 양과 모양으로 정해지는 칭호는 1만 가지, 당기는 건 얼굴 없는 데생 인형.", "catch": "밀려 나오는 ○△■를 끌어내라!"},
   },
   {
+    name: '矢は壊れない', yomi: 'やはこわれない',
+    url: 'https://nasubi-no-oniwa.github.io/ya/',
+    image: 'img/ya.png',
+    text: 'どこに撃っても、矢は必ず自分に刺さる。なぞって方向を決め、ボタンを押して矢を引き、離すと撃つ。的に当たれば跳ね返り、カラスに打ち返され、クジラに飲みこまれて吐き出され、地球を一周して背中に刺さる。死に方は、撃つ方向と高さで変わる300種類。引き始めてから死ぬまでの時間が長い人ほど上位の、一発勝負のランキング。どんな死に方をしても、矢だけは無傷。死因はXに投稿できる。',
+    tags: ['3D', '長押し', '一発勝負', 'ひとりで', 'ランキング'],
+    badge: 'NEW', catch: 'どこに撃っても、自分に刺さる。',
+    en: {"name": "THE ARROW NEVER BREAKS", "text": "Wherever you shoot, the arrow always ends up in you. Drag to aim, hold the button to draw, release to shoot. It bounces off the target, gets batted back by a crow, swallowed and spat out by a whale, or flies around the Earth and hits you in the back. 300 ways to die, depending on direction and height. One shot per run, ranked by how long you last from the first draw to your death. Whatever happens, the arrow itself is unharmed. You can post your cause of death to X.", "catch": "Wherever you shoot, it hits you."},
+    zh: {"name": "矢は壊れない", "yomi": "箭不會壞", "text": "不管射向哪裡，箭一定會插在自己身上。滑動決定方向，按住按鈕拉弓，放開就射出。射中箭靶會彈回來、被烏鴉打回來、被鯨魚吞下又吐出來，甚至繞地球一圈插在背上。死法依方向和高度不同，共300種。一局只能射一次，從開始拉弓到死亡的時間越長，排名越前面。不管怎麼死，只有箭毫髮無傷。死因可以發到X。", "catch": "不管射向哪裡，都會插在自己身上。"},
+    ko: {"name": "矢は壊れない", "yomi": "화살은 부러지지 않는다", "text": "어디로 쏴도 화살은 반드시 자신에게 꽂힌다. 화면을 밀어 방향을 정하고, 버튼을 눌러 당기고, 떼면 발사. 과녁에 맞고 튕겨 나오고, 까마귀가 받아치고, 고래가 삼켰다 뱉고, 지구를 한 바퀴 돌아 등에 꽂힌다. 죽는 방법은 방향과 높이에 따라 300가지. 한 판에 한 발, 당기기 시작해서 죽을 때까지의 시간이 길수록 상위. 어떻게 죽어도 화살만은 멀쩡하다. 사인은 X에 올릴 수 있다.", "catch": "어디로 쏴도, 자신에게 꽂힌다."}
+  },
+  {
     name: '字力', yomi: 'じりき',
     url: 'https://nasubi-no-oniwa.github.io/jiryoku/',
     image: 'img/jiryoku.png',
@@ -906,6 +917,7 @@ const GAMES = [
 ];
 
 const NEWS = [
+  { date: '2026.11.19', text: '新作「矢は壊れない」を公開しました。どこに撃っても矢が必ず自分に刺さる、一発勝負の弓のゲームです。死に方は300種類。引き始めてから死ぬまでの時間を競います。矢だけは無傷です。', en: "New game \"THE ARROW NEVER BREAKS\" is out. A one-shot archery game where the arrow always ends up in you, wherever you shoot. 300 ways to die, ranked by how long you last. The arrow is unharmed.", zh: "新作「矢は壊れない（箭不會壞）」上線了。不管射向哪裡，箭一定會插在自己身上的一發決勝負射箭遊戲。死法共300種，比的是從開始拉弓到死亡的時間。只有箭毫髮無傷。", ko: "신작 「矢は壊れない（화살은 부러지지 않는다）」를 공개했습니다. 어디로 쏴도 화살이 반드시 자신에게 꽂히는 한 발 승부 활 게임입니다. 죽는 방법은 300가지. 당기기 시작해서 죽을 때까지의 시간을 겨룹니다. 화살만은 멀쩡합니다." },
   { date: '2026.11.17', text: '新作「残り1%」を公開しました。バッテリー1%のスマホで、60秒のあいだにお題どおりLINEを返すゲームです。送る文は自分で打ちます。打ちまちがえても取り消せません。', en: "New game \"1% LEFT\" is out. Your phone is at 1%: answer chats as the prompts say for 60 seconds. You type every message yourself, and typos can't be unsent.", zh: '新作「残り1%（剩下1%）」上線了。手機電量只剩1%，在60秒內照著題目回LINE。訊息要自己打字，打錯也無法收回。', ko: '신작 「残り1%（남은 1%）」을 공개했습니다. 배터리 1%인 스마트폰으로 60초 동안 지시대로 카톡에 답하는 게임입니다. 글은 직접 입력하며, 오타가 나도 취소할 수 없습니다.' },
   { date: '2026.11.17', text: '新作「プチプチ職人」を公開しました。最初に決めた速さのまま、プチプチを左から順番につぶし続けるゲームです。0.05秒ずれたら終わり。つぶれたプチプチは押さずに1拍休みます。', en: "New game \"BUBBLE WRAP MASTER\" is out. Keep popping bubble wrap left to right at the speed you picked. Off by 0.05s and it's over. Rest a beat on the already-popped ones.", zh: '新作「プチプチ職人（泡泡紙職人）」上線了。用一開始決定的速度，從左邊依序一直捏破泡泡紙。差了0.05秒就結束。破掉的泡泡不要按，休息一拍。', ko: '신작 「プチプチ職人（뽁뽁이 장인）」을 공개했습니다. 처음 정한 속도 그대로 뽁뽁이를 왼쪽부터 차례로 계속 터뜨리는 게임입니다. 0.05초 어긋나면 끝. 터진 건 누르지 말고 한 박자 쉽니다.' },
   { date: '2026.11.16', text: '新作「達人の手２」を公開しました。星・ハート・渦巻き・直線・花を、見本なし・一発勝負・7秒で、指でどれだけきれいに描けるかを競うゲームです。描いた形は流れ星や蚊取り線香になって動きだします。' },
