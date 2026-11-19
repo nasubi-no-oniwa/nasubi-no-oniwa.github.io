@@ -116,7 +116,7 @@
       p.className = 'nsb-next-panel';
       var cards = picks.map(function (q) {
         var x = q[1];
-        return '<a href="' + esc(BASE + x.g + '/') + '" data-g="' + esc(x.g) + '" style="flex:1 1 0;max-width:112px;min-width:0;display:block;text-decoration:none;color:#222;background:#fff;border:1px solid #ddd;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.12)">' +
+        return '<a href="' + esc(x.u || (BASE + x.g + '/')) + '" data-g="' + esc(x.g) + '" style="flex:1 1 0;max-width:112px;min-width:0;display:block;text-decoration:none;color:#222;background:#fff;border:1px solid #ddd;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.12)">' +
           '<div style="font:bold 11px sans-serif;color:#fff;background:' + (q[0] === t.nw ? '#e0457b' : q[0] === t.pin ? '#e8900c' : '#3a7bd5') + ';padding:3px 0">' + esc(q[0]) + '</div>' +
           '<div style="position:relative">' + (x.img ? '<img alt="" src="' + esc(BASE + x.img) + '" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">' : '<div style="aspect-ratio:1/1;background:#f1ede4"></div>') +
           (LIVE[x.g] ? '<div data-lv="' + esc(x.g) + '" style="display:none;position:absolute;left:0;right:0;bottom:0;background:#e5262b;color:#fff;font:bold 11px sans-serif;padding:3px 0;letter-spacing:.05em">● ' + esc(t.lv) + '</div>' : '') + '</div>' +
