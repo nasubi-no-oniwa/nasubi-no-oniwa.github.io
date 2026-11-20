@@ -13,9 +13,12 @@
     if (!C || !C.r || !C.r.length || window.__nsbNext) return;
     window.__nsbNext = 1;
     var BASE = 'https://nasubi-no-oniwa.github.io/';
+    var COM = {"ya": 1, "jiryoku": 1, "robot": 1, "puchipuchi": 1, "battery1": 1, "mahou-takkyu": 1, "teryudan-kitaku": 1, "jumaime": 1, "tatsujin-no-te": 1, "en": 1, "fifty": 1, "dopagaki-kasegenai": 1, "settai-mahjong": 1, "yotsume": 1, "hiyoko-kantei": 1, "jihanki": 1, "tequila": 1, "sakugae": 1, "pinchbowl": 1, "osunayo": 1, "nabe": 1, "mahou-volley": 1, "mahou-pk": 1, "kopamijin": 1, "kairou": 1, "hanetank": 1, "imomusume": 1, "jibun": 1, "hitouma": 1, "dopagaki-catch": 1, "yukidama": 1, "daruma": 1, "yubi-barrier": 1, "bisu-uchi": 1, "konnyaku": 1, "sumo-king": 1, "jimoto": 1, "panfa": 1, "oreleo": 1, "eshi": 1, "dangan": 1, "mahou-no-tama": 1, "batbey": 1, "hitsujikai": 1, "hinan-kunren": 1, "chikyu-boeigun": 1, "settai-golf": 1, "sakasama": 1, "gojuuni": 1, "moyashi-no-jiro": 1, "meishi-seiri": 1, "kaeru": 1, "kubi": 1}; /* .com に引っ越した作品 */
+    function GU(x) { var u = x.u || ''; var m = u.match(/^https:\/\/nasubi-no-oniwa\.github\.io\/([A-Za-z0-9_-]+)\//); if (m && COM[m[1]]) return u.replace('nasubi-no-oniwa.github.io', 'nasubi-no-oniwa.com'); if (u) return u; return (COM[x.g] ? 'https://nasubi-no-oniwa.com/' : BASE) + x.g + '/'; }
     var SP = /iPhone|iPod|Android|Mobile|Windows Phone|BlackBerry/i.test(navigator.userAgent || '');
     var ADS = !!C.ad && SP && !/[?&]noad=1/.test(location.search);
-    var AD = BASE + 'ad/', AD2 = BASE + 'ad/big.html', LOCK = 1200, MIN = 30000;
+    var ADB = /(^|\.)nasubi-no-oniwa\.com$/.test(location.hostname) ? 'https://nasubi-no-oniwa.com/ad/' : BASE + 'ad/'; /* .com の中では .com の広告の部品を読む（github.io の部品だと空白になる） */
+    var AD = ADB, AD2 = ADB + 'big.html', LOCK = 1200, MIN = 30000;
     var lang = (navigator.language || 'ja').slice(0, 2).toLowerCase();
     var T = {
       ja: { row: '次のゲーム　右にスライド', ttl: '次はこれで遊ぶ？', back: '◀ 左にスライドか ✖ で、結果にもどる', t1: 'いま1位', t2: 'いま2位', nw: '最新作', pin: '注目', lv: '配信中', fl1: '新作を毎日出してます', fl2: 'なすPをフォロー' },
@@ -116,7 +119,7 @@
       p.className = 'nsb-next-panel';
       var cards = picks.map(function (q) {
         var x = q[1];
-        return '<a href="' + esc(x.u || (BASE + x.g + '/')) + '" data-g="' + esc(x.g) + '" style="flex:1 1 0;max-width:112px;min-width:0;display:block;text-decoration:none;color:#222;background:#fff;border:1px solid #ddd;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.12)">' +
+        return '<a href="' + esc(GU(x)) + '" data-g="' + esc(x.g) + '" style="flex:1 1 0;max-width:112px;min-width:0;display:block;text-decoration:none;color:#222;background:#fff;border:1px solid #ddd;border-radius:12px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.12)">' +
           '<div style="font:bold 11px sans-serif;color:#fff;background:' + (q[0] === t.nw ? '#e0457b' : q[0] === t.pin ? '#e8900c' : '#3a7bd5') + ';padding:3px 0">' + esc(q[0]) + '</div>' +
           '<div style="position:relative">' + (x.img ? '<img alt="" src="' + esc(BASE + x.img) + '" style="width:100%;aspect-ratio:1/1;object-fit:cover;display:block">' : '<div style="aspect-ratio:1/1;background:#f1ede4"></div>') +
           (LIVE[x.g] ? '<div data-lv="' + esc(x.g) + '" style="display:none;position:absolute;left:0;right:0;bottom:0;background:#e5262b;color:#fff;font:bold 11px sans-serif;padding:3px 0;letter-spacing:.05em">● ' + esc(t.lv) + '</div>' : '') + '</div>' +
